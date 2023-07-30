@@ -26,7 +26,18 @@ import {
 import SplashScreen from "../SplashScreen";
 import Link from "next/link";
 import { Container, IconButton } from "@mui/material";
-import cities_arr, { state_arr } from "../utils/CityDropdown";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import "../../node_modules/swiper/modules/pagination.css";
+import "../../node_modules/swiper/modules/navigation.css";
+import "../../node_modules/swiper/modules/navigation.css";
+import "../../node_modules/swiper/swiper.css";
+import { Form, Formik } from "formik";
+import Gap from "../UI/Gap";
+import FormWrapper from "../UI/FormWrapper";
+import InputField from "../UI/InputField";
+import * as Yup from "yup";
+// import cities_arr, { state_arr } from "../utils/CityDropdown";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true);
@@ -38,6 +49,7 @@ const HomePage = () => {
     zone: "",
     format: "",
   });
+  const [propertyFor, setPropertyFor] = useState("For Sale");
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -89,6 +101,44 @@ const HomePage = () => {
       </div>
     );
   };
+
+  const initialValues = {
+    address: Yup.string().required("Required"),
+    type: Yup.string().required("Required"),
+    // description:Yup.string().required('Required'),
+    format: Yup.string().required("Required"),
+    city: Yup.string().required("Required"),
+    state: Yup.string().required("Required"),
+    size: Yup.string().required("Required"),
+    category: Yup.string().required("Required"),
+    owner: Yup.object().shape({
+      name: Yup.string().required("Required"),
+      // email:Yup.string().required('Required').email("Invalid format"),
+      email: Yup.string().email("Invalid format"),
+      mobileNo1: Yup.number(),
+    }),
+  };
+  const validationSchema = Yup.object({
+    address: Yup.string().required("Required"),
+    type: Yup.string().required("Required"),
+    // description:Yup.string().required('Required'),
+    format: Yup.string().required("Required"),
+    city: Yup.string().required("Required"),
+    state: Yup.string().required("Required"),
+    size: Yup.string().required("Required"),
+    category: Yup.string().required("Required"),
+    owner: Yup.object().shape({
+      name: Yup.string().required("Required"),
+      // email:Yup.string().required('Required').email("Invalid format"),
+      email: Yup.string().email("Invalid format"),
+      mobileNo1: Yup.number(),
+    }),
+  });
+
+  const onSubmitHandler = ({ values }) => {
+    console.log(values);
+  };
+
   return (
     <>
       {loading ? (
@@ -116,52 +166,55 @@ const HomePage = () => {
       <Image alt='Hero Section' className='h-[100%] overflow-hidden brightness-50' src={assets.bg_01} />
 
       </div> */}
+
           <div className="bg-warehouseBlue flex-col  p-1 flex gap-2 justify-between ">
             <div className="flex flex-col gap-2">
               <div className="flex text-white gap-1 justify-between">
-            <div className="flex text-white gap-1">
-                <Phone sx={{ color: "white" }} />
-                <a href="tel:+918191802837">+918191802837</a>
-              </div>
-              <div className=" flex-1 hidden md:flex text-white gap-1">
-                <Email sx={{ color: "white" }} />
-                <a href="mailto:warehouseservicez@gmail.com">
-                  warehouseservicez@gmail.com
-                </a>
-              </div>
-              <div className="flex gap-1 ">
-              <IconButton
-                size="small"
-                
-                onClick={() => {
-                  window.open(
-                    "https://www.facebook.com/warehouseservicez",
-                    "_blank"
-                  );
-                }}
-              >
-                <Facebook fontSize="small" sx={{ color: "white" }} />
-              </IconButton>
-              <IconButton
-                size="small"
-                onClick={() => {
-                  window.open(
-                    "https://instagram.com/warehouse.services?igshid=NTc4MTIwNjQ2YQ==",
-                    "_blank"
-                  );
-                }}
-              >
-                <Instagram fontSize="small" sx={{ color: "white" }} />
-              </IconButton>
-              <IconButton
-                size="small"
-                onClick={() => {
-                  window.open("https://twitter.com/warehouseservi3", "_blank");
-                }}
-              >
-                <Twitter fontSize="small" sx={{ color: "white" }} />
-              </IconButton>
-            </div>
+                <div className="flex text-white gap-1">
+                  <Phone sx={{ color: "white" }} />
+                  <a href="tel:+918191802837">+918191802837</a>
+                </div>
+                <div className=" flex-1 hidden md:flex text-white gap-1">
+                  <Email sx={{ color: "white" }} />
+                  <a href="mailto:warehouseservicez@gmail.com">
+                    warehouseservicez@gmail.com
+                  </a>
+                  </div>
+                <div className="flex gap-1 ">
+                  <IconButton
+                    size="small"
+                    onClick={() => {
+                      window.open(
+                        "https://www.facebook.com/warehouseservicez",
+                        "_blank"
+                      );
+                    }}
+                  >
+                    <Facebook fontSize="small" sx={{ color: "white" }} />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    onClick={() => {
+                      window.open(
+                        "https://instagram.com/warehouse.services?igshid=NTc4MTIwNjQ2YQ==",
+                        "_blank"
+                      );
+                    }}
+                  >
+                    <Instagram fontSize="small" sx={{ color: "white" }} />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    onClick={() => {
+                      window.open(
+                        "https://twitter.com/warehouseservi3",
+                        "_blank"
+                      );
+                    }}
+                  >
+                    <Twitter fontSize="small" sx={{ color: "white" }} />
+                  </IconButton>
+                </div>
               </div>
 
               <div className="flex visible md:hidden text-white gap-1">
@@ -170,21 +223,134 @@ const HomePage = () => {
                   warehouseservicez@gmail.com
                 </a>
               </div>
-            
             </div>
-           
           </div>
           <ResponsiveDrawer />
+          <div className="h-max">
+            <Swiper
+              spaceBetween={30}
+              loop={true}
+              pagination={{
+                clickable: true,
+              }}
+              navigation={true}
+              modules={[Pagination, Navigation, Autoplay]}
+              autoplay={{
+                delay: 3000,
+              }}
+              className="h-[100vh]"
+            >
+              <SwiperSlide>
+                <Image
+                  data-aos="zoom-in-up"
+                  src={assets.bg_01}
+                  alt="Hero Section"
+                  className="w-full h-full m-auto object-cover overflow-x-hidden"
+                />
+              </SwiperSlide>
+              <SwiperSlide>
+                <Image
+                  data-aos="zoom-in-up"
+                  src={assets.bg_01}
+                  alt="Hero Section"
+                  className="w-full h-full m-auto object-cover overflow-x-hidden"
+                />
+              </SwiperSlide>
+            </Swiper>
+          </div>
           {/* Section 1 */}
+          {/*
           <div className='bg-gradient-to-tr from-primary to-secondary py-8 overflow-hidden relative' >
-            <div className="absolute top-[20vh] md:top-[40vh] left-0 right-0 mx-auto bottom-0 z-10 flex flex-col gap-8">
-            <h1 id='LuckiestGuy' className='text-5xl md:text-8xl text-white font-bold text-center' data-aos="fade-right">MINIMUM THE RENTAL</h1>
-          <h1 id='LuckiestGuy' className='text-5xl md:text-8xl text-white font-bold text-center' data-aos="fade-left">LONGER THE SURVIVAL</h1>
+              <div className="absolute top-[20vh] md:top-[40vh] left-0 right-0 mx-auto bottom-0 z-10 flex flex-col gap-8">
+                  <h1 id='LuckiestGuy' className='text-5xl md:text-8xl text-white font-bold text-center' data-aos="fade-right">MINIMUM THE RENTAL</h1>
+                  <h1 id='LuckiestGuy' className='text-5xl md:text-8xl text-white font-bold text-center' data-aos="fade-left">LONGER THE SURVIVAL</h1>
+              </div>
+              <div className='w-[90%] md:w-[100vh] m-auto h-[400px] md:h-auto'>
+                  <Image data-aos='zoom-in-up' src={assets.bg_02} alt='Hero Section' className='w-[80%] m-auto object-cover overflow-x-hidden' />
+              </div>
+          </div>*/}
+
+          {/* Section 2*/}
+          <div className="bg-ter min-h-[300px] w-[100vw] flex">
+            <div className="min-h-full bg-secondary p-5 flex flex-col justify-center">
+              <p className="text-lg">Discover Your</p>
+              <p className="text-3xl font-bold">Dream</p>
+              <p className="text-3xl font-bold">House</p>
             </div>
-        <div className='w-[90%] md:w-[100vh] m-auto h-[400px] md:h-auto'>
-        <Image data-aos='zoom-in-up' src={assets.bg_02} alt='Hero Section' className='w-[80%] m-auto object-cover overflow-x-hidden' />
-        </div>
-      </div>
+            <div className="p-5 w-full">
+              <div className="p-2 flex gap-3">
+                <button
+                  className={`w-20 p-2 rounded ${
+                    propertyFor === "For Sale" && "bg-quat"
+                  }`}
+                  onClick={() => setPropertyFor("For Sale")}
+                >
+                  For Sale
+                </button>
+                <button
+                  className={`w-20 p-2 rounded ${
+                    propertyFor === "For Rent" && "bg-quat"
+                  }`}
+                  onClick={() => setPropertyFor("For Rent")}
+                >
+                  For Rent
+                </button>
+              </div>
+              <hr />
+              <div>
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={validationSchema}
+                  enableReinitialize={true}
+                  onSubmit={onSubmitHandler}
+                >
+                  {({ values }) => {
+                    return (
+                      <Form>
+                        <FormWrapper>
+                          <InputField
+                            override={true}
+                            as="select"
+                            uni="type"
+                            labelName="Type"
+                            fieldRequired={true}
+                            inputClass={"bg-quat rounded-sm"}
+                          >
+                            <option disabled value="">
+                              Choose
+                            </option>
+                            <option value="Prefab Structure">
+                              Prefab Structure
+                            </option>
+                            <option value="Semi Prefab Structure">
+                              Semi Prefab Structure
+                            </option>
+                            <option value="RCC">RCC</option>
+                            <option value="Shed">Shed</option>
+                            <option value="Land">Land</option>
+                            <option value="Multi Store">Multi Store</option>
+                          </InputField>
+                        </FormWrapper>
+
+                        <div className="flex justify-end">
+                          {/* {!buttonLoading ? ( */}
+                          <button
+                            type="submit"
+                            className={`bg-primary rounded-sm text-white w-32 h-10 `}
+                          >
+                            {/* {id ? "UPDATE" : "SUBMIT"} */}
+                          </button>
+                          {/* ) : ( */}
+                          {/* <Spinner size={40} /> */}
+                          {/* )} */}
+                        </div>
+                      </Form>
+                    );
+                  }}
+                </Formik>
+              </div>
+            </div>
+          </div>
 
           {/* <div id='parallex_1'  className='h-[calc(100vh_-_122px)] bg-cover md:bg-fixed flex flex-col justify-center items-center gap-16  bg-no-repeat  bg-center  bg-secondary text-5xl md:text-8xl text-white font-bold text-center'> */}
           {/* <h1 id='LuckiestGuy' className='text-5xl md:text-8xl text-white font-bold text-center' data-aos="fade-right">MINIMUM THE RENTAL</h1> */}
@@ -218,8 +384,8 @@ const HomePage = () => {
               >
                 LONGER THE SURVIVAL
               </h1> */}
-              {/* <Image src={assets.bg_02} alt='Image Not Found' className='relative' /> */}
-            {/* </div>
+          {/* <Image src={assets.bg_02} alt='Image Not Found' className='relative' /> */}
+          {/* </div>
           </div> */}
           {/* <div className='min-h-[100vh]' style={{backgroundImage: `url('${assets.bg_02.src}')`}}> */}
           {/* {console.log(assets.bg_02.src)} */}
@@ -327,24 +493,22 @@ const HomePage = () => {
                 industries.
               </p>
               <p>
-              With years of experience in the industry, we have
-                built a solid reputation for providing reliable, secure, and
-                cost-effective warehousing solutions to our clients. Our
-                warehouses are strategically located to ensure easy access and
-                efficient logistics operations.
+                With years of experience in the industry, we have built a solid
+                reputation for providing reliable, secure, and cost-effective
+                warehousing solutions to our clients. Our warehouses are
+                strategically located to ensure easy access and efficient
+                logistics operations.
               </p>
               <p>
-              We understand the unique needs
-                of each of our clients and strive to provide personalized
-                services that meet their specific requirements. Whether you need
-                short-term or long-term warehouse space, our team is dedicated
-                to providing you with flexible solutions that are tailored to
-                your needs.
+                We understand the unique needs of each of our clients and strive
+                to provide personalized services that meet their specific
+                requirements. Whether you need short-term or long-term warehouse
+                space, our team is dedicated to providing you with flexible
+                solutions that are tailored to your needs.
               </p>
               <p>
-              Contact us today and let us help you take your
-                business to the next level with our exceptional warehousing
-                services.
+                Contact us today and let us help you take your business to the
+                next level with our exceptional warehousing services.
               </p>
               <Link
                 href="/services"

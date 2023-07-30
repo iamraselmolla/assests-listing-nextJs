@@ -13,10 +13,10 @@ module.exports = {
       colors:{
         // primary:'#1D2671',
         // secondary:'#C33764',
-        primary:'#516395',
-        secondary:'#614385',
-        ter:'#fd3368',
-        quat:'#aa076b',
+        primary:'#E38B29',
+        secondary:'#F1A661',
+        ter:'#FFD8A9',
+        quat:'#FDEEDC',
         pent:'#61045f',
         warehouseBlue:'#487cea'
       },
