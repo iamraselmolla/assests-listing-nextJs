@@ -29,6 +29,7 @@ import {
   Map,
   SingleBedOutlined,
   BathtubOutlined,
+  Message,
 } from "@mui/icons-material";
 import SplashScreen from "../SplashScreen";
 import Link from "next/link";
@@ -171,12 +172,17 @@ const HomePage = () => {
     bathroom,
   }) => {
     return (
-      <div className="flex flex-col gap-2 bg-quat shadow-md border rounded overflow-hidden">
+      <div className="flex flex-col gap-2 bg-quat shadow-md rounded overflow-hidden h-full justify-between">
         <Image src={image} alt={"Not Found"} className="h-52" />
         <div className="p-3 flex flex-col gap-2">
-            <p className="w-20 bg-primary shadow-sm text-sm p-1 rounded-full text-center text-white font-bold">For Sale</p>
+          <p className="w-20 bg-primary shadow-sm text-sm p-1 rounded-full text-center text-white font-bold">
+            For Sale
+          </p>
           <h2 className="text-xl font-bold">{title}</h2>
-          <p>Rs {price.toLocaleString('en-US')} <b className="text-primary">/ {period ? period : "-"}</b></p>
+          <p>
+            Rs {price.toLocaleString("en-US")}{" "}
+            <b className="text-primary">/ {period ? period : "-"}</b>
+          </p>
           <div className="flex gap-2">
             <LocationOn sx={{ color: "orange" }} />
             <p>{location}</p>
@@ -189,19 +195,19 @@ const HomePage = () => {
             <Person sx={{ color: "orange" }} />
             <p>{owner}</p>
           </div>
-          <div className="bg-primary p-1 rounded-sm text-white flex justify-between text-sm shadow-inner">
-            <div className="flex gap-1 items-center">
-              <Map />
-              <p>{area}</p>
-            </div>
-            <div className="flex gap-1 items-center">
-              <SingleBedOutlined />
-              <p>{bedroom}</p>
-            </div>
-            <div className="flex gap-1 items-center">
-              <BathtubOutlined />
-              <p>{bathroom}</p>
-            </div>
+        </div>
+        <div className="bg-primary px-3 p-1 text-white flex justify-between text-sm shadow-inner">
+          <div className="flex gap-1 items-center">
+            <Map />
+            <p>{area}</p>
+          </div>
+          <div className="flex gap-1 items-center">
+            <SingleBedOutlined />
+            <p>{bedroom}</p>
+          </div>
+          <div className="flex gap-1 items-center">
+            <BathtubOutlined />
+            <p>{bathroom}</p>
           </div>
         </div>
       </div>
@@ -210,7 +216,7 @@ const HomePage = () => {
 
   const DealsIn = ({ title, image }) => {
     return (
-      <div className="bg-white shadow-inner rounded overflow-hidden w-48 my-10">
+      <div className="bg-white shadow-inner rounded overflow-hidden w-48 my-10 mx-10">
         <Image src={image} alt={"Not Found"} className="max-h-32" />
         <p className="text-xl text-center my-1">{title}</p>
       </div>
@@ -265,6 +271,50 @@ const HomePage = () => {
     console.log(values);
   };
 
+  const UserTestimonialData = [
+    {
+      index: 0,
+      user: "Robby Sharifah",
+      designation: "CEO",
+      title: "Most Value For Money",
+      testimonial:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis bcaecati repellendus iusto officia! Architecto harum corrupti voluptatem animi incidunt numquam odit, eveniet illo, nam non onsequuntur cumque rerum commodi. Provident libero quo praesentium olorem quam corrupti ipsa deserunt sunt voluptatibus.",
+    },
+    {
+      index: 1,
+      user: "Johnny James",
+      designation: "Manager",
+      title: "Most knowledgable",
+      testimonial:
+        "Lorem ipsum dolor caecati repellendus iusto officia! Architecto harum corrupti voluptatem animi incidunt numquam odit, eveniet illo, nam non onsequuntur cumque rerum commodi. Provident libero quo praesentium olorem quam corrupti ipsa deserunt sunt voluptatibus.",
+    },
+    {
+      index: 2,
+      user: "Robby Sharifah",
+      designation: "CEO",
+      title: "Most Value For Money",
+      testimonial:
+        "eveniet illo, nam non onsequuntur cumque rerum commodi. Provident libero quo praesentium olorem quam corrupti ipsa deserunt sunt voluptatibus.",
+    },
+  ];
+
+  const UserTestimonial = ({ user, designation, title, testimonial }) => {
+    return (
+      <div className="flex flex-col justify-center items-center p-4 gap-2 max-w-sm">
+        <div className="bg-quat w-20 aspect-square flex justify-center items-center text-primary rounded-full">
+          <Message />
+        </div>
+        <div className="flex flex-col gap-3 text-center">
+          <h2 className="text-xl">{user}</h2>
+          <p> {designation} </p>
+          <p>
+            {testimonial.substring(0, 170)}
+            <button className="text-primary">...Read More </button>
+          </p>
+        </div>
+      </div>
+    );
+  };
   return (
     <>
       {loading ? (
@@ -703,7 +753,8 @@ const HomePage = () => {
             <Swiper
               spaceBetween={20}
               modules={[Pagination, Autoplay]}
-                pagination={true}
+              pagination={true}
+          navigation
               autoplay={{
                 delay: 3000,
                 disableOnInteraction: false,
@@ -958,7 +1009,47 @@ const HomePage = () => {
             >
               {clientList.map((item, i) => (
                 <SwiperSlide className="m-3 my-10" key={i}>
-                  <Image src={item}  />
+                  <Image src={item} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          {/* Testimonials */}
+          <div className="bg-white p-[10%] m-auto">
+            <h1 className="text-3xl">Testimonials</h1>
+            <hr className="my-3" />
+            <Swiper
+              spaceBetween={20}
+              modules={[Pagination, Autoplay, Navigation, Pagination]}
+              navigation={true}
+              pagination={{
+                clickable: true,
+              }}
+              loop={true}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              id="commercial"
+              breakpoints={{
+                "@0.00": {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                "@1.00": {
+                  slidesPerView: 2,
+                  spaceBetween: 40,
+                },
+                "@1.50": {
+                  slidesPerView: 3,
+                  spaceBetween: 40,
+                },
+              }}
+            >
+              {UserTestimonialData.map((item) => (
+                <SwiperSlide className="m-3 my-10">
+                  <UserTestimonial {...item} />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -975,7 +1066,6 @@ const HomePage = () => {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3444.2067707735296!2d78.0095323763292!3d30.31663590562165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39092925e963de41%3A0xaa1fcaa43e5c52cb!2sWarehouse%20Servicez!5e0!3m2!1sen!2sin!4v1683894184725!5m2!1sen!2sin"
             ></iframe>
           </div>
-
           {/* Footer */}
           <Footer />
         </div>
