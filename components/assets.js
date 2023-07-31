@@ -34,6 +34,7 @@ import NU from './assets/NU.png';
 import Ola from './assets/Ola.png';
 import Renest from './assets/Renest.png';
 import V_MART from './assets/V_MART.png';
+import feedback_img from './assets/feedback-image.png';
 
 export const assets={
     bg_01,
@@ -74,5 +75,6 @@ export const assets={
     NU,
     Ola,
     Renest,
-    V_MART
+    V_MART,
+    feedback_img
 }
