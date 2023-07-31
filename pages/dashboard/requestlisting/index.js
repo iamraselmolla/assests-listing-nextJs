@@ -1,6 +1,5 @@
 import Head from "next/head";
 import React from "react";
-import RequestListing from "../../../components/pages/RequestListing";
 
 const index = () => {
   return (
@@ -35,7 +34,6 @@ const index = () => {
         <meta property="og:description" content="" />
         <meta property="og:site_name" content="Sikka ware Hse" />
       </Head>
-      <RequestListing />
     </>
   );
 };

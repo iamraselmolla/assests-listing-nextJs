@@ -22,6 +22,13 @@ import {
   ShoppingCart,
   Twitter,
   Warehouse,
+  Search,
+  LocationOn,
+  BookmarkBorder,
+  Person,
+  Map,
+  SingleBedOutlined,
+  BathtubOutlined,
 } from "@mui/icons-material";
 import SplashScreen from "../SplashScreen";
 import Link from "next/link";
@@ -102,37 +109,156 @@ const HomePage = () => {
     );
   };
 
+  const featuredList = [
+    {
+      image: assets.warehouse.warehouse_gallery_01,
+      title: "Single House Near, Los Angeles",
+      price: 30000,
+      period: "Month",
+      location: "1911 Sunset Blvd Los Angeles, CA 90026",
+      type: "House",
+      owner: "James Carlos",
+      area: "105 sq.ft",
+      bedroom: 1,
+      bathroom: 2,
+    },
+    {
+      image: assets.warehouse.warehouse_gallery_01,
+      title: "Double Flat",
+      price: 10000,
+      period: "Month",
+      location: "1911 Sunset Blvd Los Angeles, CA 90026",
+      type: "House",
+      owner: "John Doe",
+      area: "185 sq.ft",
+      bedroom: 3,
+      bathroom: 2,
+    },
+    {
+      image: assets.warehouse.warehouse_gallery_01,
+      title: "Single House Near, Los Angeles",
+      price: 30000,
+      period: "Month",
+      location: "1911 Sunset Blvd Los Angeles, CA 90026",
+      type: "House",
+      owner: "John Doe",
+      area: "105 sq.ft",
+      bedroom: 3,
+      bathroom: 2,
+    },
+    {
+      image: assets.warehouse.warehouse_gallery_01,
+      title: "Single House Near, Los Angeles",
+      price: 2000,
+      location: "1911 Sunset Blvd Los Angeles, CA 90026",
+      type: "House",
+      owner: "John Doe",
+      area: "15 sq.ft",
+      bedroom: 3,
+      bathroom: 2,
+    },
+  ];
+  const FeaturedProperty = ({
+    image,
+    title,
+    price,
+    period,
+    location,
+    type,
+    owner,
+    area,
+    bedroom,
+    bathroom,
+  }) => {
+    return (
+      <div className="flex flex-col gap-2 bg-quat shadow-md border rounded overflow-hidden">
+        <Image src={image} alt={"Not Found"} className="h-52" />
+        <div className="p-3 flex flex-col gap-2">
+            <p className="w-20 bg-primary shadow-sm text-sm p-1 rounded-full text-center text-white font-bold">For Sale</p>
+          <h2 className="text-xl font-bold">{title}</h2>
+          <p>Rs {price.toLocaleString('en-US')} <b className="text-primary">/ {period ? period : "-"}</b></p>
+          <div className="flex gap-2">
+            <LocationOn sx={{ color: "orange" }} />
+            <p>{location}</p>
+          </div>
+          <div className="flex gap-2">
+            <BookmarkBorder sx={{ color: "orange" }} />
+            <p>{type}</p>
+          </div>
+          <div className="flex gap-2">
+            <Person sx={{ color: "orange" }} />
+            <p>{owner}</p>
+          </div>
+          <div className="bg-primary p-1 rounded-sm text-white flex justify-between text-sm shadow-inner">
+            <div className="flex gap-1 items-center">
+              <Map />
+              <p>{area}</p>
+            </div>
+            <div className="flex gap-1 items-center">
+              <SingleBedOutlined />
+              <p>{bedroom}</p>
+            </div>
+            <div className="flex gap-1 items-center">
+              <BathtubOutlined />
+              <p>{bathroom}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const DealsIn = ({ title, image }) => {
+    return (
+      <div className="bg-white shadow-inner rounded overflow-hidden w-48 my-10">
+        <Image src={image} alt={"Not Found"} className="max-h-32" />
+        <p className="text-xl text-center my-1">{title}</p>
+      </div>
+    );
+  };
+
+  const taskList = [
+    { title: "Warehouse", image: assets.bg_03 },
+    { title: "Industrial Shed", image: assets.bg_03 },
+    { title: "Hotel", image: assets.bg_03 },
+    { title: "Call Center", image: assets.bg_03 },
+    { title: "Restaurant", image: assets.bg_03 },
+    { title: "Factory", image: assets.bg_03 },
+    { title: "Showroom", image: assets.bg_03 },
+    { title: "Corporate Office", image: assets.bg_03 },
+    { title: "Co-working Space", image: assets.bg_03 },
+  ];
+
+  const clientList = [
+    assets.HDFC,
+    assets.Ola,
+    assets.Delhivery,
+    assets.IDP,
+    assets.NU,
+    assets.Bihani,
+    assets.Bata,
+    assets.V_MART,
+  ];
+
   const initialValues = {
-    address: Yup.string().required("Required"),
-    type: Yup.string().required("Required"),
-    // description:Yup.string().required('Required'),
-    format: Yup.string().required("Required"),
-    city: Yup.string().required("Required"),
-    state: Yup.string().required("Required"),
-    size: Yup.string().required("Required"),
-    category: Yup.string().required("Required"),
-    owner: Yup.object().shape({
-      name: Yup.string().required("Required"),
-      // email:Yup.string().required('Required').email("Invalid format"),
-      email: Yup.string().email("Invalid format"),
-      mobileNo1: Yup.number(),
-    }),
+    type: "",
+    title: "",
+    address: "",
+    bedroom: "Any Bedrooms",
+    minPrice: 1000,
+    max: 50000,
+    size: "10",
+    landarea: "100",
   };
   const validationSchema = Yup.object({
-    address: Yup.string().required("Required"),
-    type: Yup.string().required("Required"),
-    // description:Yup.string().required('Required'),
-    format: Yup.string().required("Required"),
-    city: Yup.string().required("Required"),
-    state: Yup.string().required("Required"),
-    size: Yup.string().required("Required"),
-    category: Yup.string().required("Required"),
-    owner: Yup.object().shape({
-      name: Yup.string().required("Required"),
-      // email:Yup.string().required('Required').email("Invalid format"),
-      email: Yup.string().email("Invalid format"),
-      mobileNo1: Yup.number(),
-    }),
+    type: Yup.string(),
+    title: Yup.string(),
+    address: Yup.string(),
+    bedroom: Yup.string(),
+    minPrice: Yup.string(),
+    max: Yup.string(),
+    size: Yup.string(),
+    landarea: Yup.string(),
   });
 
   const onSubmitHandler = ({ values }) => {
@@ -179,7 +305,7 @@ const HomePage = () => {
                   <a href="mailto:warehouseservicez@gmail.com">
                     warehouseservicez@gmail.com
                   </a>
-                  </div>
+                </div>
                 <div className="flex gap-1 ">
                   <IconButton
                     size="small"
@@ -330,15 +456,60 @@ const HomePage = () => {
                             <option value="Land">Land</option>
                             <option value="Multi Store">Multi Store</option>
                           </InputField>
+                          <InputField
+                            uni="title"
+                            placeholder="Title"
+                            labelName="Title"
+                            inputClass={"bg-quat rounded-sm"}
+                          />
+                          <InputField
+                            uni="address"
+                            placeholder="Address"
+                            labelName="Address"
+                            inputClass={"bg-quat rounded-sm"}
+                          />
+                          <InputField
+                            uni="bedroom"
+                            placeholder="Bedroom"
+                            labelName="Bedroom"
+                            inputClass={"bg-quat rounded-sm"}
+                          />
+                          <div className="grid grid-cols-2 gap-4">
+                            <InputField
+                              uni="minPrice"
+                              placeholder="Min Price"
+                              labelName="Min Price"
+                              inputClass={"bg-quat rounded-sm"}
+                            />
+                            <InputField
+                              uni="max"
+                              placeholder="Max Price"
+                              labelName="Max Price"
+                              inputClass={"bg-quat rounded-sm"}
+                            />
+                          </div>
+                          <InputField
+                            uni="size"
+                            placeholder="Size"
+                            labelName="Size"
+                            inputClass={"bg-quat rounded-sm"}
+                          />
+                          <InputField
+                            uni="landarea"
+                            placeholder="Land Area"
+                            labelName="Land Area"
+                            inputClass={"bg-quat rounded-sm"}
+                          />
                         </FormWrapper>
 
                         <div className="flex justify-end">
                           {/* {!buttonLoading ? ( */}
                           <button
                             type="submit"
-                            className={`bg-primary rounded-sm text-white w-32 h-10 `}
+                            className={`bg-primary rounded-sm text-white w-32 h-10 flex justify-center items-center gap-3`}
                           >
                             {/* {id ? "UPDATE" : "SUBMIT"} */}
+                            <Search /> Search
                           </button>
                           {/* ) : ( */}
                           {/* <Spinner size={40} /> */}
@@ -349,6 +520,60 @@ const HomePage = () => {
                   }}
                 </Formik>
               </div>
+            </div>
+          </div>
+
+          <div className="bg-white py-10">
+            <div className="w-[80%] m-auto">
+              <h1 className="text-3xl my-3">Find A House</h1>
+              <hr className="my-3" />
+              <div className="grid grid-cols-1 md:grid-cols-3 my-3 gap-4">
+                {featuredList.map((property) => (
+                  <FeaturedProperty key={property.title} {...property} />
+                ))}
+                <button className="col-span-full w-40 p-2 rounded-sm hover:bg-primary hover:text-white font-bold text-primary border border-primary justify-self-center">
+                  Show More
+                </button>
+              </div>
+              {/*<Swiper
+                spaceBetween={20}
+                modules={[Pagination, Autoplay]}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                }}
+                breakpoints={{
+                  "@0.00": {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                  },
+                  "@0.75": {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                  },
+                  "@1.00": {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                  },
+                  "@1.50": {
+                    slidesPerView: 4,
+                    spaceBetween: 50,
+                  },
+                }}
+              >
+                <SwiperSlide>
+                  <FeaturedProperty />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <FeaturedProperty />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <FeaturedProperty />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <FeaturedProperty />
+                </SwiperSlide>
+              </Swiper>*/}
             </div>
           </div>
 
@@ -472,47 +697,69 @@ const HomePage = () => {
         <Link href={`/warehouses?state=${search.state}&city=${search.city}&type=${search.type}&category=${search.category}&zone=${search.zone}&format=${search.format}`} className='rounded-lg bg-white p-2 w-[100%] md:w-[200px] text-center  my-4 md:mx-auto'>SEARCH</Link>
       </div> */}
 
+          <div className="bg-quat p-[10%] m-auto">
+            <h1 className="text-3xl">We Deals In Commercial Space</h1>
+            <hr className="my-3" />
+            <Swiper
+              spaceBetween={20}
+              modules={[Pagination, Autoplay]}
+                pagination={true}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              id="commercial"
+              breakpoints={{
+                "@0.00": {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                "@0.75": {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                "@1.00": {
+                  slidesPerView: 3,
+                  spaceBetween: 40,
+                },
+                "@1.50": {
+                  slidesPerView: 4,
+                  spaceBetween: 50,
+                },
+              }}
+            >
+              {taskList.map((item) => (
+                <SwiperSlide key={item.title}>
+                  <DealsIn {...item} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
           {/* Section 2 */}
           <div className="bg-white px-4 py-20 lg:px-40 grid grid-cols-1 md:grid-cols-2 gap-4 overflow-x-hidden">
             <div
               data-aos="fade-right"
               className="flex flex-col gap-4 overflow-x-hidden"
             >
-              <h2 className="text-4xl md:text-6xl font-bold">Welcome to the</h2>
-              <h2 className="text-4xl md:text-6xl font-bold">
-                Warehouse Servicez
-              </h2>
-              <h2 className="text-3xl md:text-5xl ">
-                Where We Build Your Visions
+              <h2 className="text-3xl md:text-4xl font-bold">
+                Know About Sikka and Associates
               </h2>
               <p>
-                Welcome to Warehouse Servicez Company, your trusted partner in
-                providing top-quality warehousing solutions for your business
-                needs. Our company specializes in offering warehouse rental and
-                leasing services to a wide range of businesses across different
-                industries.
+                Sikka and Associates are committed to providing their clients
+                with top-notch commercial properties that are tailored to their
+                unique needs. With 20 years of experience in the real estate
+                industry,We have built a reputation for excellence and are
+                dedicated to delivering outstanding services to our clients. We
+                Deals In All Type of Commercial Space On Rent/Lease.
               </p>
               <p>
-                With years of experience in the industry, we have built a solid
-                reputation for providing reliable, secure, and cost-effective
-                warehousing solutions to our clients. Our warehouses are
-                strategically located to ensure easy access and efficient
-                logistics operations.
-              </p>
-              <p>
-                We understand the unique needs of each of our clients and strive
-                to provide personalized services that meet their specific
-                requirements. Whether you need short-term or long-term warehouse
-                space, our team is dedicated to providing you with flexible
-                solutions that are tailored to your needs.
-              </p>
-              <p>
-                Contact us today and let us help you take your business to the
-                next level with our exceptional warehousing services.
+                We Provide Space For Retail store, Showroom, Land, Corporate
+                Office , Schools/Hostel, Hotel , Restaurant , Co-working space,
+                Call center, Warehouse, Industrial Shed, Factory etc
               </p>
               <Link
                 href="/services"
-                className="bg-secondary text-white w-40 p-2 text-center"
+                className="bg-secondary text-white w-40 p-2 text-center rounded-sm"
               >
                 KNOW MORE
               </Link>
@@ -520,13 +767,14 @@ const HomePage = () => {
             <div className="overflow-x-hidden" data-aos="fade-left">
               <Image
                 alt="Hero Section"
-                className="h-[100%] overflow-hidden object-cover "
+                className="h-[100%] overflow-hidden object-cover rounded-sm"
                 src={assets.bg_01}
               />
             </div>
           </div>
 
           {/* Section 3 */}
+          {/*
           <div className="px-4 py-20 lg:px-40 bg-gradient-to-tr from-primary  to-secondary flex flex-col overflow-x-hidden">
             <h1
               id="LuckiestGuy"
@@ -548,8 +796,10 @@ const HomePage = () => {
               ))}
             </div>
           </div>
+        */}
 
           {/* Section 4 */}
+          {/* 
           <div className="px-4 py-20 lg:px-40 bg-gray-600 text-white flex flex-col gap-8 overflow-x-hidden ">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <h3 data-aos="fade-right" id="Ubuntu" className="text-3xl">
@@ -670,7 +920,49 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-
+     */}
+          <div className="bg-white p-[10%] m-auto">
+            <h1 className="text-3xl">We Serve</h1>
+            <hr className="my-3" />
+            <Swiper
+              spaceBetween={20}
+              modules={[Pagination, Autoplay, Navigation, Pagination]}
+              navigation={true}
+              pagination={{
+                clickable: true,
+              }}
+              loop={true}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              id="commercial"
+              breakpoints={{
+                "@0.00": {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                "@0.75": {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                "@1.00": {
+                  slidesPerView: 3,
+                  spaceBetween: 40,
+                },
+                "@1.50": {
+                  slidesPerView: 4,
+                  spaceBetween: 50,
+                },
+              }}
+            >
+              {clientList.map((item, i) => (
+                <SwiperSlide className="m-3 my-10" key={i}>
+                  <Image src={item}  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
           {/* Section 5 */}
 
           <div className="flex flex-col justify-center items-center bg-white text-black overflow-hidden">
