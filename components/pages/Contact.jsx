@@ -113,8 +113,14 @@ const Contact = () => {
                             </div>
 
                         </Container>
+                        <div className="flex flex-col justify-center items-center bg-white text-black my-2">
+                            <h4 className="text-4xl font-bold m-10 ">OUR LOCATION</h4>
+                            <iframe
+                                className="w-full h-[300px] md:h-[400px]" title="map"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3444.2067707735296!2d78.0095323763292!3d30.31663590562165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39092925e963de41%3A0xaa1fcaa43e5c52cb!2sWarehouse%20Servicez!5e0!3m2!1sen!2sin!4v1683894184725!5m2!1sen!2sin"
+                            ></iframe>
+                        </div>
                         <Footer />
-
                     </div>
                 </>
             }
