@@ -17,11 +17,13 @@ import cities_arr from "../utils/CityDropdown";
 import { useRouter } from "next/router";
 
 const ResponsiveDrawer = () => {
-  const router=useRouter();
+  const router = useRouter();
   const [openMenu, setOpenMenu] = useState(true);
   const authCtx = useContext(AuthContext);
   const [allCities, setAllCities] = useState([]);
-  const [state, setState] = useState(router.query.state ? +router.query.state : '');
+  const [state, setState] = useState(
+    router.query.state ? +router.query.state : "",
+  );
   const [zone, setZone] = useState("");
   const [category, setCategory] = useState("");
   const [city, setCity] = useState("");
@@ -176,467 +178,25 @@ const ResponsiveDrawer = () => {
           <div>
             <div className="group/parent relative group-hover/parent:bg-red-400  text-center h-[100%] flex flex-col items-center justify-center">
               <button className=" border-b-2 border-transparent hover:border-black duration-500 h-10">
-                WAREHOUSES
+                PROPERTIES
                 <KeyboardArrowDown />
               </button>
               <div className=" invisible absolute top-2 mt-8  group-hover/parent:visible  flex flex-col ">
                 <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
                   <div className="group/parent2 flex  ">
-                    <button
+                    <Link
                       className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
+                      href={"/properties"}
                     >
-                      State
-                    </button>
-                    <div className="hidden group-hover/parent2:flex bg-white group/parent2 absolute right-0 w-[240px] translate-x-[240px] flex-col max-h-[400px] overflow-auto">
-                      {/* <MenuButton href={`/warehouses?state=33`}>Uttarakhand</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?state=32`}>Uttar Pradesh</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?state=13`}>Himachal Pradesh</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?state=27`}>Punjab</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?state=12`}>Haryana</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?state=28`}>Rajasthan</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?state=4`}>Bihar</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?state=3`}>Assam</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?state=25`}>Odisha</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?state=15`}>Jharkhand</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?state=6`}>Chhattisgarh</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?state=10`}>Goa</MenuButton> */}
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          state === 33
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => {
-                          setState(33);
-                          setCity("");
-                        }}
-                      >
-                        Uttarakhand
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          state === 32
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => {
-                          setState(32);
-                          setCity("");
-                        }}
-                      >
-                        Uttar Pradesh
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          state === 13
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => {
-                          setState(13);
-                          setCity("");
-                        }}
-                      >
-                        Himachal Pradesh
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          state === 27
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => {
-                          setState(27);
-                          setCity("");
-                        }}
-                      >
-                        Punjab
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          state === 12
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => {
-                          setState(12);
-                          setCity("");
-                        }}
-                      >
-                        Haryana
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          state === 28
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => {
-                          setState(28);
-                          setCity("");
-                        }}
-                      >
-                        Rajasthan
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          state === 4
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => {
-                          setState(4);
-                          setCity("");
-                        }}
-                      >
-                        {" "}
-                        Bihar
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          state === 3
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => {
-                          setState(3);
-                          setCity("");
-                        }}
-                      >
-                        {" "}
-                        Assam
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          state === 25
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => {
-                          setState(25);
-                          setCity("");
-                        }}
-                      >
-                        Odisha
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          state === 15
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => {
-                          setState(15);
-                          setCity("");
-                        }}
-                      >
-                        Jharkhand
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          state === 6
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => {
-                          setState(6);
-                          setCity("");
-                        }}
-                      >
-                        {" "}
-                        Chhattisgarh
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          state === 10
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        } `}
-                        onClick={() => {
-                          setState(10);
-                          setCity("");
-                        }}
-                      >
-                        Goa
-                      </button>
-                    </div>
+                      For Rent
+                    </Link>
                   </div>
-                </div>
-
-                <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
-                  <div className="group/parent2 flex  ">
-                    <button
-                      className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
-                    >
-                      City
-                    </button>
-                    <div className="hidden group-hover/parent2:flex bg-white group/parent2 absolute right-0 w-[240px] translate-x-[240px] flex-col max-h-[400px] overflow-auto">
-                      {allCities.map((item, i) => (
-                        <button
-                          key={i}
-                          className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                            city === item
-                              ? "bg-warehouseBlue text-white"
-                              : "bg-white"
-                          }`}
-                          onClick={() => {
-                            setCity(item);
-                          }}
-                        >
-                          {item}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
-                  <div className="group/parent2 flex  ">
-                    <button
-                      className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
-                    >
-                      Type
-                    </button>
-                    <div className="hidden group-hover/parent2:flex bg-white group/parent2 absolute right-0 w-[240px] translate-x-[240px] flex-col">
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          type === "Prefab Structure"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setType("Prefab Structure")}
-                      >
-                        Prefab
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          type === "Semi Prefab Structure"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setType("Semi Prefab Structure")}
-                      >
-                        Semi Prefab
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          type === "Rcc"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setType("Rcc")}
-                      >
-                        RCC
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          type === "Shed"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setType("Shed")}
-                      >
-                        Shed
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          type === "Land"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setType("Land")}
-                      >
-                        Land
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          type === "Multi Store"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setType("Multi Store")}
-                      >
-                        Multi Store
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
-                  <div className="group/parent2 flex  ">
-                    <button
-                      className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
-                    >
-                      Zone
-                    </button>
-                    <div className="hidden group-hover/parent2:flex bg-white group/parent2 absolute right-0 w-[240px] translate-x-[240px] flex-col">
-                      {/* <MenuButton href={`/warehouses?zone=Normal`}>Normal</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?zone=Red`}>Red</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?zone=Blue`}>Blue</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?zone=Green`}>Green</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?zone=Yellow`}>Yellow</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?zone=Purple`}>Purple</MenuButton> */}
-
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          zone === "Normal"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setZone("Normal")}
-                      >
-                        Normal
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          zone === "Red"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setZone("Red")}
-                      >
-                        Red
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          zone === "Blue"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setZone("Blue")}
-                      >
-                        Blue
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          zone === "Green"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setZone("Green")}
-                      >
-                        Green
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          zone === "Yellow"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setZone("Yellow")}
-                      >
-                        Yellow
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          zone === "Purple"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setZone("Purple")}
-                      >
-                        Purple
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          zone === "Industrial"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setZone("Industrial")}
-                      >
-                        Industrial
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
-                  <div className="group/parent2 flex  ">
-                    <button
-                      className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
-                    >
-                      Category
-                    </button>
-                    <div className="hidden group-hover/parent2:flex bg-white group/parent2 absolute right-0 w-[240px] translate-x-[240px] flex-col">
-                      {/* <MenuButton href={`/warehouses?category=Approved`}>Approved</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?category=Non-Approved`}>Non-Approved</MenuButton> */}
-                      {/* <MenuButton href={`/warehouses?category=Both`}>Both</MenuButton> */}
-
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          category === "Approved"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setCategory("Approved")}
-                      >
-                        Approved
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          category === "Non-Approved"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setCategory("Non-Approved")}
-                      >
-                        Non-Approved
-                      </button>
-                      <button
-                        className={`text-left p-2 hover:bg-warehouseBlue hover:text-white ${
-                          category === "Both"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setCategory("Both")}
-                      >
-                        Both
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
-                  <div className="group/parent2 flex  ">
-                    <button
-                      className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
-                    >
-                      Format
-                    </button>
-                    <div className="hidden group-hover/parent2:flex bg-white group/parent2 absolute right-0 w-[240px] translate-x-[240px] flex-col">
-                      <button
-                        className={`p-2 hover:bg-warehouseBlue hover:text-white text-black ${
-                          format === "BTS"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setFormat("BTS")}
-                      >
-                        BTS(Build to suite)
-                      </button>
-                      <button
-                        className={`p-2 hover:bg-warehouseBlue hover:text-white text-black ${
-                          format === "Under Construction"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setFormat("Under Construction")}
-                      >
-                        Under Construction
-                      </button>
-                      <button
-                        className={`p-2 hover:bg-warehouseBlue hover:text-white text-black ${
-                          format === "Ready to Move"
-                            ? "bg-warehouseBlue text-white"
-                            : "bg-white"
-                        }`}
-                        onClick={() => setFormat("Ready to Move")}
-                      >
-                        Ready to Move
-                      </button>
-                    </div>
-                  </div>
+                  <Link
+                    className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
+                    href={"/properties"}
+                  >
+                    For Sale
+                  </Link>
                 </div>
               </div>
             </div>
@@ -1208,15 +768,15 @@ const ResponsiveDrawer = () => {
                       BTS
                     </button>
                     <button
-                        className={`p-2 hover:bg-warehouseBlue hover:text-white text-white ${
-                          format === "Under Construction"
-                            ? "bg-warehouseBlue "
-                            : "bg-secondary"
-                        }`}
-                        onClick={() => setFormat("Under Construction")}
-                      >
-                        Under Construction
-                      </button>
+                      className={`p-2 hover:bg-warehouseBlue hover:text-white text-white ${
+                        format === "Under Construction"
+                          ? "bg-warehouseBlue "
+                          : "bg-secondary"
+                      }`}
+                      onClick={() => setFormat("Under Construction")}
+                    >
+                      Under Construction
+                    </button>
                     <button
                       className={`p-2 hover:bg-warehouseBlue text-white ${
                         format === "Ready to Move"
