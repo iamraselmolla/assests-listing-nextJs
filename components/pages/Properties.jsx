@@ -24,6 +24,7 @@ const Properties = () => {
   const [propertyFor, setPropertyFor] = useState("For Rent");
 
   useEffect(() => {
+     // const url = new URLSearchParams()
     const timer = setTimeout(() => {
       setLoading(false);
     }, 100);
