@@ -10,7 +10,7 @@ import InputField from "../UI/InputField";
 import Image from "next/image";
 import { assets } from "../assets";
 
-const Login = () => {
+const Signup = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,18 +23,22 @@ const Login = () => {
   }, []);
 
   const initialValues = {
-    username: "",
+    firstname: "",
+    lastname: "",
+    email: "",
     password: "",
   };
   const validationSchema = Yup.object({
-    username: Yup.string(),
+    firstname: Yup.string(),
+    lastname: Yup.string(),
+    email: Yup.string().email(),
     password: Yup.string(),
   });
 
-  const onSubmitHandler = ({values}) => {
-      console.log(values)
-        //------------ Route to submit the form -------------------
-        //---------------------------------------------------------
+  const onSubmitHandler = ({ values }) => {
+    console.log(values);
+    //------------ Route to submit the form -------------------
+    //---------------------------------------------------------
   };
 
   return (
@@ -48,7 +52,6 @@ const Login = () => {
           <div className="py-20 bg-white text-black">
             <Container>
               <div className="p-3 my-5 shadow-lg rounded grid md:grid-cols-2 gap-4">
-                <Image src={assets.contact} className="hidden md:block rounded" />
                 <Formik
                   initialValues={initialValues}
                   validationSchema={validationSchema}
@@ -58,11 +61,27 @@ const Login = () => {
                   {({ values }) => {
                     return (
                       <Form className="flex flex-col gap-6">
-                        <h2 className="text-center text-2xl font-bold">Login</h2>
+                        <h2 className="text-center text-2xl font-bold">
+                          Sign Up
+                        </h2>
+                        <div className="grid md:grid-cols-2 gap-5">
+                          <InputField
+                            uni="firstname"
+                            placeholder="First Name"
+                            labelName="First Name"
+                            inputClass="bg-quat rounded-sm"
+                          />
+                          <InputField
+                            uni="lastname"
+                            placeholder="Last Name"
+                            labelName="Last Name"
+                            inputClass="bg-quat rounded-sm"
+                          />
+                        </div>
                         <InputField
-                          uni="username"
-                          placeholder="Username"
-                          labelName="Username"
+                          uni="email"
+                          placeholder="Email"
+                          labelName="Email"
                           inputClass={"bg-quat rounded-sm"}
                         />
                         <InputField
@@ -73,18 +92,24 @@ const Login = () => {
                           type={"password"}
                         />
 
-                          {!loading ? (
-                            <button
-                              type="submit"
-                              className="self-center border border-primary hover:bg-primary rounded-sm text-primary font-bold hover:text-white w-full h-10 flex justify-center items-center gap-3"
-                            >Login</button>
-                          ) : (
-                            <Spinner size={40} />
-                          )}
+                        {!loading ? (
+                          <button
+                            type="submit"
+                            className="self-center border border-primary hover:bg-primary rounded-sm text-primary font-bold hover:text-white w-full h-10 flex justify-center items-center gap-3"
+                          >
+                            Signup
+                          </button>
+                        ) : (
+                          <Spinner size={40} />
+                        )}
                       </Form>
                     );
                   }}
                 </Formik>
+                <Image
+                  src={assets.contact}
+                  className="hidden md:block rounded"
+                />
               </div>
             </Container>
             <Footer />
@@ -95,4 +120,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
