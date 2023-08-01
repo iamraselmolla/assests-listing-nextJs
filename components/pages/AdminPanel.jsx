@@ -10,6 +10,7 @@ import AuthContext from '../store/AuthContext';
 import SplashScreen from '../SplashScreen';
 import ResponsiveDrawer from '../UI/ResponsiveDrawer';
 import Footer from '../UI/Footer';
+import { adminLoginHandler } from '../services/userServices';
 
 const AdminPanel = () => {
     const [loading,setLoading]=useState(true);
@@ -45,14 +46,9 @@ const AdminPanel = () => {
     }
 
     try {
+      console.log(formData)
       setButtonLoading(true);
-      const response = await axios.post(
-        '/api/login',
-        {
-          username: formData.username,
-          password: formData.password,
-        }
-      );
+      const response = await adminLoginHandler(formData)
       if (response.status === 200) {
         toast.success('Signed in Successfully');
         setFormData({
@@ -60,7 +56,7 @@ const AdminPanel = () => {
           password: '',
         });
         console.log(response.data)
-        authCtx.login(response.data.user._id, response.data.user.token,'admin');
+        authCtx.login(response.data.user._id, response.data.user?.token,'admin');
         router.push('/dashboard');
       }
     } catch (err) {
@@ -70,6 +66,7 @@ const AdminPanel = () => {
     }
     setButtonLoading(false);
   };
+  
 
   return (
     <div className='relative bg-white'>
@@ -81,7 +78,7 @@ const AdminPanel = () => {
         <div className="mt-16 flex justify-center items-center font-sans bg-white mb-10">
           <div className="flex flex-col justify-center items-center w-[90vw]  md:w-[500px] md:m-auto  bg-primary text-white rounded-lg md:p-16 p-8">
             <h4 className="uppercase  text-2xl mb-4">Login</h4>
-            <form className="w-full flex flex-col  space-y-4">
+            <form onSubmit={formHandler} className="w-full flex flex-col  space-y-4">
               <div className="flex flex-col items-center space-y-2 text-md">
                 <label htmlFor="email">User Name or Email</label>
                 <input
