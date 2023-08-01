@@ -35,8 +35,10 @@ import Ola from './assets/Ola.png';
 import Renest from './assets/Renest.png';
 import V_MART from './assets/V_MART.png';
 import feedback_img from './assets/feedback-image.png';
+import contact from './assets/contact.jpg'
 
 export const assets={
+    contact,
     bg_01,
     bg_02,
     bg_03,

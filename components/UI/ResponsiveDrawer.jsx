@@ -135,31 +135,35 @@ const ResponsiveDrawer = () => {
 
           {authCtx.isLoggedIn && (
             <div className="group/parent relative group-hover/parent:bg-red-400  text-center h-[100%] flex flex-col items-center justify-center">
-              <button className="group/item border-b-2 border-transparent hover:border-black duration-500 h-10">
-                ACCOUNT
-                <KeyboardArrowDown />
-              </button>
+              <Link
+                href={`${authCtx.isLoggedIn ? "/addproperty" : "/login"}`}
+                className="group/item border-b-2 border-transparent hover:border-black duration-500 h-10"
+              >
+                <button className="text-black p-2 ">
+                  ACCOUNT
+                  {!authCtx.isLoggedIn && <KeyboardArrowDown />}
+                </button>
+              </Link>
               <div className="group/item2 invisible absolute top-2 mt-8  group-hover/parent:visible space-y-1 flex flex-col ">
                 <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
-                  <MenuButton href="/dashboard">Dashboard</MenuButton>
-                  <MenuButton href="/dashboard/addwarehouse">
-                    Add Warehouse
-                  </MenuButton>
-                  <MenuButton href="/dashboard/gallery">
-                    Gallery Images
-                  </MenuButton>
-                  <MenuButton href="/dashboard/requestlisting">
-                    Request Listing
-                  </MenuButton>
-                  <button
-                    onClick={() => {
-                      authCtx.logout();
-                      toast.success("Logged out successfully");
-                    }}
-                    className="text-black p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%]"
-                  >
-                    Logout
-                  </button>
+                  {!authCtx.isLoggedIn && (
+                    <>
+                      <MenuButton href="/login">LOGIN</MenuButton>
+                      <MenuButton href="/login">SIGNUP</MenuButton>
+                    </>
+                  )}
+
+                  {!authCtx.isLoggedIn && (
+                    <button
+                      onClick={() => {
+                        authCtx.logout();
+                        toast.success("Logged out successfully");
+                      }}
+                      className="text-black p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%]"
+                    >
+                      Logout
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -265,6 +269,22 @@ const ResponsiveDrawer = () => {
                   className=" bg-primary text-white p-2 hover:bg-secondary w-60"
                 >
                   ABOUT US
+                </button>
+              </Link>
+              <Link href="/login">
+                <button
+                  onClick={() => closeMenuHandler()}
+                  className=" bg-primary text-white p-2 hover:bg-secondary w-60"
+                >
+                  LOGIN
+                </button>
+              </Link>
+              <Link href="/signup">
+                <button
+                  onClick={() => closeMenuHandler()}
+                  className=" bg-primary text-white p-2 hover:bg-secondary w-60"
+                >
+                  SIGNUP
                 </button>
               </Link>
               {/* <Link href='/director'><button onClick={()=>closeMenuHandler()} className=' bg-primary text-white p-2 hover:bg-secondary w-60'>DIRECTOR&apos;S MESSAGE</button></Link> */}
@@ -618,13 +638,6 @@ const ResponsiveDrawer = () => {
               </button>
               {mobileSearchButtons.zone && (
                 <>
-                  {/* <MobileButton href={`/warehouses?zone=Normal`}>Normal</MobileButton> */}
-                  {/* <MobileButton href={`/warehouses?zone=Red`}>Red</MobileButton> */}
-                  {/* <MobileButton href={`/warehouses?zone=Blue`}>Blue</MobileButton> */}
-                  {/* <MobileButton href={`/warehouses?zone=Green`}>Green</MobileButton> */}
-                  {/* <MobileButton href={`/warehouses?zone=Yellow`}>Yellow</MobileButton> */}
-                  {/* <MobileButton href={`/warehouses?zone=Purple`}>Purple</MobileButton> */}
-
                   <button
                     className={`text-center p-2 hover:bg-warehouseBlue text-white ${
                       zone === "Normal" ? "bg-warehouseBlue" : "bg-secondary"
@@ -733,9 +746,6 @@ const ResponsiveDrawer = () => {
                   >
                     Both
                   </button>
-                  {/* <MobileButton href={`/warehouses?category=Approved`}>Approved</MobileButton> */}
-                  {/* <MobileButton href={`/warehouses?category=Non-Approved`}>Non-Approved</MobileButton> */}
-                  {/* <MobileButton href={`/warehouses?category=Both`}>Both</MobileButton> */}
                 </>
               )}
 
@@ -827,8 +837,6 @@ const ResponsiveDrawer = () => {
                   LOGOUT
                 </button>
               )}
-              {/* <Link href=''><button onClick={()=>closeMenuHandler()} className=' bg-primary text-white p-2 hover:bg-secondary w-60'>HOME</button></Link> */}
-              {/* <Link href=''><button onClick={()=>closeMenuHandler()} className=' bg-primary text-white p-2 hover:bg-secondary w-60'>HOME</button></Link> */}
             </div>
           </div>
         </div>
