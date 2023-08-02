@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import ResponsiveDrawer from "../UI/ResponsiveDrawer";
 import TopCard from "../UI/TopCard";
 import SplashScreen from "../SplashScreen";
+import Footer from "../UI/Footer";
 // import cloudinary from '../utils/cloudinary'
 const AddProperty = () => {
   const router = useRouter();
@@ -26,13 +27,13 @@ const AddProperty = () => {
   const [fetchedValues, setFetchedValues] = useState({
     address: "",
     type: "",
-    description: "",
+    //description: "",
     format: "",
-    city: "",
-    state: "",
-    size: "",
-    zone: "",
-    category: "",
+    //city: "",
+    //state: "",
+    //size: "",
+    //zone: "",
+    //category: "",
     owner: {
       name: "",
       email: "",
@@ -73,21 +74,21 @@ const AddProperty = () => {
       setFetchedValues({
         address: "",
         type: "",
-        description: "",
+        //description: "",
         format: "",
-        city: "",
-        state: "",
-        size: "",
-        zone: "",
-        category: "",
+        //city: "",
+        //state: "",
+        //size: "",
+        //zone: "",
+        //category: "",
         owner: {
           name: "",
           email: "",
           mobileNo1: "",
           mobileNo2: "",
         },
-        partlyAvailable: "",
-        price: "",
+        //partlyAvailable: "",
+        //price: "",
       });
     };
   }, [id]);
@@ -97,14 +98,15 @@ const AddProperty = () => {
     type: Yup.string().required("Required"),
     // description:Yup.string().required('Required'),
     format: Yup.string().required("Required"),
-    city: Yup.string().required("Required"),
-    state: Yup.string().required("Required"),
-    size: Yup.string().required("Required"),
-    category: Yup.string().required("Required"),
+    //city: Yup.string().required("Required"),
+    //state: Yup.string().required("Required"),
+    //size: Yup.string().required("Required"),
+    //category: Yup.string().required("Required"),
     owner: Yup.object().shape({
       name: Yup.string().required("Required"),
-      // email:Yup.string().required('Required').email("Invalid format"),
-      email: Yup.string().email("Invalid format"),
+      email: Yup.string().required("Required").email("Invalid format"),
+      //email: Yup.string().email("Invalid format"),
+      mobileNo1: Yup.number().required("Required"),
       mobileNo1: Yup.number(),
     }),
   });
@@ -197,7 +199,7 @@ const AddProperty = () => {
         <>
           <ResponsiveDrawer />
           <div className="bg-white">
-          <TopCard title="Add Property" />
+            <TopCard title="Add Property" />
             <Container>
               <Formik
                 initialValues={fetchedValues}
@@ -208,7 +210,8 @@ const AddProperty = () => {
                 {({ values }) => {
                   return (
                     <Form>
-                      <Gap>Warehouse Details</Gap>
+                      {/*
+                      <Gap>Owner Details</Gap>
                       <FormWrapper>
                         <InputField
                           override={true}
@@ -334,6 +337,7 @@ const AddProperty = () => {
                           labelName="Price"
                         />
                       </FormWrapper>
+                      */}
 
                       <Gap>Owner Details</Gap>
                       <FormWrapper>
@@ -358,8 +362,87 @@ const AddProperty = () => {
                           labelName="Mobile No 2"
                         />
                       </FormWrapper>
+                      <Gap>Property Details</Gap>
+                      <FormWrapper>
+                        <InputField
+                          override={true}
+                          as="select"
+                          labelName="State"
+                          uni="state"
+                          placeholder="Uttarakhand"
+                          fieldRequired={true}
+                        >
+                          <option disabled value="">
+                            Choose
+                          </option>
+                          {state_arr.map((item, i) => (
+                            <option key={i} value={i}>
+                              {item}
+                            </option>
+                          ))}
+                        </InputField>
+                        <InputField
+                          override={true}
+                          as="select"
+                          labelName="City"
+                          uni="city"
+                          placeholder="Dehradun"
+                          fieldRequired={true}
+                        >
+                          <option disabled value="">
+                            Choose
+                          </option>
+                          {cities_arr[values.state]?.map((item, i) => (
+                            <option key={i} value={`${item}`}>
+                              {item}
+                            </option>
+                          ))}
+                        </InputField>
+                        <InputField
+                          override={true}
+                          as="select"
+                          uni="type"
+                          labelName="Type"
+                          fieldRequired={true}
+                        >
+                          <option disabled value="">
+                            Choose
+                          </option>
+                          <option value="Prefab Structure">
+                            Prefab Structure
+                          </option>
+                          <option value="Semi Prefab Structure">
+                            Semi Prefab Structure
+                          </option>
+                          <option value="RCC">RCC</option>
+                          <option value="Shed">Shed</option>
+                          <option value="Land">Land</option>
+                          <option value="Multi Store">Multi Store</option>
+                        </InputField>{" "}
+                        <InputField
+                          uni="address"
+                          placeholder="GMS Road"
+                          labelName="Address"
+                        />
+                        <InputField
+                          override={true}
+                          as="select"
+                          uni="format"
+                          labelName="Format"
+                          fieldRequired={true}
+                        >
+                          <option disabled value="">
+                            Choose
+                          </option>
+                          <option value="Ready to Move">Ready to Move</option>
+                          <option value="Under Construction">
+                            Under Construction
+                          </option>
+                          <option value="BTS">BTS (Build to suite)</option>
+                        </InputField>
+                      </FormWrapper>
 
-                      <Gap>Warehouse Image</Gap>
+                      <Gap>Property Image</Gap>
                       <FormWrapper>
                         {image &&
                           preview.map((item, i) => (
@@ -435,6 +518,7 @@ const AddProperty = () => {
                 }}
               </Formik>
             </Container>
+            <Footer />
           </div>
         </>
       )}
