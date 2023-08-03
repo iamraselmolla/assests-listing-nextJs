@@ -45,7 +45,7 @@ import Gap from "../UI/Gap";
 import FormWrapper from "../UI/FormWrapper";
 import InputField from "../UI/InputField";
 import * as Yup from "yup";
-// import cities_arr, { state_arr } from "../utils/CityDropdown";
+import cities_arr, { state_arr } from "../utils/CityDropdown";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true);
@@ -362,7 +362,7 @@ const HomePage = () => {
                     onClick={() => {
                       window.open(
                         "https://www.facebook.com/warehouseservicez",
-                        "_blank"
+                        "_blank",
                       );
                     }}
                   >
@@ -373,7 +373,7 @@ const HomePage = () => {
                     onClick={() => {
                       window.open(
                         "https://instagram.com/warehouse.services?igshid=NTc4MTIwNjQ2YQ==",
-                        "_blank"
+                        "_blank",
                       );
                     }}
                   >
@@ -384,7 +384,7 @@ const HomePage = () => {
                     onClick={() => {
                       window.open(
                         "https://twitter.com/warehouseservi3",
-                        "_blank"
+                        "_blank",
                       );
                     }}
                   >
@@ -492,20 +492,84 @@ const HomePage = () => {
                             fieldRequired={true}
                             inputClass={"bg-quat rounded-sm"}
                           >
+                            {propertyFor === "For Rent" ? (
+                              <>
+                                <option value="Hotels">Hotels</option>
+                                <option value="Food Court">Food court</option>
+                                <option value="Office Space">
+                                  Office space
+                                </option>
+                                <option value="Warehouse">Warehouse</option>
+                                <option value="Factory">Factory</option>
+                                <option value="Schools">Schools</option>
+                                <option value="Banks">Banks</option>
+                                <option value="Hospitals">Hospitals</option>
+                                <option value="Call center">Call center</option>
+                                <option value="Land">Land</option>
+                                <option value="Hostel">Hostel</option>
+                                <option value="Mall">Mall</option>
+                                <option value="Multiplex">Multiplex</option>
+                              </>
+                            ) : (
+                              <>
+                                <option value="Resedential">Resedential</option>
+                                <option value="Commercial">Commercial</option>
+                                <option value="Pre-lease">Pre-lease</option>
+                              </>
+                            )}
+                          </InputField>
+                          <InputField
+                            override={true}
+                            as="select"
+                            labelName="State"
+                            uni="state"
+                            placeholder="Uttarakhand"
+                            fieldRequired={true}
+                            inputClass={"bg-quat rounded-sm"}
+                          >
                             <option disabled value="">
                               Choose
                             </option>
-                            <option value="Prefab Structure">
-                              Prefab Structure
-                            </option>
-                            <option value="Semi Prefab Structure">
-                              Semi Prefab Structure
-                            </option>
-                            <option value="RCC">RCC</option>
-                            <option value="Shed">Shed</option>
-                            <option value="Land">Land</option>
-                            <option value="Multi Store">Multi Store</option>
+                            {state_arr.map((item, i) => (
+                              <option key={i} value={i}>
+                                {item}
+                              </option>
+                            ))}
                           </InputField>
+                          <InputField
+                            override={true}
+                            as="select"
+                            labelName="City"
+                            uni="city"
+                            placeholder="Dehradun"
+                            fieldRequired={true}
+                            inputClass={"bg-quat rounded-sm"}
+                          >
+                            <option disabled value="">
+                              Choose
+                            </option>
+                            {cities_arr[values.state]?.map((item, i) => (
+                              <option key={i} value={`${item}`}>
+                                {item}
+                              </option>
+                            ))}
+                          </InputField>
+
+                          <InputField
+                            override={true}
+                            as="select"
+                            labelName="Format"
+                            uni="format"
+                            placeholder="Dehradun"
+                            fieldRequired={true}
+                            inputClass={"bg-quat rounded-sm"}
+                          >
+                            <option disabled value="">
+                              Choose
+                            </option>
+                            <option>BTS</option>
+                          </InputField>
+                          {/* 
                           <InputField
                             uni="title"
                             placeholder="Title"
@@ -550,17 +614,19 @@ const HomePage = () => {
                             labelName="Land Area"
                             inputClass={"bg-quat rounded-sm"}
                           />
+                            */}
                         </FormWrapper>
 
                         <div className="flex justify-end">
                           {/* {!buttonLoading ? ( */}
-                          <button
+                          <Link
                             type="submit"
                             className={`bg-primary rounded-sm text-white w-32 h-10 flex justify-center items-center gap-3`}
+                            href="/properties"
                           >
                             {/* {id ? "UPDATE" : "SUBMIT"} */}
                             <Search /> Search
-                          </button>
+                          </Link>
                           {/* ) : ( */}
                           {/* <Spinner size={40} /> */}
                           {/* )} */}
@@ -575,7 +641,7 @@ const HomePage = () => {
 
           <div className="bg-white py-10">
             <div className="w-[80%] m-auto">
-              <h1 className="text-3xl my-3">Find A House</h1>
+              <h1 className="text-3xl my-3">Find A Property</h1>
               <hr className="my-3" />
               <div className="grid grid-cols-1 md:grid-cols-3 my-3 gap-4">
                 {featuredList.map((property) => (
@@ -754,7 +820,7 @@ const HomePage = () => {
               spaceBetween={20}
               modules={[Pagination, Autoplay]}
               pagination={true}
-          navigation
+              navigation
               autoplay={{
                 delay: 3000,
                 disableOnInteraction: false,

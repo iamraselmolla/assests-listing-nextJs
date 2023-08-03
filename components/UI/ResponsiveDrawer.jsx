@@ -110,7 +110,7 @@ const ResponsiveDrawer = () => {
 
   return (
     <>
-      <div className="h-[80px]  sticky w-[100%] top-0 flex justify-between items-center bg-white  text-black z-20 ">
+      <div className="h-[80px]  sticky w-[100%] top-0 flex justify-between items-center bg-quat text-black z-20">
         {/* <h2 id='LuckiestGuy' className='text-2xl md:text-4xl font-bold'>SIKKAWAREHOUSE</h2> */}
         <Link className="hover:scale-105 duration-200 ease-linear" href="/">
           <Image
@@ -125,6 +125,7 @@ const ResponsiveDrawer = () => {
           <Link href="/">
             <button className=" hover:underline  text-black p-2 ">HOME</button>
           </Link>
+
           <Link href="/about">
             <button className=" hover:underline  text-black p-2 ">
               ABOUT US
@@ -133,41 +134,70 @@ const ResponsiveDrawer = () => {
           {/* <Link href='/warehouses'><button  className=' hover:underline  text-black p-2 '>WAREHOUSES</button></Link> */}
           {/* <Link href='/services'><button onClick={()=>closeMenuHandler()} className=' hover:underline  text-black p-2 '>SERVICES</button></Link> */}
 
-          {authCtx.isLoggedIn && (
-            <div className="group/parent relative group-hover/parent:bg-red-400  text-center h-[100%] flex flex-col items-center justify-center">
+          <div className="group/parent relative group-hover/parent:bg-red-400  text-center h-[100%] flex flex-col items-center justify-center">
+            <button className="text-black p-2 ">
               <Link
                 href={`${authCtx.isLoggedIn ? "/addproperty" : "/login"}`}
                 className="group/item border-b-2 border-transparent hover:border-black duration-500 h-10"
               >
-                <button className="text-black p-2 ">
-                  ACCOUNT
-                  {!authCtx.isLoggedIn && <KeyboardArrowDown />}
-                </button>
+                ACCOUNT
+                {!authCtx.isLoggedIn && <KeyboardArrowDown />}
               </Link>
-              <div className="group/item2 invisible absolute top-2 mt-8  group-hover/parent:visible space-y-1 flex flex-col ">
-                <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
-                  {!authCtx.isLoggedIn && (
-                    <>
-                      <MenuButton href="/login">LOGIN</MenuButton>
-                      <MenuButton href="/login">SIGNUP</MenuButton>
-                    </>
-                  )}
+            </button>
+            <div className="group/item2 invisible absolute top-2 mt-8  group-hover/parent:visible space-y-1 flex flex-col ">
+              <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
+                {!authCtx.isLoggedIn && (
+                  <>
+                    <MenuButton href="/login">LOGIN</MenuButton>
+                    <MenuButton href="/signup">SIGNUP</MenuButton>
+                  </>
+                )}
 
-                  {!authCtx.isLoggedIn && (
-                    <button
-                      onClick={() => {
-                        authCtx.logout();
-                        toast.success("Logged out successfully");
-                      }}
-                      className="text-black p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%]"
+                {authCtx.isLoggedIn && (
+                  <button
+                    onClick={() => {
+                      authCtx.logout();
+                      toast.success("Logged out successfully");
+                    }}
+                    className="text-black p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%]"
+                  >
+                    Logout
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="group/parent relative group-hover/parent:bg-red-400  text-center h-[100%] flex flex-col items-center justify-center">
+              <button>
+                <Link
+                  href={"/"}
+                  className=" border-b-2 border-transparent hover:border-black duration-500 h-10"
+                >
+                  PROPERTIES
+                  <KeyboardArrowDown />
+                </Link>
+              </button>
+              <div className=" invisible absolute top-2 mt-8  group-hover/parent:visible  flex flex-col ">
+                <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
+                  <div className="group/parent2 flex  ">
+                    <Link
+                      className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
+                      href={"/properties?type=For Rent"}
                     >
-                      Logout
-                    </button>
-                  )}
+                      For Rent
+                    </Link>
+                  </div>
+                  <Link
+                    className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
+                    href={"/properties?type=For Sale"}
+                  >
+                    For Sale
+                  </Link>
                 </div>
               </div>
             </div>
-          )}
+          </div>
           {/* <div className="group/parent relative group-hover/parent:bg-red-400  text-center h-[100%] flex flex-col items-center justify-center">
         <button  className="group/item border-b-2 border-transparent hover:border-black duration-500 h-10">SERVICES<KeyboardArrowDown/></button>
           <div className="group/item2 invisible absolute top-2 mt-8  group-hover/parent:visible space-y-1 flex flex-col " >
@@ -179,35 +209,8 @@ const ResponsiveDrawer = () => {
           </div>
       </div> */}
 
-          <div>
-            <div className="group/parent relative group-hover/parent:bg-red-400  text-center h-[100%] flex flex-col items-center justify-center">
-              <button className=" border-b-2 border-transparent hover:border-black duration-500 h-10">
-                PROPERTIES
-                <KeyboardArrowDown />
-              </button>
-              <div className=" invisible absolute top-2 mt-8  group-hover/parent:visible  flex flex-col ">
-                <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
-                  <div className="group/parent2 flex  ">
-                    <Link
-                      className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
-                      href={"/properties"}
-                    >
-                      For Rent
-                    </Link>
-                  </div>
-                  <Link
-                    className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
-                    href={"/properties"}
-                  >
-                    For Sale
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* <Link href='/director'><button className=' hover:underline  text-black p-2 '>DIRECTOR</button></Link> */}
-          <Link href="/gallery">
+          {/*<Link href="/gallery">
             <button className=" hover:underline  text-black p-2 ">
               GALLERY
             </button>
@@ -216,18 +219,17 @@ const ResponsiveDrawer = () => {
             <button className=" hover:underline  text-black p-2 ">
               LIST WAREHOUSE
             </button>
-          </Link>
+          </Link>*/}
           <Link href="/contact">
             <button className=" hover:underline  text-black p-2 ">
               CONTACT
             </button>
           </Link>
         </div>
-
         <div className="hidden lg:flex h-[100%]">
-          <div className="w-0 h-0 border-[40px] border-warehouseBlue border-l-transparent"></div>
-          <div className="bg-warehouseBlue text-xl h-[100%] px-4 ">
-            <div className="h-[100%] bg-warehouseBlue text-white text-xl font-bold flex justify-center items-center gap-4">
+          <div className="w-0 h-0 border-[40px] border-primary border-l-transparent"></div>
+          <div className="bg-primary text-xl h-[100%] px-4 ">
+            <div className="h-[100%] bg-primary text-white text-xl font-bold flex justify-center items-center gap-4">
               <Phone sx={{ color: "white", fontSize: "32px" }} />
               <a href="tel:+918191802837">+918191802837</a>
             </div>
@@ -287,15 +289,7 @@ const ResponsiveDrawer = () => {
                   SIGNUP
                 </button>
               </Link>
-              {/* <Link href='/director'><button onClick={()=>closeMenuHandler()} className=' bg-primary text-white p-2 hover:bg-secondary w-60'>DIRECTOR&apos;S MESSAGE</button></Link> */}
-              <Link href="/warehouses">
-                <button
-                  onClick={() => closeMenuHandler()}
-                  className=" bg-primary text-white p-2 hover:bg-secondary w-60"
-                >
-                  WAREHOUSES
-                </button>
-              </Link>
+              {/*
               {authCtx.isLoggedIn && (
                 <>
                   <Link href="/dashboard">
@@ -331,476 +325,434 @@ const ResponsiveDrawer = () => {
                     </button>
                   </Link>
                 </>
-              )}
-              {authCtx.isLoggedIn && (
-                <Link href="/dashboard/addwarehouse">
-                  <button
-                    onClick={() => closeMenuHandler()}
-                    className=" bg-primary text-white p-2 hover:bg-secondary w-60"
-                  >
-                    ADD WAREHOUSE
-                  </button>
-                </Link>
-              )}
-              {/* <Link href='/services'><button onClick={()=>closeMenuHandler()} className=' bg-primary text-white p-2 hover:bg-secondary w-60'>SERVICES</button></Link> */}
-              {/* <Link href='/rentAndLease'><button onClick={()=>closeMenuHandler()} className=' bg-primary text-white p-2 hover:bg-secondary w-60'>RENT AND LEASE</button></Link> */}
+              )}*/}
               {/* <Link href='/storageFacilities'><button onClick={()=>closeMenuHandler()} className=' bg-primary text-white p-2 hover:bg-secondary w-60'>STORAGE AND FACILITIES</button></Link> */}
-              <button
-                onClick={() =>
-                  setMobileSearchButtons({
-                    ...mobileSearchButtons,
-                    state: !mobileSearchButtons.state,
-                  })
-                }
-                className=" bg-red-500 text-white p-2 hover:bg-red-500 w-60 flex justify-between"
-              >
-                <span></span>
-                <span>STATE</span>
-                {mobileSearchButtons.state ? (
-                  <KeyboardArrowUp />
-                ) : (
-                  <KeyboardArrowDown />
-                )}
-              </button>
-              {mobileSearchButtons.state && (
-                <>
-                  <button
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      state === 33 ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => {
-                      setState(33);
-                      setCity("");
-                    }}
-                  >
-                    Uttarakhand
-                  </button>
-                  <button
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      state === 32 ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => {
-                      setState(32);
-                      setCity("");
-                    }}
-                  >
-                    Uttar Pradesh
-                  </button>
-                  <button
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      state === 13 ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => {
-                      setState(13);
-                      setCity("");
-                    }}
-                  >
-                    Himachal Pradesh
-                  </button>
-                  <button
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      state === 27 ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => {
-                      setState(27);
-                      setCity("");
-                    }}
-                  >
-                    Punjab
-                  </button>
-                  <button
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      state === 12 ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => {
-                      setState(12);
-                      setCity("");
-                    }}
-                  >
-                    Haryana
-                  </button>
-                  <button
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      state === 28 ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => {
-                      setState(28);
-                      setCity("");
-                    }}
-                  >
-                    Rajasthan
-                  </button>
-                  <button
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      state === 4 ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => {
-                      setState(4);
-                      setCity("");
-                    }}
-                  >
-                    Bihar
-                  </button>
-                  <button
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      state === 3 ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => {
-                      setState(3);
-                      setCity("");
-                    }}
-                  >
-                    Assam
-                  </button>
-                  <button
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      state === 25 ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => {
-                      setState(25);
-                      setCity("");
-                    }}
-                  >
-                    Odisha
-                  </button>
-                  <button
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      state === 15 ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => {
-                      setState(15);
-                      setCity("");
-                    }}
-                  >
-                    Jharkhand
-                  </button>
-                  <button
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      state === 6 ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => {
-                      setState(6);
-                      setCity("");
-                    }}
-                  >
-                    Chhattisgarh
-                  </button>
-                  <button
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      state === 10 ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => {
-                      setState(10);
-                      setCity("");
-                    }}
-                  >
-                    Goa
-                  </button>
-                </>
-              )}
+              {/*
+                            <button
+                                onClick={() =>
+                                    setMobileSearchButtons({
+                                        ...mobileSearchButtons,
+                                        state: !mobileSearchButtons.state,
+                                    })
+                                }
+                                className=" bg-red-500 text-white p-2 hover:bg-red-500 w-60 flex justify-between"
+                            >
+                                <span></span>
+                                <span>STATE</span>
+                                {mobileSearchButtons.state ? (
+                                    <KeyboardArrowUp />
+                                ) : (
+                                    <KeyboardArrowDown />
+                                )}
+                            </button>
+                            {mobileSearchButtons.state && (
+                                <>
+                                    <button
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${state === 33 ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => {
+                                            setState(33);
+                                            setCity("");
+                                        }}
+                                    >
+                                        Uttarakhand
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${state === 32 ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => {
+                                            setState(32);
+                                            setCity("");
+                                        }}
+                                    >
+                                        Uttar Pradesh
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${state === 13 ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => {
+                                            setState(13);
+                                            setCity("");
+                                        }}
+                                    >
+                                        Himachal Pradesh
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${state === 27 ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => {
+                                            setState(27);
+                                            setCity("");
+                                        }}
+                                    >
+                                        Punjab
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${state === 12 ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => {
+                                            setState(12);
+                                            setCity("");
+                                        }}
+                                    >
+                                        Haryana
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${state === 28 ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => {
+                                            setState(28);
+                                            setCity("");
+                                        }}
+                                    >
+                                        Rajasthan
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${state === 4 ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => {
+                                            setState(4);
+                                            setCity("");
+                                        }}
+                                    >
+                                        Bihar
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${state === 3 ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => {
+                                            setState(3);
+                                            setCity("");
+                                        }}
+                                    >
+                                        Assam
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${state === 25 ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => {
+                                            setState(25);
+                                            setCity("");
+                                        }}
+                                    >
+                                        Odisha
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${state === 15 ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => {
+                                            setState(15);
+                                            setCity("");
+                                        }}
+                                    >
+                                        Jharkhand
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${state === 6 ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => {
+                                            setState(6);
+                                            setCity("");
+                                        }}
+                                    >
+                                        Chhattisgarh
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${state === 10 ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => {
+                                            setState(10);
+                                            setCity("");
+                                        }}
+                                    >
+                                        Goa
+                                    </button>
+                                </>
+                            )}*/}
+              {/*
 
-              <button
-                onClick={() =>
-                  setMobileSearchButtons({
-                    ...mobileSearchButtons,
-                    city: !mobileSearchButtons.city,
-                  })
-                }
-                className=" bg-red-500 text-white p-2 hover:bg-red-500 w-60 flex justify-between"
-              >
-                <span></span>
-                <span>CITY</span>
-                {mobileSearchButtons.city ? (
-                  <KeyboardArrowUp />
-                ) : (
-                  <KeyboardArrowDown />
-                )}
-              </button>
+                            <button
+                                onClick={() =>
+                                    setMobileSearchButtons({
+                                        ...mobileSearchButtons,
+                                        city: !mobileSearchButtons.city,
+                                    })
+                                }
+                                className=" bg-red-500 text-white p-2 hover:bg-red-500 w-60 flex justify-between"
+                            >
+                                <span></span>
+                                <span>CITY</span>
+                                {mobileSearchButtons.city ? (
+                                    <KeyboardArrowUp />
+                                ) : (
+                                    <KeyboardArrowDown />
+                                )}
+                            </button>
 
-              {mobileSearchButtons.city &&
-                allCities.map((item, i) => (
-                  <button
-                    key={i}
-                    className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${
-                      city === item ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => setCity(item)}
-                  >
-                    {item}
-                  </button>
-                ))}
+                            {mobileSearchButtons.city &&
+                                allCities.map((item, i) => (
+                                    <button
+                                        key={i}
+                                        className={`p-2 hover:cursor-pointer text-white flex justify-center w-[100%] ${city === item ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => setCity(item)}
+                                    >
+                                        {item}
+                                    </button>
+                                ))}*/}
+              {/*
+                            <button
+                                onClick={() =>
+                                    setMobileSearchButtons({
+                                        ...mobileSearchButtons,
+                                        type: !mobileSearchButtons.type,
+                                    })
+                                }
+                                className=" bg-red-500 text-white p-2 hover:bg-red-500 w-60 flex justify-between"
+                            >
+                                <span></span>
+                                <span>TYPE</span>
+                                {mobileSearchButtons.type ? (
+                                    <KeyboardArrowUp />
+                                ) : (
+                                    <KeyboardArrowDown />
+                                )}
+                            </button>
+                            {mobileSearchButtons.type && (
+                                <>
 
-              <button
-                onClick={() =>
-                  setMobileSearchButtons({
-                    ...mobileSearchButtons,
-                    type: !mobileSearchButtons.type,
-                  })
-                }
-                className=" bg-red-500 text-white p-2 hover:bg-red-500 w-60 flex justify-between"
-              >
-                <span></span>
-                <span>TYPE</span>
-                {mobileSearchButtons.type ? (
-                  <KeyboardArrowUp />
-                ) : (
-                  <KeyboardArrowDown />
-                )}
-              </button>
-              {mobileSearchButtons.type && (
-                <>
-                  {/* <MobileButton href={`/warehouses?type=Prefab Structure`}>Prefab</MobileButton> */}
-                  {/* <MobileButton href={`/warehouses?type=Semi Prefab Structure`}>Semi Prefab</MobileButton> */}
-                  {/* <MobileButton href={`/warehouses?type=RCC`}>RCC</MobileButton> */}
-                  {/* <MobileButton href={`/warehouses?type=Shed`}>Shed</MobileButton> */}
-                  {/* <MobileButton href={`/warehouses?type=Land`}>Land</MobileButton> */}
-                  {/* <MobileButton href={`/warehouses?type=Multi Store`}>Multi Store</MobileButton> */}
+                                    <button
+                                        className={`p-2 hover:bg-warehouseBlue text-white ${type === "Prefab"
+                                                ? "bg-warehouseBlue text-white"
+                                                : "bg-secondary"
+                                            }`}
+                                        onClick={() => setType("Prefab")}
+                                    >
+                                        Prefab
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:bg-warehouseBlue text-white ${type === "Semi Prefab"
+                                                ? "bg-warehouseBlue text-white"
+                                                : "bg-secondary"
+                                            }`}
+                                        onClick={() => setType("Semi Prefab")}
+                                    >
+                                        Semi Prefab
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:bg-warehouseBlue text-white ${type === "RCC"
+                                                ? "bg-warehouseBlue text-white"
+                                                : "bg-secondary"
+                                            }`}
+                                        onClick={() => setType("RCC")}
+                                    >
+                                        RCC
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:bg-warehouseBlue text-white ${type === "Shed"
+                                                ? "bg-warehouseBlue text-white"
+                                                : "bg-secondary"
+                                            }`}
+                                        onClick={() => setType("Shed")}
+                                    >
+                                        shed
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:bg-warehouseBlue text-white ${type === "Land"
+                                                ? "bg-warehouseBlue text-white"
+                                                : "bg-secondary"
+                                            }`}
+                                        onClick={() => setType("Land")}
+                                    >
+                                        land
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:bg-warehouseBlue text-white ${type === "Multi Store"
+                                                ? "bg-warehouseBlue text-white"
+                                                : "bg-secondary"
+                                            }`}
+                                        onClick={() => setType("Multi Store")}
+                                    >
+                                        Multi Store
+                                    </button>
+                                </>
+                            )}*/}
 
-                  <button
-                    className={`p-2 hover:bg-warehouseBlue text-white ${
-                      type === "Prefab"
-                        ? "bg-warehouseBlue text-white"
-                        : "bg-secondary"
-                    }`}
-                    onClick={() => setType("Prefab")}
-                  >
-                    Prefab
-                  </button>
-                  <button
-                    className={`p-2 hover:bg-warehouseBlue text-white ${
-                      type === "Semi Prefab"
-                        ? "bg-warehouseBlue text-white"
-                        : "bg-secondary"
-                    }`}
-                    onClick={() => setType("Semi Prefab")}
-                  >
-                    Semi Prefab
-                  </button>
-                  <button
-                    className={`p-2 hover:bg-warehouseBlue text-white ${
-                      type === "RCC"
-                        ? "bg-warehouseBlue text-white"
-                        : "bg-secondary"
-                    }`}
-                    onClick={() => setType("RCC")}
-                  >
-                    RCC
-                  </button>
-                  <button
-                    className={`p-2 hover:bg-warehouseBlue text-white ${
-                      type === "Shed"
-                        ? "bg-warehouseBlue text-white"
-                        : "bg-secondary"
-                    }`}
-                    onClick={() => setType("Shed")}
-                  >
-                    shed
-                  </button>
-                  <button
-                    className={`p-2 hover:bg-warehouseBlue text-white ${
-                      type === "Land"
-                        ? "bg-warehouseBlue text-white"
-                        : "bg-secondary"
-                    }`}
-                    onClick={() => setType("Land")}
-                  >
-                    land
-                  </button>
-                  <button
-                    className={`p-2 hover:bg-warehouseBlue text-white ${
-                      type === "Multi Store"
-                        ? "bg-warehouseBlue text-white"
-                        : "bg-secondary"
-                    }`}
-                    onClick={() => setType("Multi Store")}
-                  >
-                    Multi Store
-                  </button>
-                </>
-              )}
+              {/*
+                            <button
+                                onClick={() =>
+                                    setMobileSearchButtons({
+                                        ...mobileSearchButtons,
+                                        zone: !mobileSearchButtons.zone,
+                                    })
+                                }
+                                className=" bg-red-500 text-white p-2 hover:bg-red-500 w-60 flex justify-between"
+                            >
+                                <span></span>
+                                <span>ZONE</span>
+                                {mobileSearchButtons.zone ? (
+                                    <KeyboardArrowUp />
+                                ) : (
+                                    <KeyboardArrowDown />
+                                )}
+                            </button>
+                            
+                            {mobileSearchButtons.zone && (
+                                <>
+                                    <button
+                                        className={`text-center p-2 hover:bg-warehouseBlue text-white ${zone === "Normal" ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => setZone("Normal")}
+                                    >
+                                        Normal
+                                    </button>
+                                    <button
+                                        className={`text-center p-2 hover:bg-warehouseBlue text-white ${zone === "Red" ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => setZone("Red")}
+                                    >
+                                        Red
+                                    </button>
+                                    <button
+                                        className={`text-center p-2 hover:bg-warehouseBlue text-white ${zone === "Blue" ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => setZone("Blue")}
+                                    >
+                                        Blue
+                                    </button>
+                                    <button
+                                        className={`text-center p-2 hover:bg-warehouseBlue text-white ${zone === "Green" ? "bg-warehouseBluee" : "bg-secondary"
+                                            }`}
+                                        onClick={() => setZone("Green")}
+                                    >
+                                        Green
+                                    </button>
+                                    <button
+                                        className={`text-center p-2 hover:bg-warehouseBlue text-white ${zone === "Yellow" ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => setZone("Yellow")}
+                                    >
+                                        Yellow
+                                    </button>
+                                    <button
+                                        className={`text-center p-2 hover:bg-warehouseBlue text-white ${zone === "Purple" ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => setZone("Purple")}
+                                    >
+                                        Purple
+                                    </button>
+                                    <button
+                                        className={`text-center p-2 hover:bg-warehouseBlue text-white ${zone === "Industrial"
+                                                ? "bg-warehouseBlue"
+                                                : "bg-secondary"
+                                            }`}
+                                        onClick={() => setZone("Industrial")}
+                                    >
+                                        Industrial
+                                    </button>
+                                </>
+                            )}
+            */}
+              {/*
 
-              <button
-                onClick={() =>
-                  setMobileSearchButtons({
-                    ...mobileSearchButtons,
-                    zone: !mobileSearchButtons.zone,
-                  })
-                }
-                className=" bg-red-500 text-white p-2 hover:bg-red-500 w-60 flex justify-between"
-              >
-                <span></span>
-                <span>ZONE</span>
-                {mobileSearchButtons.zone ? (
-                  <KeyboardArrowUp />
-                ) : (
-                  <KeyboardArrowDown />
-                )}
-              </button>
-              {mobileSearchButtons.zone && (
-                <>
-                  <button
-                    className={`text-center p-2 hover:bg-warehouseBlue text-white ${
-                      zone === "Normal" ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => setZone("Normal")}
-                  >
-                    Normal
-                  </button>
-                  <button
-                    className={`text-center p-2 hover:bg-warehouseBlue text-white ${
-                      zone === "Red" ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => setZone("Red")}
-                  >
-                    Red
-                  </button>
-                  <button
-                    className={`text-center p-2 hover:bg-warehouseBlue text-white ${
-                      zone === "Blue" ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => setZone("Blue")}
-                  >
-                    Blue
-                  </button>
-                  <button
-                    className={`text-center p-2 hover:bg-warehouseBlue text-white ${
-                      zone === "Green" ? "bg-warehouseBluee" : "bg-secondary"
-                    }`}
-                    onClick={() => setZone("Green")}
-                  >
-                    Green
-                  </button>
-                  <button
-                    className={`text-center p-2 hover:bg-warehouseBlue text-white ${
-                      zone === "Yellow" ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => setZone("Yellow")}
-                  >
-                    Yellow
-                  </button>
-                  <button
-                    className={`text-center p-2 hover:bg-warehouseBlue text-white ${
-                      zone === "Purple" ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => setZone("Purple")}
-                  >
-                    Purple
-                  </button>
-                  <button
-                    className={`text-center p-2 hover:bg-warehouseBlue text-white ${
-                      zone === "Industrial"
-                        ? "bg-warehouseBlue"
-                        : "bg-secondary"
-                    }`}
-                    onClick={() => setZone("Industrial")}
-                  >
-                    Industrial
-                  </button>
-                </>
-              )}
+                            <button
+                                onClick={() =>
+                                    setMobileSearchButtons({
+                                        ...mobileSearchButtons,
+                                        category: !mobileSearchButtons.category,
+                                    })
+                                }
+                                className=" bg-red-500 text-white p-2 hover:bg-red-500 w-60 flex justify-between"
+                            >
+                                <span></span>
+                                <span>CATEGORY</span>
+                                {mobileSearchButtons.category ? (
+                                    <KeyboardArrowUp />
+                                ) : (
+                                    <KeyboardArrowDown />
+                                )}
+                            </button>
+                            {mobileSearchButtons.category && (
+                                <>
+                                    <button
+                                        className={`p-2 hover:bg-warehouseBlue text-white ${category === "Approved"
+                                            ? "bg-warehouseBlue"
+                                            : "bg-secondary"
+                                            }`}
+                                        onClick={() => setCategory("Approved")}
+                                    >
+                                        Approved
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:bg-warehouseBlue text-white ${category === "Non-Approved"
+                                            ? "bg-warehouseBlue"
+                                            : "bg-secondary"
+                                            }`}
+                                        onClick={() => setCategory("Non-Approved")}
+                                    >
+                                        Non Approved
+                                    </button>
+                                    <button
+                                        className={`p-2 hover:bg-warehouseBlue text-white ${category === "Both" ? "bg-warehouseBlue" : "bg-secondary"
+                                            }`}
+                                        onClick={() => setCategory("Both")}
+                                    >
+                                        Both
+                                    </button>
+                                </>
+                            )}*/}
 
-              <button
-                onClick={() =>
-                  setMobileSearchButtons({
-                    ...mobileSearchButtons,
-                    category: !mobileSearchButtons.category,
-                  })
-                }
-                className=" bg-red-500 text-white p-2 hover:bg-red-500 w-60 flex justify-between"
-              >
-                <span></span>
-                <span>CATEGORY</span>
-                {mobileSearchButtons.category ? (
-                  <KeyboardArrowUp />
-                ) : (
-                  <KeyboardArrowDown />
-                )}
-              </button>
-              {mobileSearchButtons.category && (
-                <>
-                  <button
-                    className={`p-2 hover:bg-warehouseBlue text-white ${
-                      category === "Approved"
-                        ? "bg-warehouseBlue"
-                        : "bg-secondary"
-                    }`}
-                    onClick={() => setCategory("Approved")}
-                  >
-                    Approved
-                  </button>
-                  <button
-                    className={`p-2 hover:bg-warehouseBlue text-white ${
-                      category === "Non-Approved"
-                        ? "bg-warehouseBlue"
-                        : "bg-secondary"
-                    }`}
-                    onClick={() => setCategory("Non-Approved")}
-                  >
-                    Non Approved
-                  </button>
-                  <button
-                    className={`p-2 hover:bg-warehouseBlue text-white ${
-                      category === "Both" ? "bg-warehouseBlue" : "bg-secondary"
-                    }`}
-                    onClick={() => setCategory("Both")}
-                  >
-                    Both
-                  </button>
-                </>
-              )}
-
-              <button
-                onClick={() =>
-                  setMobileSearchButtons({
-                    ...mobileSearchButtons,
-                    format: !mobileSearchButtons.format,
-                  })
-                }
-                className=" bg-red-500 text-white p-2 hover:bg-red-500 w-60 flex justify-between"
-              >
-                <span></span>
-                <span>FORMAT</span>
-                {mobileSearchButtons.format ? (
-                  <KeyboardArrowUp />
-                ) : (
-                  <KeyboardArrowDown />
-                )}
-              </button>
-              {mobileSearchButtons.format && (
-                <>
-                  <>
-                    <button
-                      className={`p-2 hover:bg-warehouseBlue text-white ${
-                        format === "BTS" ? "bg-warehouseBlue" : "bg-secondary"
-                      }`}
-                      onClick={() => setFormat("BTS (build to suite)")}
-                    >
-                      BTS
-                    </button>
-                    <button
-                      className={`p-2 hover:bg-warehouseBlue hover:text-white text-white ${
-                        format === "Under Construction"
-                          ? "bg-warehouseBlue "
-                          : "bg-secondary"
-                      }`}
-                      onClick={() => setFormat("Under Construction")}
-                    >
-                      Under Construction
-                    </button>
-                    <button
-                      className={`p-2 hover:bg-warehouseBlue text-white ${
-                        format === "Ready to Move"
-                          ? "bg-warehouseBlue"
-                          : "bg-secondary"
-                      }`}
-                      onClick={() => setFormat("Ready to Move")}
-                    >
-                      Ready to Move
-                    </button>
-                  </>
-                </>
-              )}
-
+              {/*
+                            <button
+                                onClick={() =>
+                                    setMobileSearchButtons({
+                                        ...mobileSearchButtons,
+                                        format: !mobileSearchButtons.format,
+                                    })
+                                }
+                                className=" bg-red-500 text-white p-2 hover:bg-red-500 w-60 flex justify-between"
+                            >
+                                <span></span>
+                                <span>FORMAT</span>
+                                {mobileSearchButtons.format ? (
+                                    <KeyboardArrowUp />
+                                ) : (
+                                    <KeyboardArrowDown />
+                                )}
+                            </button>
+                            {mobileSearchButtons.format && (
+                                <>
+                                    <>
+                                        <button
+                                            className={`p-2 hover:bg-warehouseBlue text-white ${format === "BTS" ? "bg-warehouseBlue" : "bg-secondary"
+                                                }`}
+                                            onClick={() => setFormat("BTS (build to suite)")}
+                                        >
+                                            BTS
+                                        </button>
+                                        <button
+                                            className={`p-2 hover:bg-warehouseBlue hover:text-white text-white ${format === "Under Construction"
+                                                ? "bg-warehouseBlue "
+                                                : "bg-secondary"
+                                                }`}
+                                            onClick={() => setFormat("Under Construction")}
+                                        >
+                                            Under Construction
+                                        </button>
+                                        <button
+                                            className={`p-2 hover:bg-warehouseBlue text-white ${format === "Ready to Move"
+                                                ? "bg-warehouseBlue"
+                                                : "bg-secondary"
+                                                }`}
+                                            onClick={() => setFormat("Ready to Move")}
+                                        >
+                                            Ready to Move
+                                        </button>
+                                    </>
+                                </>
+                            )}
+            */}
+              {/*
               <Link href="/gallery">
                 <button
                   onClick={() => closeMenuHandler()}
@@ -808,7 +760,7 @@ const ResponsiveDrawer = () => {
                 >
                   GALLERY
                 </button>
-              </Link>
+              </Link>*/}
               <Link href="/contact">
                 <button
                   onClick={() => closeMenuHandler()}
@@ -817,6 +769,7 @@ const ResponsiveDrawer = () => {
                   CONTACT
                 </button>
               </Link>
+              {/*
               <Link href="/listwarehouse">
                 <button
                   onClick={() => closeMenuHandler()}
@@ -824,7 +777,7 @@ const ResponsiveDrawer = () => {
                 >
                   LIST WAREHOUSE
                 </button>
-              </Link>
+              </Link>*/}
               {authCtx.isLoggedIn && (
                 <button
                   onClick={() => {

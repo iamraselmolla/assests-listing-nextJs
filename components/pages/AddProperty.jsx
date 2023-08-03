@@ -405,19 +405,19 @@ const AddProperty = () => {
                           labelName="Type"
                           fieldRequired={true}
                         >
-                          <option disabled value="">
-                            Choose
-                          </option>
-                          <option value="Prefab Structure">
-                            Prefab Structure
-                          </option>
-                          <option value="Semi Prefab Structure">
-                            Semi Prefab Structure
-                          </option>
-                          <option value="RCC">RCC</option>
-                          <option value="Shed">Shed</option>
+                          <option value="Hotels">Hotels</option>
+                          <option value="Food Court">Food court</option>
+                          <option value="Office Space">Office space</option>
+                          <option value="Warehouse">Warehouse</option>
+                          <option value="Factory">Factory</option>
+                          <option value="Schools">Schools</option>
+                          <option value="Banks">Banks</option>
+                          <option value="Hospitals">Hospitals</option>
+                          <option value="Call center">Call center</option>
                           <option value="Land">Land</option>
-                          <option value="Multi Store">Multi Store</option>
+                          <option value="Hostel">Hostel</option>
+                          <option value="Mall">Mall</option>
+                          <option value="Multiplex">Multiplex</option>
                         </InputField>{" "}
                         <InputField
                           uni="address"

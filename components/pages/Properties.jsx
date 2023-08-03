@@ -8,6 +8,8 @@ import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import FormWrapper from "../UI/FormWrapper";
 import InputField from "../UI/InputField";
+import cities_arr, { state_arr } from "../utils/CityDropdown";
+
 import {
   BathtubOutlined,
   BookmarkBorder,
@@ -24,7 +26,8 @@ const Properties = () => {
   const [propertyFor, setPropertyFor] = useState("For Rent");
 
   useEffect(() => {
-     // const url = new URLSearchParams()
+    const url = new URLSearchParams()
+    setPropertyFor(url.get("type"))
     const timer = setTimeout(() => {
       setLoading(false);
     }, 100);
@@ -202,65 +205,93 @@ const Properties = () => {
                             fieldRequired={true}
                             inputClass={"bg-quat rounded-sm"}
                           >
+                            {propertyFor === "For Rent" ? (
+                              <>
+                                <option value="Hotels">Hotels</option>
+                                <option value="Food Court">Food court</option>
+                                <option value="Office Space">
+                                  Office space
+                                </option>
+                                <option value="Warehouse">Warehouse</option>
+                                <option value="Factory">Factory</option>
+                                <option value="Schools">Schools</option>
+                                <option value="Banks">Banks</option>
+                                <option value="Hospitals">Hospitals</option>
+                                <option value="Call center">Call center</option>
+                                <option value="Land">Land</option>
+                                <option value="Hostel">Hostel</option>
+                                <option value="Mall">Mall</option>
+                                <option value="Multiplex">Multiplex</option>
+                              </>
+                            ) : (
+                              <>
+                                <option value="Resedential">Resedential</option>
+                                <option value="Commercial">Commercial</option>
+                                <option value="Pre-lease">Pre-lease</option>
+                              </>
+                            )}
+                          </InputField>
+
+                          <InputField
+                            override={true}
+                            as="select"
+                            labelName="State"
+                            uni="state"
+                            placeholder="Uttarakhand"
+                            fieldRequired={true}
+                            inputClass={"bg-quat rounded-sm"}
+                          >
                             <option disabled value="">
                               Choose
                             </option>
-                            <option value="Prefab Structure">
-                              Prefab Structure
-                            </option>
-                            <option value="Semi Prefab Structure">
-                              Semi Prefab Structure
-                            </option>
-                            <option value="RCC">RCC</option>
-                            <option value="Shed">Shed</option>
-                            <option value="Land">Land</option>
-                            <option value="Multi Store">Multi Store</option>
+                            {state_arr.map((item, i) => (
+                              <option key={i} value={i}>
+                                {item}
+                              </option>
+                            ))}
                           </InputField>
                           <InputField
-                            uni="title"
-                            placeholder="Title"
-                            labelName="Title"
+                            override={true}
+                            as="select"
+                            labelName="City"
+                            uni="city"
+                            placeholder="Dehradun"
+                            fieldRequired={true}
                             inputClass={"bg-quat rounded-sm"}
-                          />
+                          >
+                            <option disabled value="">
+                              Choose
+                            </option>
+                            {cities_arr[values.state]?.map((item, i) => (
+                              <option key={i} value={`${item}`}>
+                                {item}
+                              </option>
+                            ))}
+                          </InputField>
                           <InputField
-                            uni="address"
-                            placeholder="Address"
-                            labelName="Address"
+                            override={true}
+                            as="select"
+                            uni="format"
+                            labelName="Format"
+                            fieldRequired={true}
                             inputClass={"bg-quat rounded-sm"}
-                          />
-                          <InputField
-                            uni="bedroom"
-                            placeholder="Bedroom"
-                            labelName="Bedroom"
-                            inputClass={"bg-quat rounded-sm"}
-                          />
-                          <div className="grid grid-cols-2 gap-4">
-                            <InputField
-                              uni="minPrice"
-                              placeholder="Min Price"
-                              labelName="Min Price"
-                              inputClass={"bg-quat rounded-sm"}
-                            />
-                            <InputField
-                              uni="max"
-                              placeholder="Max Price"
-                              labelName="Max Price"
-                              inputClass={"bg-quat rounded-sm"}
-                            />
-                          </div>
-                          <InputField
-                            uni="size"
-                            placeholder="Size"
-                            labelName="Size"
-                            inputClass={"bg-quat rounded-sm"}
-                          />
-                          <InputField
-                            uni="landarea"
-                            placeholder="Land Area"
-                            labelName="Land Area"
-                            inputClass={"bg-quat rounded-sm"}
-                          />
-
+                          >
+                            {propertyFor === "For Rent" ? (
+                              <>
+                                <option value="Hotels">Hotels</option>
+                                <option value="Food Court">Food court</option>
+                                <option value="Office Space">
+                                  Office space
+                                </option>
+                              </>
+                            ) : (
+                              <>
+                                <option value="Resedential">Resedential</option>
+                                <option value="Commercial">Commercial</option>
+                                <option value="Pre-lease">Pre-lease</option>
+                              </>
+                            )}
+                          </InputField>
                           <div className="flex justify-end">
                             {/* {!buttonLoading ? ( */}
                             <button
