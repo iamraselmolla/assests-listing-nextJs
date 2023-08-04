@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { assets } from "../assets";
 import Image from "next/image";
-import { ChecklistRtl, Photo } from "@mui/icons-material";
+import { ChecklistRtl, Newspaper, Photo } from "@mui/icons-material";
 
 export const adminMenu = [
   {
@@ -23,8 +23,8 @@ export const adminMenu = [
     showAlways: false,
   },
   {
-    name: "Add Warehouse",
-    pageLink: "/dashboard/addwarehouse",
+    name: "Add Property",
+    pageLink: "/dashboard/addproperty",
     icon: <WarehouseIcon />,
     showAlways: false,
   },
@@ -38,6 +38,12 @@ export const adminMenu = [
     name: "Request Listing",
     pageLink: "/dashboard/requestlisting",
     icon: <ChecklistRtl />,
+    showAlways: false,
+  },
+  {
+    name: "Blog",
+    pageLink: "/dashboard/requestlisting",
+    icon: <Newspaper />,
     showAlways: false,
   },
 ];

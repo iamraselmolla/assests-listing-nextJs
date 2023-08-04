@@ -11,7 +11,6 @@ export default async function handler(req, res) {
                 try {
                     let { username, password } = req.body;
                     await dbConnect();
-                    console.log(username, password)
                     username = username.toLowerCase();
                     const user = await User.findOne({ username });
                     if (!user) return res.status(404).json({ message: 'User not found' });
@@ -19,7 +18,6 @@ export default async function handler(req, res) {
 
                     if (checkandComparePass) {
                         const token = jwt.sign({ username }, secretKey);
-                        console.log(token)
                         return res.status(200).json({ message: 'Logged in Successfully', user: { username, token, _id: user._id } });
                     }
 

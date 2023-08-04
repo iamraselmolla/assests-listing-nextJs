@@ -22,7 +22,7 @@ const ResponsiveDrawer = () => {
   const authCtx = useContext(AuthContext);
   const [allCities, setAllCities] = useState([]);
   const [state, setState] = useState(
-    router.query.state ? +router.query.state : "",
+    router.query.state ? +router.query.state : ""
   );
   const [zone, setZone] = useState("");
   const [category, setCategory] = useState("");

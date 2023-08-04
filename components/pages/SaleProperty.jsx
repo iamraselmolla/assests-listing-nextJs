@@ -14,7 +14,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 // import cloudinary from '../utils/cloudinary'
-const AddWarehouse = () => {
+const SaleProperty = () => {
   const router = useRouter();
   const { id } = router.query;
   console.log(id);
@@ -407,4 +407,4 @@ const AddWarehouse = () => {
   );
 };
 
-export default AddWarehouse;
+export default SaleProperty;
