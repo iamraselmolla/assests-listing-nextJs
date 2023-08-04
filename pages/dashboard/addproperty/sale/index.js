@@ -1,4 +1,5 @@
 import Head from "next/head";
+import SaleProperty from "../../../../components/pages/SaleProperty";
 
 export default function index() {
   return (
@@ -36,6 +37,7 @@ export default function index() {
         <meta property="og:description" content="" />
         <meta property="og:site_name" content="Warehouse Servicez" />
       </Head>
+      <SaleProperty />
     </>
   );
 }
