@@ -22,23 +22,23 @@ const SaleProperty = () => {
   const [preview, setPreview] = useState([]);
   const [image, setImage] = useState([]);
   const [fetchedValues, setFetchedValues] = useState({
-    address: "",
     type: "",
-    description: "",
-    format: "",
-    city: "",
     state: "",
-    size: "",
-    zone: "",
-    category: "",
-    owner: {
-      name: "",
-      email: "",
-      mobileNo1: "",
-      mobileNo2: "",
-    },
-    partlyAvailable: "",
-    price: "",
+    city: "",
+    format: "",
+    // address: "",
+    // description: "",
+    // size: "",
+    // zone: "",
+    // category: "",
+    // owner: {
+    //   name: "",
+    //   email: "",
+    //   mobileNo1: "",
+    //   mobileNo2: "",
+    // },
+    // partlyAvailable: "",
+    // price: "",
   });
 
   useEffect(() => {
@@ -58,43 +58,43 @@ const SaleProperty = () => {
 
     return () => {
       setFetchedValues({
-        address: "",
         type: "",
-        description: "",
-        format: "",
-        city: "",
         state: "",
-        size: "",
-        zone: "",
-        category: "",
-        owner: {
-          name: "",
-          email: "",
-          mobileNo1: "",
-          mobileNo2: "",
-        },
-        partlyAvailable: "",
-        price: "",
+        city: "",
+        format: "",
+        // address: "",
+        // description: "",
+        // size: "",
+        // zone: "",
+        // category: "",
+        // owner: {
+        //   name: "",
+        //   email: "",
+        //   mobileNo1: "",
+        //   mobileNo2: "",
+        // },
+        // partlyAvailable: "",
+        // price: "",
       });
     };
   }, [id]);
 
   const validationSchema = Yup.object({
-    address: Yup.string().required("Required"),
     type: Yup.string().required("Required"),
-    // description:Yup.string().required('Required'),
-    format: Yup.string().required("Required"),
-    city: Yup.string().required("Required"),
     state: Yup.string().required("Required"),
-    size: Yup.string().required("Required"),
-    category: Yup.string().required("Required"),
-    owner: Yup.object().shape({
-      name: Yup.string().required("Required"),
-      // email:Yup.string().required('Required').email("Invalid format"),
-      email: Yup.string().email("Invalid format"),
-      mobileNo1: Yup.number(),
-    }),
-    price: Yup.string().required("Required"),
+    city: Yup.string().required("Required"),
+    format: Yup.string().required("Required"),
+    // description:Yup.string().required('Required'),
+    // address: Yup.string().required("Required"),
+    // size: Yup.string().required("Required"),
+    // category: Yup.string().required("Required"),
+    // owner: Yup.object().shape({
+    //   name: Yup.string().required("Required"),
+    // email:Yup.string().required('Required').email("Invalid format"),
+    //   email: Yup.string().email("Invalid format"),
+    //   mobileNo1: Yup.number(),
+    // }),
+    // price: Yup.string().required("Required"),
   });
 
   const onSubmitHandler = async (values, { resetForm }) => {
@@ -192,6 +192,55 @@ const SaleProperty = () => {
                 <InputField
                   override={true}
                   as="select"
+                  uni="type"
+                  labelName="Type"
+                  fieldRequired={true}
+                >
+                  <option disabled value="">
+                    Choose
+                  </option>
+                  <option value="residential">Residential</option>
+                  <option value="commercial">Commerial</option>
+                  <option value="pro-lease">Pro-lease</option>
+                </InputField>
+                <InputField
+                  override={true}
+                  as="select"
+                  labelName="State"
+                  uni="state"
+                  placeholder="Uttarakhand"
+                  fieldRequired={true}
+                >
+                  <option disabled value="">
+                    Choose
+                  </option>
+                  {state_arr.map((item, i) => (
+                    <option key={i} value={i}>
+                      {item}
+                    </option>
+                  ))}
+                </InputField>
+                <InputField
+                  override={true}
+                  as="select"
+                  labelName="City"
+                  uni="city"
+                  placeholder="Dehradun"
+                  fieldRequired={true}
+                >
+                  <option disabled value="">
+                    Choose
+                  </option>
+                  {cities_arr[values.state]?.map((item, i) => (
+                    <option key={i} value={`${item}`}>
+                      {item}
+                    </option>
+                  ))}
+                </InputField>
+
+                <InputField
+                  override={true}
+                  as="select"
                   uni="format"
                   labelName="Format"
                   fieldRequired={true}
@@ -203,26 +252,8 @@ const SaleProperty = () => {
                   <option value="Under Construction">Under Construction</option>
                   <option value="BTS">BTS (Build to suite)</option>
                 </InputField>
-                <InputField
-                  override={true}
-                  as="select"
-                  uni="type"
-                  labelName="Type"
-                  fieldRequired={true}
-                >
-                  <option disabled value="">
-                    Choose
-                  </option>
-                  <option value="Prefab Structure">Prefab Structure</option>
-                  <option value="Semi Prefab Structure">
-                    Semi Prefab Structure
-                  </option>
-                  <option value="RCC">RCC</option>
-                  <option value="Shed">Shed</option>
-                  <option value="Land">Land</option>
-                  <option value="Multi Store">Multi Store</option>
-                </InputField>
-                <InputField
+
+                {/* <InputField
                   override={true}
                   as="select"
                   uni="category"
@@ -268,46 +299,13 @@ const SaleProperty = () => {
                   uni="address"
                   placeholder="GMS Road"
                   labelName="Address"
-                />
-                <InputField
-                  override={true}
-                  as="select"
-                  labelName="State"
-                  uni="state"
-                  placeholder="Uttarakhand"
-                  fieldRequired={true}
-                >
-                  <option disabled value="">
-                    Choose
-                  </option>
-                  {state_arr.map((item, i) => (
-                    <option key={i} value={i}>
-                      {item}
-                    </option>
-                  ))}
-                </InputField>
-                <InputField
-                  override={true}
-                  as="select"
-                  labelName="City"
-                  uni="city"
-                  placeholder="Dehradun"
-                  fieldRequired={true}
-                >
-                  <option disabled value="">
-                    Choose
-                  </option>
-                  {cities_arr[values.state]?.map((item, i) => (
-                    <option key={i} value={`${item}`}>
-                      {item}
-                    </option>
-                  ))}
-                </InputField>
-                <InputField
+                /> */}
+
+                {/* <InputField
                   uni="price"
                   placeholder="10,000"
                   labelName="Price"
-                />
+                /> */}
               </FormWrapper>
 
               <Gap>Owner Details</Gap>

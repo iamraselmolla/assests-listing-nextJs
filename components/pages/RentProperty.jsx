@@ -22,23 +22,23 @@ const RentProperty = () => {
   const [preview, setPreview] = useState([]);
   const [image, setImage] = useState([]);
   const [fetchedValues, setFetchedValues] = useState({
-    address: "",
     type: "",
-    description: "",
     format: "",
     city: "",
     state: "",
-    size: "",
-    zone: "",
-    category: "",
-    owner: {
-      name: "",
-      email: "",
-      mobileNo1: "",
-      mobileNo2: "",
-    },
-    partlyAvailable: "",
-    price: "",
+    // address: "",
+    // description: "",
+    // size: "",
+    // zone: "",
+    // category: "",
+    // owner: {
+    //   name: "",
+    //   email: "",
+    //   mobileNo1: "",
+    //   mobileNo2: "",
+    // },
+    // partlyAvailable: "",
+    // price: "",
   });
 
   useEffect(() => {
@@ -58,43 +58,43 @@ const RentProperty = () => {
 
     return () => {
       setFetchedValues({
-        address: "",
         type: "",
-        description: "",
         format: "",
         city: "",
         state: "",
-        size: "",
-        zone: "",
-        category: "",
-        owner: {
-          name: "",
-          email: "",
-          mobileNo1: "",
-          mobileNo2: "",
-        },
-        partlyAvailable: "",
-        price: "",
+        // address: "",
+        // description: "",
+        // size: "",
+        // zone: "",
+        // category: "",
+        // owner: {
+        //   name: "",
+        //   email: "",
+        //   mobileNo1: "",
+        //   mobileNo2: "",
+        // },
+        // partlyAvailable: "",
+        // price: "",
       });
     };
   }, [id]);
 
   const validationSchema = Yup.object({
-    address: Yup.string().required("Required"),
     type: Yup.string().required("Required"),
-    // description:Yup.string().required('Required'),
     format: Yup.string().required("Required"),
     city: Yup.string().required("Required"),
     state: Yup.string().required("Required"),
-    size: Yup.string().required("Required"),
-    category: Yup.string().required("Required"),
-    owner: Yup.object().shape({
-      name: Yup.string().required("Required"),
-      // email:Yup.string().required('Required').email("Invalid format"),
-      email: Yup.string().email("Invalid format"),
-      mobileNo1: Yup.number(),
-    }),
-    price: Yup.string().required("Required"),
+    // description:Yup.string().required('Required'),
+    // address: Yup.string().required("Required"),
+    // size: Yup.string().required("Required"),
+    // category: Yup.string().required("Required"),
+    // owner: Yup.object().shape({
+    // name: Yup.string().required("Required"),
+    // email:Yup.string().required('Required').email("Invalid format"),
+    // email: Yup.string().email("Invalid format"),
+    // mobileNo1: Yup.number(),
+    // }),
+    // price: Yup.string().required("Required"),
   });
 
   const onSubmitHandler = async (values, { resetForm }) => {
@@ -192,83 +192,28 @@ const RentProperty = () => {
                 <InputField
                   override={true}
                   as="select"
-                  uni="format"
-                  labelName="Format"
-                  fieldRequired={true}
-                >
-                  <option disabled value="">
-                    Choose
-                  </option>
-                  <option value="Ready to Move">Ready to Move</option>
-                  <option value="Under Construction">Under Construction</option>
-                  <option value="BTS">BTS (Build to suite)</option>
-                </InputField>
-                <InputField
-                  override={true}
-                  as="select"
                   uni="type"
                   labelName="Type"
                   fieldRequired={true}
                 >
                   <option disabled value="">
-                    Choose
+                    Select Type
                   </option>
-                  <option value="Prefab Structure">Prefab Structure</option>
-                  <option value="Semi Prefab Structure">
-                    Semi Prefab Structure
-                  </option>
-                  <option value="RCC">RCC</option>
-                  <option value="Shed">Shed</option>
-                  <option value="Land">Land</option>
-                  <option value="Multi Store">Multi Store</option>
+                  <option value="1">Hotels</option>
+                  <option value="1">Food Court</option>
+                  <option value="2">Co-working Space</option>
+                  <option value="3">Office Space</option>
+                  <option value="4">Warehouse</option>
+                  <option value="5">Factory</option>
+                  <option value="6">Schools</option>
+                  <option value="7">Banks</option>
+                  <option value="8">Hospitals</option>
+                  <option value="9">Call Center</option>
+                  <option value="10">Land</option>
+                  <option value="11">Hostel</option>
+                  <option value="12">Mall</option>
+                  <option value="13">Multiplex</option>
                 </InputField>
-                <InputField
-                  override={true}
-                  as="select"
-                  uni="category"
-                  labelName="Category"
-                  fieldRequired={true}
-                >
-                  <option disabled value="">
-                    Choose
-                  </option>
-                  <option value="Approved">Approved</option>
-                  <option value="Non-Approved">Non-Approved</option>
-                  <option value="Both">Both</option>
-                </InputField>
-                <InputField
-                  uni="size"
-                  placeholder="10,000 sq.ft"
-                  labelName="Size"
-                />
-                <InputField
-                  uni="partlyAvailable"
-                  placeholder="3,000 sq.ft"
-                  labelName="Partly Available"
-                />
-                <InputField
-                  override={true}
-                  as="select"
-                  uni="zone"
-                  placeholder="Red"
-                  labelName="Zone"
-                >
-                  <option disabled value="">
-                    Choose
-                  </option>
-                  <option value="Normal">Normal</option>
-                  <option value="Red">Red</option>
-                  <option value="Blue">Blue</option>
-                  <option value="Green">Green</option>
-                  <option value="Yellow">Yellow</option>
-                  <option value="Purple">Purple</option>
-                  <option value="Industrial">Industrial</option>
-                </InputField>
-                <InputField
-                  uni="address"
-                  placeholder="GMS Road"
-                  labelName="Address"
-                />
                 <InputField
                   override={true}
                   as="select"
@@ -304,10 +249,73 @@ const RentProperty = () => {
                   ))}
                 </InputField>
                 <InputField
+                  override={true}
+                  as="select"
+                  uni="format"
+                  labelName="Format"
+                  fieldRequired={true}
+                >
+                  <option disabled value="">
+                    Choose
+                  </option>
+                  <option value="Ready to Move">Ready to Move</option>
+                  <option value="Under Construction">Under Construction</option>
+                  <option value="BTS">BTS (Build to suite)</option>
+                </InputField>
+
+                {/* <InputField
+                  override={true}
+                  as="select"
+                  uni="category"
+                  labelName="Category"
+                  fieldRequired={true}
+                >
+                  <option disabled value="">
+                    Choose
+                  </option>
+                  <option value="Approved">Approved</option>
+                  <option value="Non-Approved">Non-Approved</option>
+                  <option value="Both">Both</option>
+                </InputField> */}
+                {/* <InputField
+                  uni="size"
+                  placeholder="10,000 sq.ft"
+                  labelName="Size"
+                /> */}
+                {/* <InputField
+                  uni="partlyAvailable"
+                  placeholder="3,000 sq.ft"
+                  labelName="Partly Available"
+                /> */}
+                {/* <InputField
+                  override={true}
+                  as="select"
+                  uni="zone"
+                  placeholder="Red"
+                  labelName="Zone"
+                >
+                  <option disabled value="">
+                    Choose
+                  </option>
+                  <option value="Normal">Normal</option>
+                  <option value="Red">Red</option>
+                  <option value="Blue">Blue</option>
+                  <option value="Green">Green</option>
+                  <option value="Yellow">Yellow</option>
+                  <option value="Purple">Purple</option>
+                  <option value="Industrial">Industrial</option>
+                </InputField> */}
+                {/* <InputField
+                  uni="address"
+                  placeholder="GMS Road"
+                  labelName="Address"
+                /> */}
+
+                {/* <InputField
                   uni="price"
                   placeholder="10,000"
                   labelName="Price"
-                />
+                /> */}
               </FormWrapper>
 
               <Gap>Owner Details</Gap>

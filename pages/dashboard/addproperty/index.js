@@ -50,18 +50,18 @@ const Signup = () => {
                       />
                       <Link href={ALL_LINKS.rentProperty}>
                         <button
-                          className={`bg-black text-white h-10  hover:opacity-75 w-full`}
+                          className={`bg-black text-white h-10 font-bold  hover:opacity-75 w-full`}
                           type
                         >
-                          Add Property for Rent
+                          For Rent
                         </button>
                       </Link>
                       <Link href={ALL_LINKS.saleProperty}>
                         <button
-                          className={`bg-black text-white h-10  hover:opacity-75 w-full`}
+                          className={`bg-black text-white h-10 font-bold  hover:opacity-75 w-full`}
                           type
                         >
-                          Add property for sale
+                          For Sale
                         </button>
                       </Link>
                     </div>
