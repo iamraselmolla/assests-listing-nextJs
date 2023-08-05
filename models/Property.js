@@ -41,3 +41,6 @@ const propertySchema = mongoose.Schema({
     required: true,
   },
 });
+
+export default mongoose.models.Property ||
+  mongoose.model("Property", propertySchema);

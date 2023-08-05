@@ -22,21 +22,24 @@ const SaleProperty = () => {
   const [image, setImage] = useState([]);
   const [propertyType, setPropertyType] = useState(null);
   const [fetchedValues, setFetchedValues] = useState({
-    type: "",
-    state: "",
-    city: "",
-    format: "",
+    property: {
+      type: "",
+      format: "",
+      city: "",
+      state: "",
+    },
+    owner: {
+      name: "",
+      email: "",
+      mobileNo1: "",
+      mobileNo2: "",
+    },
+    img: "",
     // address: "",
     // description: "",
     // size: "",
     // zone: "",
     // category: "",
-    // owner: {
-    //   name: "",
-    //   email: "",
-    //   mobileNo1: "",
-    //   mobileNo2: "",
-    // },
     // partlyAvailable: "",
     // price: "",
   });
@@ -58,21 +61,25 @@ const SaleProperty = () => {
 
     return () => {
       setFetchedValues({
-        type: "",
-        state: "",
-        city: "",
-        format: "",
+        property: {
+          type: "",
+          format: "",
+          city: "",
+          state: "",
+        },
+        owner: {
+          name: "",
+          email: "",
+          mobileNo1: "",
+          mobileNo2: "",
+        },
+        img: "",
         // address: "",
         // description: "",
         // size: "",
         // zone: "",
         // category: "",
-        // owner: {
-        //   name: "",
-        //   email: "",
-        //   mobileNo1: "",
-        //   mobileNo2: "",
-        // },
+        //
         // partlyAvailable: "",
         // price: "",
       });
@@ -80,20 +87,22 @@ const SaleProperty = () => {
   }, [id]);
 
   const validationSchema = Yup.object({
-    type: Yup.string().required("Required"),
-    state: Yup.string().required("Required"),
-    city: Yup.string().required("Required"),
-    format: Yup.string().required("Required"),
+    property: Yup.object().shape({
+      type: Yup.string().required("Required"),
+      format: Yup.string().required("Required"),
+      city: Yup.string().required("Required"),
+      state: Yup.string().required("Required"),
+    }),
+    owner: Yup.object().shape({
+      name: Yup.string().required("Required"),
+      email: Yup.string().required("Required").email("Invalid format"),
+      // email: Yup.string().email("Invalid format"),
+      mobileNo1: Yup.string().required("Required"),
+    }),
     // description:Yup.string().required('Required'),
     // address: Yup.string().required("Required"),
     // size: Yup.string().required("Required"),
     // category: Yup.string().required("Required"),
-    // owner: Yup.object().shape({
-    //   name: Yup.string().required("Required"),
-    // email:Yup.string().required('Required').email("Invalid format"),
-    //   email: Yup.string().email("Invalid format"),
-    //   mobileNo1: Yup.number(),
-    // }),
     // price: Yup.string().required("Required"),
   });
 
@@ -193,7 +202,7 @@ const SaleProperty = () => {
                   onChange={(e) => setPropertyType(e.target)}
                   override={true}
                   as="select"
-                  uni="type"
+                  uni="property.type"
                   labelName="Type"
                   fieldRequired={true}
                 >
@@ -208,7 +217,7 @@ const SaleProperty = () => {
                   override={true}
                   as="select"
                   labelName="State"
-                  uni="state"
+                  uni="property.state"
                   placeholder="Uttarakhand"
                   fieldRequired={true}
                 >
@@ -225,7 +234,7 @@ const SaleProperty = () => {
                   override={true}
                   as="select"
                   labelName="City"
-                  uni="city"
+                  uni="property.city"
                   placeholder="Dehradun"
                   fieldRequired={true}
                 >
@@ -242,7 +251,7 @@ const SaleProperty = () => {
                 <InputField
                   override={true}
                   as="select"
-                  uni="format"
+                  uni="property.format"
                   labelName="Format"
                   fieldRequired={true}
                 >
