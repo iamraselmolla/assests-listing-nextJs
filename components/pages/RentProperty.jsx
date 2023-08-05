@@ -22,6 +22,7 @@ const RentProperty = () => {
   const [preview, setPreview] = useState([]);
   const [image, setImage] = useState([]);
   const [fetchedValues, setFetchedValues] = useState({
+    motive: "",
     property: {
       type: "",
       format: "",
@@ -61,6 +62,7 @@ const RentProperty = () => {
 
     return () => {
       setFetchedValues({
+        motive: "",
         property: {
           type: "",
           format: "",
@@ -70,7 +72,7 @@ const RentProperty = () => {
         owner: {
           name: "",
           email: "",
-          mobileNo1: "",
+          mobile1: "",
           mobileNo2: "",
         },
         img: "",
@@ -211,9 +213,7 @@ const RentProperty = () => {
                   labelName="Type"
                   fieldRequired={true}
                 >
-                  <option disabled value="">
-                    Select Type
-                  </option>
+                  <option value="">Select Type</option>
                   <option value="hotels">Hotels</option>
                   <option value="foodcourt">Food Court</option>
                   <option value="coworkingspace">Co-working Space</option>
@@ -257,7 +257,7 @@ const RentProperty = () => {
                   <option disabled value="">
                     Choose
                   </option>
-                  {cities_arr[values.state]?.map((item, i) => (
+                  {cities_arr[values.property.state]?.map((item, i) => (
                     <option key={i} value={`${item}`}>
                       {item}
                     </option>

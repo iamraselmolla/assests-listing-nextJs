@@ -13,6 +13,7 @@ import { IconButton } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { addProperty } from "../services/userServices";
 // import cloudinary from '../utils/cloudinary'
 const SaleProperty = () => {
   const router = useRouter();
@@ -22,6 +23,7 @@ const SaleProperty = () => {
   const [image, setImage] = useState([]);
   const [propertyType, setPropertyType] = useState(null);
   const [fetchedValues, setFetchedValues] = useState({
+    motive: "",
     property: {
       type: "",
       format: "",
@@ -31,8 +33,8 @@ const SaleProperty = () => {
     owner: {
       name: "",
       email: "",
-      mobileNo1: "",
-      mobileNo2: "",
+      mobile1: "",
+      mobile2: "",
     },
     img: "",
     // address: "",
@@ -61,6 +63,7 @@ const SaleProperty = () => {
 
     return () => {
       setFetchedValues({
+        motive: "",
         property: {
           type: "",
           format: "",
@@ -70,8 +73,8 @@ const SaleProperty = () => {
         owner: {
           name: "",
           email: "",
-          mobileNo1: "",
-          mobileNo2: "",
+          mobile1: "",
+          mobile2: "",
         },
         img: "",
         // address: "",
@@ -97,7 +100,7 @@ const SaleProperty = () => {
       name: Yup.string().required("Required"),
       email: Yup.string().required("Required").email("Invalid format"),
       // email: Yup.string().email("Invalid format"),
-      mobileNo1: Yup.string().required("Required"),
+      mobile1: Yup.string().required("Required"),
     }),
     // description:Yup.string().required('Required'),
     // address: Yup.string().required("Required"),
@@ -114,56 +117,72 @@ const SaleProperty = () => {
       formData.append("file", image[0]);
       formData.append("upload_preset", "client-uploads");
       try {
-        const res = await fetch(
-          `https://api.cloudinary.com/v1_1/da75fckow/image/upload`,
-          {
-            method: "POST",
-            body: formData,
-          }
+        // const res = await fetch(
+        //   `https://api.cloudinary.com/v1_1/da75fckow/image/upload`,
+        //   {
+        //     method: "POST",
+        //     body: formData,
+        //   }
+        // );
+        // const data = await res.json();
+        const response = await axios.post(
+          "https://api.cloudinary.com/v1_1/da75fckow/image/upload",
+          formData
         );
-        const data = await res.json();
-        imageUrl = data.secure_url;
+        console.log(response);
+
+        if (response.status === 200) {
+          imageUrl = response.data.secure_url;
+          values.motive = "sale";
+          values.img = imageUrl;
+          const result = await addProperty(values);
+          if (result.status === 200) {
+            toast.success("Property added");
+          }
+        }
       } catch (err) {
         console.error(err);
       }
+    } else {
+      toast.error("Please select a property Image");
     }
 
-    let res;
+    // let res;
     try {
-      if (id) {
-        res = await axios.put(`/api/warehouse?id=${id}`, {
-          address: values.address,
-          type: values.type,
-          format: values.format,
-          city: values.city,
-          state: values.state,
-          imageUrl: image.length > 0 ? imageUrl : preview[0],
-          size: values.size,
-          zone: values.zone,
-          category: values.category,
-          owner: values.owner,
-          addedBy: "owner",
-          partlyAvailable: values.partlyAvailable,
-          price: values.price,
-        });
-        toast.success("Updated Successfully");
-      } else {
-        res = await axios.post("/api/warehouse", {
-          address: values.address,
-          type: values.type,
-          format: values.format,
-          city: values.city,
-          state: values.state,
-          imageUrl: imageUrl,
-          size: values.size,
-          zone: values.zone,
-          category: values.category,
-          owner: values.owner,
-          addedBy: "owner",
-          partlyAvailable: values.partlyAvailable,
-          price: values.price,
-        });
-      }
+      // if (id) {
+      //   res = await axios.put(`/api/warehouse?id=${id}`, {
+      //     address: values.address,
+      //     type: values.type,
+      //     format: values.format,
+      //     city: values.city,
+      //     state: values.state,
+      //     imageUrl: image.length > 0 ? imageUrl : preview[0],
+      //     size: values.size,
+      //     zone: values.zone,
+      //     category: values.category,
+      //     owner: values.owner,
+      //     addedBy: "owner",
+      //     partlyAvailable: values.partlyAvailable,
+      //     price: values.price,
+      //   });
+      //   toast.success("Updated Successfully");
+      // } else {
+      //   res = await axios.post("/api/warehouse", {
+      //     address: values.address,
+      //     type: values.type,
+      //     format: values.format,
+      //     city: values.city,
+      //     state: values.state,
+      //     imageUrl: imageUrl,
+      //     size: values.size,
+      //     zone: values.zone,
+      //     category: values.category,
+      //     owner: values.owner,
+      //     addedBy: "owner",
+      //     partlyAvailable: values.partlyAvailable,
+      //     price: values.price,
+      //   });
+      // }
       if (res.status === 201) {
         resetForm({ values: "" });
         setImage([]);
@@ -206,9 +225,7 @@ const SaleProperty = () => {
                   labelName="Type"
                   fieldRequired={true}
                 >
-                  <option disabled value="">
-                    Choose
-                  </option>
+                  <option value="">Choose</option>
                   <option value="residential">Residential</option>
                   <option value="commercial">Commerial</option>
                   <option value="prolease">Pro-lease</option>
@@ -241,7 +258,7 @@ const SaleProperty = () => {
                   <option disabled value="">
                     Choose
                   </option>
-                  {cities_arr[values.state]?.map((item, i) => (
+                  {cities_arr[values.property.state]?.map((item, i) => (
                     <option key={i} value={`${item}`}>
                       {item}
                     </option>
@@ -331,12 +348,12 @@ const SaleProperty = () => {
                   labelName="Email"
                 />
                 <InputField
-                  uni="owner.mobileNo1"
+                  uni="owner.mobile1"
                   placeholder="+919876543210"
                   labelName="Mobile No 1"
                 />
                 <InputField
-                  uni="owner.mobileNo2"
+                  uni="owner.mobile2"
                   placeholder="+919876543210"
                   labelName="Mobile No 2"
                 />
