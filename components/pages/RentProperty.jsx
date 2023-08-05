@@ -17,7 +17,6 @@ import { useRouter } from "next/router";
 const RentProperty = () => {
   const router = useRouter();
   const { id } = router.query;
-  console.log(id);
   const [buttonLoading, setButtonLoading] = useState(false);
   const [preview, setPreview] = useState([]);
   const [image, setImage] = useState([]);
@@ -32,8 +31,8 @@ const RentProperty = () => {
     owner: {
       name: "",
       email: "",
-      mobileNo1: "",
-      mobileNo2: "",
+      mobile1: "",
+      mobile2: "",
     },
     img: "",
     // address: "",
@@ -45,48 +44,48 @@ const RentProperty = () => {
     // price: "",
   });
 
-  useEffect(() => {
-    const fetchWarehouse = async () => {
-      if (id) {
-        try {
-          const response = await axios.get(`/api/warehouse?id=${id}`);
-          const item = response.data.warehouse;
-          setPreview([item.imageUrl]);
-          setFetchedValues(item);
-        } catch (err) {
-          toast.error(err);
-        }
-      }
-    };
-    fetchWarehouse();
+  // useEffect(() => {
+  //   const fetchWarehouse = async () => {
+  //     if (id) {
+  //       try {
+  //         const response = await axios.get(`/api/warehouse?id=${id}`);
+  //         const item = response.data.warehouse;
+  //         setPreview([item.imageUrl]);
+  //         setFetchedValues(item);
+  //       } catch (err) {
+  //         toast.error(err);
+  //       }
+  //     }
+  //   };
+  //   fetchWarehouse();
 
-    return () => {
-      setFetchedValues({
-        motive: "",
-        property: {
-          type: "",
-          format: "",
-          city: "",
-          state: "",
-        },
-        owner: {
-          name: "",
-          email: "",
-          mobile1: "",
-          mobileNo2: "",
-        },
-        img: "",
-        // address: "",
-        // description: "",
-        // size: "",
-        // zone: "",
-        // category: "",
+  //   return () => {
+  //     setFetchedValues({
+  //       motive: "",
+  //       property: {
+  //         type: "",
+  //         format: "",
+  //         city: "",
+  //         state: "",
+  //       },
+  //       owner: {
+  //         name: "",
+  //         email: "",
+  //         mobile1: "",
+  //         mobile2: "",
+  //       },
+  //       img: "",
+  //       // address: "",
+  //       // description: "",
+  //       // size: "",
+  //       // zone: "",
+  //       // category: "",
 
-        // partlyAvailable: "",
-        // price: "",
-      });
-    };
-  }, [id]);
+  //       // partlyAvailable: "",
+  //       // price: "",
+  //     });
+  //   };
+  // }, [id]);
 
   const validationSchema = Yup.object({
     property: Yup.object().shape({
@@ -99,7 +98,7 @@ const RentProperty = () => {
       name: Yup.string().required("Required"),
       email: Yup.string().required("Required").email("Invalid format"),
       // email: Yup.string().email("Invalid format"),
-      mobileNo1: Yup.string().required("Required"),
+      mobile1: Yup.string().required("Required"),
     }),
     // description:Yup.string().required('Required'),
     // address: Yup.string().required("Required"),
@@ -122,67 +121,103 @@ const RentProperty = () => {
       formData.append("file", image[0]);
       formData.append("upload_preset", "client-uploads");
       try {
-        const res = await fetch(
-          `https://api.cloudinary.com/v1_1/da75fckow/image/upload`,
-          {
-            method: "POST",
-            body: formData,
-          }
+        // const res = await fetch(
+        //   `https://api.cloudinary.com/v1_1/da75fckow/image/upload`,
+        //   {
+        //     method: "POST",
+        //     body: formData,
+        //   }
+        // );
+        // const data = await res.json();
+        const response = await axios.post(
+          "https://api.cloudinary.com/v1_1/da75fckow/image/upload",
+          formData
         );
-        const data = await res.json();
-        imageUrl = data.secure_url;
+        console.log(response);
+
+        if (response.status === 200) {
+          imageUrl = response.data.secure_url;
+          values.motive = "rent";
+          values.img = imageUrl;
+          const result = await addProperty(values);
+          if (result.status === 200) {
+            toast.success("Property added");
+            resetForm({ values: "" });
+            setButtonLoading(false);
+          }
+        }
       } catch (err) {
         console.error(err);
+        setButtonLoading(false);
       }
+
+      // const formData = new FormData();
+      // formData.append("file", image[0]);
+      // formData.append("upload_preset", "client-uploads");
+      // try {
+      //   const res = await fetch(
+      //     `https://api.cloudinary.com/v1_1/da75fckow/image/upload`,
+      //     {
+      //       method: "POST",
+      //       body: formData,
+      //     }
+      //   );
+      //   const data = await res.json();
+      //   imageUrl = data.secure_url;
+      // } catch (err) {
+      //   console.error(err);
+      // }
+    } else {
+      toast.error("Please add a property image");
     }
 
-    let res;
-    try {
-      if (id) {
-        res = await axios.put(`/api/warehouse?id=${id}`, {
-          address: values.address,
-          type: values.type,
-          format: values.format,
-          city: values.city,
-          state: values.state,
-          imageUrl: image.length > 0 ? imageUrl : preview[0],
-          size: values.size,
-          zone: values.zone,
-          category: values.category,
-          owner: values.owner,
-          addedBy: "owner",
-          partlyAvailable: values.partlyAvailable,
-          price: values.price,
-        });
-        toast.success("Updated Successfully");
-      } else {
-        res = await axios.post("/api/warehouse", {
-          address: values.address,
-          type: values.type,
-          format: values.format,
-          city: values.city,
-          state: values.state,
-          imageUrl: imageUrl,
-          size: values.size,
-          zone: values.zone,
-          category: values.category,
-          owner: values.owner,
-          addedBy: "owner",
-          partlyAvailable: values.partlyAvailable,
-          price: values.price,
-        });
-      }
-      if (res.status === 201) {
-        resetForm({ values: "" });
-        setImage([]);
-        setPreview([]);
-        toast.success("Added Successfully");
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setButtonLoading(false);
-    }
+    // let res;
+    // try {
+    //   if (id) {
+    //     res = await axios.put(`/api/warehouse?id=${id}`, {
+    //       address: values.address,
+    //       type: values.type,
+    //       format: values.format,
+    //       city: values.city,
+    //       state: values.state,
+    //       imageUrl: image.length > 0 ? imageUrl : preview[0],
+    //       size: values.size,
+    //       zone: values.zone,
+    //       category: values.category,
+    //       owner: values.owner,
+    //       addedBy: "owner",
+    //       partlyAvailable: values.partlyAvailable,
+    //       price: values.price,
+    //     });
+    //     toast.success("Updated Successfully");
+    //   } else {
+    //     res = await axios.post("/api/warehouse", {
+    //       address: values.address,
+    //       type: values.type,
+    //       format: values.format,
+    //       city: values.city,
+    //       state: values.state,
+    //       imageUrl: imageUrl,
+    //       size: values.size,
+    //       zone: values.zone,
+    //       category: values.category,
+    //       owner: values.owner,
+    //       addedBy: "owner",
+    //       partlyAvailable: values.partlyAvailable,
+    //       price: values.price,
+    //     });
+    //   }
+    //   if (res.status === 201) {
+    //     resetForm({ values: "" });
+    //     setImage([]);
+    //     setPreview([]);
+    //     toast.success("Added Successfully");
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    // } finally {
+    //   setButtonLoading(false);
+    // }
   };
   useEffect(() => {
     if (image.length === 0) return;
@@ -416,7 +451,8 @@ const RentProperty = () => {
                     type="submit"
                     className={`bg-primary rounded-sm text-white w-32 h-10 `}
                   >
-                    {id ? "UPDATE" : "SUBMIT"}
+                    {/* {id ? "UPDATE" : "SUBMIT"} */}
+                    SUBMIT
                   </button>
                 ) : (
                   <Spinner size={40} />

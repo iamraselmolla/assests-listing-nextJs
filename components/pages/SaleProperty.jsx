@@ -138,9 +138,12 @@ const SaleProperty = () => {
           const result = await addProperty(values);
           if (result.status === 200) {
             toast.success("Property added");
+            resetForm({ values: "" });
+            setButtonLoading(false);
           }
         }
       } catch (err) {
+        setButtonLoading(false);
         console.error(err);
       }
     } else {
