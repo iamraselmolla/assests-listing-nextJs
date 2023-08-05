@@ -199,20 +199,20 @@ const RentProperty = () => {
                   <option disabled value="">
                     Select Type
                   </option>
-                  <option value="1">Hotels</option>
-                  <option value="1">Food Court</option>
-                  <option value="2">Co-working Space</option>
-                  <option value="3">Office Space</option>
-                  <option value="4">Warehouse</option>
-                  <option value="5">Factory</option>
-                  <option value="6">Schools</option>
-                  <option value="7">Banks</option>
-                  <option value="8">Hospitals</option>
-                  <option value="9">Call Center</option>
-                  <option value="10">Land</option>
-                  <option value="11">Hostel</option>
-                  <option value="12">Mall</option>
-                  <option value="13">Multiplex</option>
+                  <option value="hotels">Hotels</option>
+                  <option value="foodcourt">Food Court</option>
+                  <option value="coworkingspace">Co-working Space</option>
+                  <option value="officespace">Office Space</option>
+                  <option value="warehouse">Warehouse</option>
+                  <option value="factory">Factory</option>
+                  <option value="schools">Schools</option>
+                  <option value="banks">Banks</option>
+                  <option value="hospitals">Hospitals</option>
+                  <option value="callcenter">Call Center</option>
+                  <option value="land">Land</option>
+                  <option value="hostel">Hostel</option>
+                  <option value="mall">Mall</option>
+                  <option value="multiplex">Multiplex</option>
                 </InputField>
                 <InputField
                   override={true}

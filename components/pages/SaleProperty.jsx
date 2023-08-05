@@ -17,10 +17,10 @@ import { useRouter } from "next/router";
 const SaleProperty = () => {
   const router = useRouter();
   const { id } = router.query;
-  console.log(id);
   const [buttonLoading, setButtonLoading] = useState(false);
   const [preview, setPreview] = useState([]);
   const [image, setImage] = useState([]);
+  const [propertyType, setPropertyType] = useState(null);
   const [fetchedValues, setFetchedValues] = useState({
     type: "",
     state: "",
@@ -190,6 +190,7 @@ const SaleProperty = () => {
               <Gap>Property Details</Gap>
               <FormWrapper>
                 <InputField
+                  onChange={(e) => setPropertyType(e.target)}
                   override={true}
                   as="select"
                   uni="type"
@@ -201,7 +202,7 @@ const SaleProperty = () => {
                   </option>
                   <option value="residential">Residential</option>
                   <option value="commercial">Commerial</option>
-                  <option value="pro-lease">Pro-lease</option>
+                  <option value="prolease">Pro-lease</option>
                 </InputField>
                 <InputField
                   override={true}
