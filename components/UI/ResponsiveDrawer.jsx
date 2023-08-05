@@ -52,7 +52,7 @@ const ResponsiveDrawer = () => {
     return (
       <Link
         href={href}
-        className={`text-black p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] ${className}`}
+        className={`text-black p-2 hover:cursor-pointer hover:bg-primary hover:text-white flex justify-start w-[100%] ${className}`}
       >
         {children}
       </Link>
@@ -110,7 +110,7 @@ const ResponsiveDrawer = () => {
 
   return (
     <>
-      <div className="h-[80px]  sticky w-[100%] top-0 flex justify-between items-center bg-quat text-black z-20">
+      <div className="h-[80px] sticky w-[100%] top-0 flex justify-between items-center bg-quat text-black z-20">
         {/* <h2 id='LuckiestGuy' className='text-2xl md:text-4xl font-bold'>SIKKAWAREHOUSE</h2> */}
         <Link className="hover:scale-105 duration-200 ease-linear" href="/">
           <Image
@@ -125,10 +125,46 @@ const ResponsiveDrawer = () => {
           <Link href="/">
             <button className=" hover:underline  text-black p-2 ">HOME</button>
           </Link>
+          <div>
+            <div className="group/parent relative group-hover/parent:bg-red-400  text-center h-[100%] flex flex-col items-center justify-center">
+              <button onClick={() => window.location.reload()}>
+                <Link
+                  href={"/properties?type=For Rent"}
+                  className=" border-b-2 border-transparent hover:border-black duration-500 h-10"
+                >
+                  PROPERTIES
+                  <KeyboardArrowDown />
+                </Link>
+              </button>
+              <div className=" invisible absolute top-2 mt-8  group-hover/parent:visible  flex flex-col ">
+                <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
+                  <div className="group/parent2 flex  flex-col">
+                    <Link
+                      className={`text-black  p-2 hover:cursor-pointer hover:bg-primary hover:text-white flex justify-start w-[100%] `}
+                      href={"/properties?type=For Rent"}
+                    >
+                      For Rent
+                    </Link>
+                    <Link
+                      className={`text-black  p-2 hover:cursor-pointer hover:bg-primary hover:text-white flex justify-start w-[100%] `}
+                      href={"/properties?type=For Sale"}
+                    >
+                      For Sale
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <Link href="/about">
             <button className=" hover:underline  text-black p-2 ">
               ABOUT US
+            </button>
+          </Link>
+          <Link href="/blog">
+            <button className=" hover:underline  text-black p-2 ">
+                BLOG
             </button>
           </Link>
           {/* <Link href='/warehouses'><button  className=' hover:underline  text-black p-2 '>WAREHOUSES</button></Link> */}
@@ -159,42 +195,11 @@ const ResponsiveDrawer = () => {
                       authCtx.logout();
                       toast.success("Logged out successfully");
                     }}
-                    className="text-black p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%]"
+                    className="text-black p-2 hover:cursor-pointer hover:bg-primary hover:text-white flex justify-start w-[100%]"
                   >
                     Logout
                   </button>
                 )}
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className="group/parent relative group-hover/parent:bg-red-400  text-center h-[100%] flex flex-col items-center justify-center">
-              <button>
-                <Link
-                  href={"/"}
-                  className=" border-b-2 border-transparent hover:border-black duration-500 h-10"
-                >
-                  PROPERTIES
-                  <KeyboardArrowDown />
-                </Link>
-              </button>
-              <div className=" invisible absolute top-2 mt-8  group-hover/parent:visible  flex flex-col ">
-                <div className=" bg-white shadow-lg border-black w-[240px] flex flex-col">
-                  <div className="group/parent2 flex  ">
-                    <Link
-                      className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
-                      href={"/properties?type=For Rent"}
-                    >
-                      For Rent
-                    </Link>
-                  </div>
-                  <Link
-                    className={`text-black  p-2 hover:cursor-pointer hover:bg-warehouseBlue hover:text-white flex justify-start w-[100%] `}
-                    href={"/properties?type=For Sale"}
-                  >
-                    For Sale
-                  </Link>
-                </div>
               </div>
             </div>
           </div>
@@ -761,6 +766,28 @@ const ResponsiveDrawer = () => {
                   GALLERY
                 </button>
               </Link>*/}
+              <Link href="/properties?type=For Sale">
+                <button
+                  onClick={() => {
+                    closeMenuHandler();
+                    window.location.reload();
+                  }}
+                  className=" bg-primary text-white p-2 hover:bg-secondary w-60"
+                >
+                  PROPERTIES FOR SALE
+                </button>
+              </Link>
+              <Link href="/properties?type=For Rent">
+                <button
+                  onClick={() => {
+                    closeMenuHandler();
+                    window.location.reload();
+                  }}
+                  className=" bg-primary text-white p-2 hover:bg-secondary w-60"
+                >
+                  PROPERTIES FOR RENT
+                </button>
+              </Link>
               <Link href="/contact">
                 <button
                   onClick={() => closeMenuHandler()}

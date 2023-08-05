@@ -42,7 +42,7 @@ const About = () => {
             ) : (
                 <>
                     <ResponsiveDrawer />
-                    <TopCard title='About Us' />
+                    <TopCard title='About Us' image={assets.about_us_1} />
                     <Container>
                         <div className=" flex flex-col  m-auto gap-20 py-16">
 

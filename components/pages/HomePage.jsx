@@ -279,6 +279,7 @@ const HomePage = () => {
       title: "Most Value For Money",
       testimonial:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis bcaecati repellendus iusto officia! Architecto harum corrupti voluptatem animi incidunt numquam odit, eveniet illo, nam non onsequuntur cumque rerum commodi. Provident libero quo praesentium olorem quam corrupti ipsa deserunt sunt voluptatibus.",
+      image: assets.feedback_img,
     },
     {
       index: 1,
@@ -287,6 +288,7 @@ const HomePage = () => {
       title: "Most knowledgable",
       testimonial:
         "Lorem ipsum dolor caecati repellendus iusto officia! Architecto harum corrupti voluptatem animi incidunt numquam odit, eveniet illo, nam non onsequuntur cumque rerum commodi. Provident libero quo praesentium olorem quam corrupti ipsa deserunt sunt voluptatibus.",
+      image: assets.feedback_img,
     },
     {
       index: 2,
@@ -295,14 +297,21 @@ const HomePage = () => {
       title: "Most Value For Money",
       testimonial:
         "eveniet illo, nam non onsequuntur cumque rerum commodi. Provident libero quo praesentium olorem quam corrupti ipsa deserunt sunt voluptatibus.",
+      image: assets.feedback_img,
     },
   ];
 
-  const UserTestimonial = ({ user, designation, title, testimonial }) => {
+  const UserTestimonial = ({
+    user,
+    designation,
+    title,
+    testimonial,
+    image,
+  }) => {
     return (
       <div className="flex flex-col justify-center items-center p-4 gap-2 max-w-sm">
         <div className="bg-quat w-20 aspect-square flex justify-center items-center text-primary rounded-full">
-          <Message />
+          <Image src={image} />
         </div>
         <div className="flex flex-col gap-3 text-center">
           <h2 className="text-xl">{user}</h2>
@@ -343,7 +352,7 @@ const HomePage = () => {
 
       </div> */}
 
-          <div className="bg-warehouseBlue flex-col  p-1 flex gap-2 justify-between ">
+          <div className="bg-primary flex-col  p-1 flex gap-2 justify-between ">
             <div className="flex flex-col gap-2">
               <div className="flex text-white gap-1 justify-between">
                 <div className="flex text-white gap-1">
@@ -567,7 +576,9 @@ const HomePage = () => {
                             <option disabled value="">
                               Choose
                             </option>
-                            <option>BTS</option>
+                            <option value="BTS">BTS(Build To Suite)</option>
+                            <option value="Under Construction">Under Construction</option>
+                            <option value="Ready to Move">Ready to Move</option>
                           </InputField>
                           {/* 
                           <InputField

@@ -31,9 +31,9 @@ const showPass=()=>{
         <label className=" text-slate-600 col-span-1 flex items-center" htmlFor={uni}>
           {labelName}
         </label>
-        <div className={`flex items-center space-x-2    rounded-lg `}>
+        <div className={`flex items-center space-x-2 rounded-lg`}>
         <Field
-          className={`p-2 w-[100%]  border resize-y  focus:outline-none border-gray-300 text-black  rounded-lg ${inputClass} ${override ? 'h-10':''}`}
+          className={`bg-quat p-2 w-[100%]  border resize-y  focus:outline-none border-gray-300 text-black  rounded-lg ${inputClass} ${override ? 'h-10':''}`}
           placeholder={placeholder}
           type={type!=='password' || type===undefined ? type : type==='password' && passVisibility ? 'text' : 'password'}
           id={uni}

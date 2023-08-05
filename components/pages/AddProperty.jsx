@@ -18,6 +18,7 @@ import SplashScreen from "../SplashScreen";
 import Footer from "../UI/Footer";
 // import cloudinary from '../utils/cloudinary'
 const AddProperty = () => {
+  const [propertyFor, setPropertyFor] = useState("For Sale");
   const router = useRouter();
   const { id } = router.query;
   console.log(id);
@@ -200,7 +201,29 @@ const AddProperty = () => {
           <ResponsiveDrawer />
           <div className="bg-white">
             <TopCard title="Add Property" />
-            <Container>
+            <Container className="text-black">
+              <div className="grid grid-cols-2 my-10 gap-3">
+                <button
+                  onClick={() => setPropertyFor("For Rent")}
+                  className={`rounded p-2 ${
+                    propertyFor === "For Rent"
+                      ? "bg-primary font-bold text-white shadow-lg"
+                      : "bg-quat shadow-inner"
+                  }`}
+                >
+                  For Rent
+                </button>
+                <button
+                  onClick={() => setPropertyFor("For Sale")}
+                  className={`rounded p-2 ${
+                    propertyFor === "For Sale"
+                      ? "bg-primary font-bold text-white shadow-lg"
+                      : "bg-quat shadow-inner"
+                  }`}
+                >
+                  For Sale
+                </button>
+              </div>
               <Formik
                 initialValues={fetchedValues}
                 validationSchema={validationSchema}
@@ -376,7 +399,11 @@ const AddProperty = () => {
                             Choose
                           </option>
                           {state_arr.map((item, i) => (
-                            <option key={i} value={i}>
+                            <option
+                              className="hover:bg-primary"
+                              key={i}
+                              value={i}
+                            >
                               {item}
                             </option>
                           ))}
@@ -393,7 +420,11 @@ const AddProperty = () => {
                             Choose
                           </option>
                           {cities_arr[values.state]?.map((item, i) => (
-                            <option key={i} value={`${item}`}>
+                            <option
+                              className="hover:bg-primary"
+                              key={i}
+                              value={`${item}`}
+                            >
                               {item}
                             </option>
                           ))}
@@ -405,19 +436,88 @@ const AddProperty = () => {
                           labelName="Type"
                           fieldRequired={true}
                         >
-                          <option value="Hotels">Hotels</option>
-                          <option value="Food Court">Food court</option>
-                          <option value="Office Space">Office space</option>
-                          <option value="Warehouse">Warehouse</option>
-                          <option value="Factory">Factory</option>
-                          <option value="Schools">Schools</option>
-                          <option value="Banks">Banks</option>
-                          <option value="Hospitals">Hospitals</option>
-                          <option value="Call center">Call center</option>
-                          <option value="Land">Land</option>
-                          <option value="Hostel">Hostel</option>
-                          <option value="Mall">Mall</option>
-                          <option value="Multiplex">Multiplex</option>
+                          {propertyFor === "For Rent" ? (
+                            <>
+                              <option
+                                className="hover:bg-primary"
+                                value="Hotels"
+                              >
+                                Hotels
+                              </option>
+                              <option
+                                className="hover:bg-primary"
+                                value="Food Court"
+                              >
+                                Food court
+                              </option>
+                              <option
+                                className="hover:bg-primary"
+                                value="Office Space"
+                              >
+                                Office space
+                              </option>
+                              <option
+                                className="hover:bg-primary"
+                                value="Warehouse"
+                              >
+                                Warehouse
+                              </option>
+                              <option
+                                className="hover:bg-primary"
+                                value="Factory"
+                              >
+                                Factory
+                              </option>
+                              <option
+                                className="hover:bg-primary"
+                                value="Schools"
+                              >
+                                Schools
+                              </option>
+                              <option
+                                className="hover:bg-primary"
+                                value="Banks"
+                              >
+                                Banks
+                              </option>
+                              <option
+                                className="hover:bg-primary"
+                                value="Hospitals"
+                              >
+                                Hospitals
+                              </option>
+                              <option
+                                className="hover:bg-primary"
+                                value="Call center"
+                              >
+                                Call center
+                              </option>
+                              <option className="hover:bg-primary" value="Land">
+                                Land
+                              </option>
+                              <option
+                                className="hover:bg-primary"
+                                value="Hostel"
+                              >
+                                Hostel
+                              </option>
+                              <option className="hover:bg-primary" value="Mall">
+                                Mall
+                              </option>
+                              <option
+                                className="hover:bg-primary"
+                                value="Multiplex"
+                              >
+                                Multiplex
+                              </option>
+                            </>
+                          ) : (
+                            <>
+                              <option value="Resedential">Resedential</option>
+                              <option value="Commercial">Commercial</option>
+                              <option value="Pre-lease">Pre-lease</option>
+                            </>
+                          )}
                         </InputField>{" "}
                         <InputField
                           uni="address"
@@ -434,11 +534,11 @@ const AddProperty = () => {
                           <option disabled value="">
                             Choose
                           </option>
-                          <option value="Ready to Move">Ready to Move</option>
+                          <option value="BTS">BTS (Build to suite)</option>
                           <option value="Under Construction">
                             Under Construction
                           </option>
-                          <option value="BTS">BTS (Build to suite)</option>
+                          <option value="Ready to Move">Ready to Move</option>
                         </InputField>
                       </FormWrapper>
 

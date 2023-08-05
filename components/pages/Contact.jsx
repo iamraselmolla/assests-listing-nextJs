@@ -49,7 +49,7 @@ const Contact = () => {
             {loading ? <SplashScreen /> :
                 <>
                     <ResponsiveDrawer />
-                    <TopCard title='CONTACT US' />
+                    <TopCard title='CONTACT US' image={assets.contact} />
                     <div className='py-20 bg-white text-black '>
                         <Container>
                             <div className='grid grid-cols-1 md:grid-cols-3 md:min-h-[400px] grid-rows-3 md:grid-rows-1 min-h-[1100px] my-10 gap-10'>

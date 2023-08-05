@@ -9,7 +9,6 @@ import { Form, Formik } from "formik";
 import FormWrapper from "../UI/FormWrapper";
 import InputField from "../UI/InputField";
 import cities_arr, { state_arr } from "../utils/CityDropdown";
-
 import {
   BathtubOutlined,
   BookmarkBorder,
@@ -21,13 +20,14 @@ import {
 } from "@mui/icons-material";
 import Image from "next/image";
 import { assets } from "../assets";
+
 const Properties = () => {
   const [loading, setLoading] = useState(true);
   const [propertyFor, setPropertyFor] = useState("For Rent");
 
   useEffect(() => {
-    const url = new URLSearchParams()
-    setPropertyFor(url.get("type"))
+    const url = new URLSearchParams(window.location.search);
+    setPropertyFor(url.get("type"));
     const timer = setTimeout(() => {
       setLoading(false);
     }, 100);
@@ -276,21 +276,11 @@ const Properties = () => {
                             fieldRequired={true}
                             inputClass={"bg-quat rounded-sm"}
                           >
-                            {propertyFor === "For Rent" ? (
-                              <>
-                                <option value="Hotels">Hotels</option>
-                                <option value="Food Court">Food court</option>
-                                <option value="Office Space">
-                                  Office space
-                                </option>
-                              </>
-                            ) : (
-                              <>
-                                <option value="Resedential">Resedential</option>
-                                <option value="Commercial">Commercial</option>
-                                <option value="Pre-lease">Pre-lease</option>
-                              </>
-                            )}
+                            <>
+                              <option value="BTS (Build To Suite)">BTS (Build To Suite)</option>
+                              <option value="Under Construction">Under Construction</option>
+                              <option value="Ready To Move">Ready To Move</option>
+                            </>
                           </InputField>
                           <div className="flex justify-end">
                             {/* {!buttonLoading ? ( */}
