@@ -1,14 +1,9 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
-import { ALL_LINKS } from "../../../components/constants/constant";
 import AuthContext from "../../../components/store/AuthContext";
-import SplashScreen from "../../../components/SplashScreen";
-import ResponsiveDrawer from "../../../components/UI/ResponsiveDrawer";
-import Footer from "../../../components/UI/Footer";
-import { assets } from "../../../components/assets";
-import Image from "next/image";
+import Head from "next/head";
+import Property from "../../../components/pages/Property";
 
 const Signup = () => {
   const [loading, setLoading] = useState(true);
@@ -32,49 +27,40 @@ const Signup = () => {
 
   return (
     <>
-      <div className="relative">
-        {loading ? (
-          <SplashScreen />
-        ) : (
-          <>
-            {authCtx.isLoggedIn ? (
-              <>
-                <ResponsiveDrawer />
-                <div className="bg-white py-10">
-                  <div className="flex justify-center items-center font-sans">
-                    <div className="w-full md:w-[600px] border-2 border-black p-4 flex flex-col gap-4">
-                      <Image
-                        className="w-2/3 m-auto"
-                        alt="illustration"
-                        src={assets.assetImage}
-                      />
-                      <Link href={ALL_LINKS.rentProperty}>
-                        <button
-                          className={`bg-black text-white h-10 font-bold  hover:opacity-75 w-full`}
-                          type
-                        >
-                          For Rent
-                        </button>
-                      </Link>
-                      <Link href={ALL_LINKS.saleProperty}>
-                        <button
-                          className={`bg-black text-white h-10 font-bold  hover:opacity-75 w-full`}
-                          type
-                        >
-                          For Sale
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <Footer />
-              </>
-            ) : (
-              <div></div>
-            )}
-          </>
-        )}
-      </div>
+      <Head>
+        <title>Warehouse Servicez - Property Type</title>
+        <meta charSet="utf-8" />
+        <link
+          rel="icon"
+          href="https://res.cloudinary.com/da75fckow/image/upload/v1683447238/sikka-warehouse/logo_ul5ndq.png"
+        />
+        <meta property="og:locale" content="en_US" />
+        <meta
+          name="description"
+          content="Welcome to the Warehouse Services , where we build your visions."
+        />
+        <meta
+          property="og:title"
+          content="Warehouse Servicez - property type"
+        />
+        <meta
+          name="keywords"
+          content="warehouse services,warehouse servicez,sikka warehouse,sikka and associates,warehouses,best warehouses"
+        />
+        <meta property="og:url" content="https://warehouseservicez.com/" />
+        {/* <meta name="author" content="Your name here" /> */}
+        <meta
+          property="og:image"
+          itemProp="https://res.cloudinary.com/da75fckow/image/upload/v1683447238/sikka-warehouse/logo_ul5ndq.png"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta httpEquiv="Content-Type" content="text/html; charSet=utf-8" />
+        <link rel="canonical" href="https://warehouseservicez.com/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content="" />
+        <meta property="og:site_name" content="Warehouse Servicez" />
+      </Head>
+      <Property></Property>
     </>
   );
 };

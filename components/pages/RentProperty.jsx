@@ -13,6 +13,7 @@ import { IconButton } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { addProperty } from "../services/userServices";
 // import cloudinary from '../utils/cloudinary'
 const RentProperty = () => {
   const router = useRouter();
@@ -114,9 +115,10 @@ const RentProperty = () => {
   });
 
   const onSubmitHandler = async (values, { resetForm }) => {
+    console.log("Hi");
     setButtonLoading(true);
     let imageUrl = "";
-    if (image.length > 0) {
+    if (image?.length > 0) {
       const formData = new FormData();
       formData.append("file", image[0]);
       formData.append("upload_preset", "client-uploads");
@@ -144,6 +146,7 @@ const RentProperty = () => {
             toast.success("Property added");
             resetForm({ values: "" });
             setButtonLoading(false);
+            setImage(null);
           }
         }
       } catch (err) {
@@ -168,7 +171,8 @@ const RentProperty = () => {
       //   console.error(err);
       // }
     } else {
-      toast.error("Please add a property image");
+      setButtonLoading(false);
+      return toast.error("Please add a property image");
     }
 
     // let res;
@@ -381,12 +385,12 @@ const RentProperty = () => {
                   labelName="Email"
                 />
                 <InputField
-                  uni="owner.mobileNo1"
+                  uni="owner.mobile1"
                   placeholder="+919876543210"
                   labelName="Mobile No 1"
                 />
                 <InputField
-                  uni="owner.mobileNo2"
+                  uni="owner.mobile2"
                   placeholder="+919876543210"
                   labelName="Mobile No 2"
                 />
