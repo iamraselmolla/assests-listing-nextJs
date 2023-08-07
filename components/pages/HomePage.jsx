@@ -845,11 +845,11 @@ const HomePage = () => {
                   spaceBetween: 10,
                 },
                 "@0.75": {
-                  slidesPerView: 2,
+                  slidesPerView: 1,
                   spaceBetween: 20,
                 },
                 "@1.00": {
-                  slidesPerView: 3,
+                  slidesPerView: 2,
                   spaceBetween: 40,
                 },
                 "@1.50": {
@@ -1055,7 +1055,7 @@ const HomePage = () => {
             <h1 className="text-3xl">We Serve</h1>
             <hr className="my-3" />
             <Swiper
-              spaceBetween={20}
+              spaceBetween={40}
               modules={[Pagination, Autoplay, Navigation, Pagination]}
               navigation={true}
               pagination={{
@@ -1070,25 +1070,21 @@ const HomePage = () => {
               breakpoints={{
                 "@0.00": {
                   slidesPerView: 1,
-                  spaceBetween: 10,
                 },
                 "@0.75": {
                   slidesPerView: 2,
-                  spaceBetween: 20,
                 },
                 "@1.00": {
                   slidesPerView: 3,
-                  spaceBetween: 40,
                 },
                 "@1.50": {
                   slidesPerView: 4,
-                  spaceBetween: 50,
                 },
               }}
             >
               {clientList.map((item, i) => (
-                <SwiperSlide className="m-3 my-10" key={i}>
-                  <Image src={item} />
+                <SwiperSlide className="my-10 flex" key={i}>
+                  <Image src={item} className="w-1/2 mx-16" />
                 </SwiperSlide>
               ))}
             </Swiper>
