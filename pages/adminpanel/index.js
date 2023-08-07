@@ -5,12 +5,12 @@ export default function index() {
   return (
     <>
     <Head>
-    <title>Sikka & Associates - Admin Panel</title>
+    <title>Sikka & Associates - Dashboard</title>
     <meta charSet="utf-8" />
     <link rel="icon" href='https://res.cloudinary.com/da75fckow/image/upload/v1683447238/sikka-warehouse/logo_ul5ndq.png' />
     <meta property="og:locale" content="en_US" />
     <meta name="description" content= "sikka_and_associates_desc" />
-    <meta property="og:title" content="Sikka & Associates - Admin Panel" />
+    <meta property="og:title" content="Sikka & Associates - Dashboard" />
     <meta name="keywords" content="sikka_and_associates_keywords" />
     <meta property="og:url" content="https://warehouseservicez.com/" />
     {/* <meta name="author" content="Your name here" /> */}
