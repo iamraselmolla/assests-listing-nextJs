@@ -23,18 +23,18 @@ const Login = () => {
   }, []);
 
   const initialValues = {
-    username: "",
+    email: "",
     password: "",
   };
   const validationSchema = Yup.object({
-    username: Yup.string(),
+    email: Yup.string(),
     password: Yup.string(),
   });
 
-  const onSubmitHandler = ({values}) => {
-      console.log(values)
-        //------------ Route to submit the form -------------------
-        //---------------------------------------------------------
+  const onSubmitHandler = ({ values }) => {
+    console.log(values);
+    //------------ Route to submit the form -------------------
+    //---------------------------------------------------------
   };
 
   return (
@@ -48,7 +48,10 @@ const Login = () => {
           <div className="py-20 bg-white text-black">
             <Container>
               <div className="p-3 my-5 shadow-lg rounded grid md:grid-cols-2 gap-4">
-                <Image src={assets.contact} className="hidden md:block rounded" />
+                <Image
+                  src={assets.contact}
+                  className="hidden md:block rounded"
+                />
                 <Formik
                   initialValues={initialValues}
                   validationSchema={validationSchema}
@@ -58,11 +61,13 @@ const Login = () => {
                   {({ values }) => {
                     return (
                       <Form className="flex flex-col gap-6">
-                        <h2 className="text-center text-2xl font-bold">Login</h2>
+                        <h2 className="text-center text-2xl font-bold">
+                          Login
+                        </h2>
                         <InputField
-                          uni="username"
-                          placeholder="Username"
-                          labelName="Username"
+                          uni="email"
+                          placeholder="Email"
+                          labelName="Email"
                           inputClass={"bg-quat rounded-sm"}
                         />
                         <InputField
@@ -73,14 +78,16 @@ const Login = () => {
                           type={"password"}
                         />
 
-                          {!loading ? (
-                            <button
-                              type="submit"
-                              className="self-center border border-primary hover:bg-primary rounded-sm text-primary font-bold hover:text-white w-full h-10 flex justify-center items-center gap-3"
-                            >Login</button>
-                          ) : (
-                            <Spinner size={40} />
-                          )}
+                        {!loading ? (
+                          <button
+                            type="submit"
+                            className="self-center border border-primary hover:bg-primary rounded-sm text-primary font-bold hover:text-white w-full h-10 flex justify-center items-center gap-3"
+                          >
+                            Login
+                          </button>
+                        ) : (
+                          <Spinner size={40} />
+                        )}
                       </Form>
                     );
                   }}

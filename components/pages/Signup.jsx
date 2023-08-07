@@ -3,15 +3,21 @@ import ResponsiveDrawer from "../UI/ResponsiveDrawer";
 import TopCard from "../UI/TopCard";
 import Footer from "../UI/Footer";
 import SplashScreen from "../SplashScreen";
+import Spinner from "../UI/Spinner";
 import { Container } from "@mui/system";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import InputField from "../UI/InputField";
 import Image from "next/image";
 import { assets } from "../assets";
+import { handleSignUp } from "../services/userServices";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const Signup = () => {
   const [loading, setLoading] = useState(true);
+  const [buttonLoading, setButtonLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,22 +29,36 @@ const Signup = () => {
   }, []);
 
   const initialValues = {
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   };
   const validationSchema = Yup.object({
-    firstname: Yup.string(),
-    lastname: Yup.string(),
+    firstName: Yup.string(),
+    lastName: Yup.string(),
     email: Yup.string().email(),
     password: Yup.string(),
   });
 
-  const onSubmitHandler = ({ values }) => {
-    console.log(values);
-    //------------ Route to submit the form -------------------
-    //---------------------------------------------------------
+  const onSubmitHandler = async (values) => {
+    setButtonLoading(true);
+    try {
+      const response = await handleSignUp(values);
+      console.log(response);
+      if (response.status !== 200) {
+        setButtonLoading(false);
+        toast.error(response.data.message);
+      }
+      if (response.status === 200) {
+        setButtonLoading(false);
+        toast.success(response.data.message);
+        router.push("/login");
+      }
+    } catch (error) {
+      console.log(error);
+      setButtonLoading(false);
+    }
   };
 
   return (
@@ -66,13 +86,13 @@ const Signup = () => {
                         </h2>
                         <div className="grid md:grid-cols-2 gap-5">
                           <InputField
-                            uni="firstname"
+                            uni="firstName"
                             placeholder="First Name"
                             labelName="First Name"
                             inputClass="bg-quat rounded-sm"
                           />
                           <InputField
-                            uni="lastname"
+                            uni="lastName"
                             placeholder="Last Name"
                             labelName="Last Name"
                             inputClass="bg-quat rounded-sm"
@@ -92,7 +112,7 @@ const Signup = () => {
                           type={"password"}
                         />
 
-                        {!loading ? (
+                        {!buttonLoading ? (
                           <button
                             type="submit"
                             className="self-center border border-primary hover:bg-primary rounded-sm text-primary font-bold hover:text-white w-full h-10 flex justify-center items-center gap-3"

@@ -42,7 +42,7 @@ export const adminMenu = [
   },
   {
     name: "Blog",
-    pageLink: "/dashboard/requestlisting",
+    pageLink: "/dashboard/blog",
     icon: <Newspaper />,
     showAlways: false,
   },

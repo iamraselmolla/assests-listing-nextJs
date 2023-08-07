@@ -17,7 +17,10 @@ export default async function handler(req, res) {
         username = username.toLowerCase();
         const user = await User.findOne({ username });
         if (!user) return res.status(404).json({ message: "User not found" });
-        // const checkandComparePass = await compareHashPass(password, user?.password)
+        const checkandComparePass = await compareHashPass(
+          password,
+          user?.password
+        );
 
         if (password === user?.password) {
           const token = jwt.sign({ username }, secretKey);
