@@ -37,6 +37,15 @@ import Renest from "./assets/Renest.png";
 import V_MART from "./assets/V_MART.png";
 import feedback_img from "./assets/feedback-image.png";
 import contact from "./assets/contact.jpg";
+import warehouse from "./assets/DealsIn/warehouse.jpg";
+import industrialShed from "./assets/DealsIn/industrialShed.jpg";
+import hotel from "./assets/DealsIn/hotel.svg";
+import callCenter from "./assets/DealsIn/callCenter.jpg";
+import restaurant from "./assets/DealsIn/restaurant.jpg";
+import factory from "./assets/DealsIn/factory.jpg";
+import showroom from "./assets/DealsIn/showroom.jpg";
+import corporate from "./assets/DealsIn/corporate.jpg";
+import co_working from "./assets/DealsIn/coWorking.jpg";
 
 export const assets = {
   assetImage,
@@ -58,6 +67,17 @@ export const assets = {
     warehouse_gallery_06,
     warehouse_gallery_07,
     warehouse_gallery_08,
+  },
+  dealsIn: {
+    warehouse,
+    industrialShed,
+    hotel,
+    callCenter,
+    restaurant,
+    factory,
+    showroom,
+    corporate,
+    co_working,
   },
   about_us_1,
   about_us_2,

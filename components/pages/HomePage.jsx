@@ -216,23 +216,23 @@ const HomePage = () => {
 
   const DealsIn = ({ title, image }) => {
     return (
-      <div className="bg-white shadow-inner rounded overflow-hidden w-48 my-10 mx-10">
-        <Image src={image} alt={"Not Found"} className="max-h-32" />
-        <p className="text-xl text-center my-1">{title}</p>
+      <div className="bg-white shadow-md rounded overflow-hidden w-48 my-10 mx-10">
+        <Image src={image} alt={"Not Found"} className="h-32" />
+        <p className="text-xl text-center my-3">{title}</p>
       </div>
     );
   };
 
   const taskList = [
-    { title: "Warehouse", image: assets.bg_03 },
-    { title: "Industrial Shed", image: assets.bg_03 },
-    { title: "Hotel", image: assets.bg_03 },
-    { title: "Call Center", image: assets.bg_03 },
-    { title: "Restaurant", image: assets.bg_03 },
-    { title: "Factory", image: assets.bg_03 },
-    { title: "Showroom", image: assets.bg_03 },
-    { title: "Corporate Office", image: assets.bg_03 },
-    { title: "Co-working Space", image: assets.bg_03 },
+    { title: "Warehouse", image: assets.dealsIn.warehouse},
+    { title: "Industrial Shed", image: assets.dealsIn.industrialShed },
+    { title: "Hotel", image: assets.dealsIn.hotel},
+    { title: "Call Center", image: assets.dealsIn.callCenter },
+    { title: "Restaurant", image: assets.dealsIn.restaurant },
+    { title: "Factory", image: assets.dealsIn.factory },
+    { title: "Showroom", image: assets.dealsIn.showroom },
+    { title: "Corporate Office", image: assets.dealsIn.corporate },
+    { title: "Co-working Space", image: assets.dealsIn.co_working },
   ];
 
   const clientList = [
@@ -824,14 +824,16 @@ const HomePage = () => {
         <Link href={`/warehouses?state=${search.state}&city=${search.city}&type=${search.type}&category=${search.category}&zone=${search.zone}&format=${search.format}`} className='rounded-lg bg-white p-2 w-[100%] md:w-[200px] text-center  my-4 md:mx-auto'>SEARCH</Link>
       </div> */}
 
-          <div className="bg-quat p-[10%] m-auto">
+          <div className="bg-quat p-[10%] m-auto shadow-inner">
             <h1 className="text-3xl">We Deals In Commercial Space</h1>
             <hr className="my-3" />
             <Swiper
               spaceBetween={20}
               modules={[Pagination, Autoplay]}
-              pagination={true}
-              navigation
+              pagination={{
+                clickable: true,
+              }}
+              navigation={true}
               autoplay={{
                 delay: 3000,
                 disableOnInteraction: false,
@@ -1049,7 +1051,7 @@ const HomePage = () => {
             </div>
           </div>
      */}
-          <div className="bg-white p-[10%] m-auto">
+          <div className="bg-quat p-[10%] m-auto shadow-inner">
             <h1 className="text-3xl">We Serve</h1>
             <hr className="my-3" />
             <Swiper
