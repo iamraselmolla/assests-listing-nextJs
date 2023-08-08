@@ -14,12 +14,15 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import AuthContext from "../store/AuthContext";
 import Spinner from "../UI/Spinner";
+import { useDispatch } from "react-redux";
+import { userDataActions } from "../store/user-data-slice";
 
 const Login = () => {
   const [loading, setLoading] = useState(true);
-  const router = useRouter()
+  const router = useRouter();
   const [buttonLoading, setButtonLoading] = useState(false);
-  const { login } = useContext(AuthContext)
+  const { login } = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -40,25 +43,26 @@ const Login = () => {
   });
 
   const onSubmitHandler = async (values) => {
-    setButtonLoading(true)
+    setButtonLoading(true);
 
     try {
-      const result = await handleLogin(values)
+      const result = await handleLogin(values);
       if (result.status === 200) {
-        toast.success("Login successfully")
+        toast.success("Login successfully");
         router.push("/dashboard/addproperty");
-        setButtonLoading(false)
-        const { token, id, role } = result?.data?.user
-        login(id, token, role);
+        setButtonLoading(false);
+        const { token, id, role } = result?.data?.user;
+        const { userInfo } = result?.data;
 
+        login(id, token, role);
+        dispatch(userDataActions.setUserInfo(userInfo));
       } else {
-        toast.warning(result?.data.message);
-        setButtonLoading(false)
+        toast.warning(result?.data?.message);
+        setButtonLoading(false);
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err);
-      setButtonLoading(false)
+      setButtonLoading(false);
     }
   };
 
@@ -75,7 +79,8 @@ const Login = () => {
               <div className="p-3 my-5 shadow-lg rounded grid md:grid-cols-2 gap-4">
                 <Image
                   src={assets.contact}
-                  className="hidden md:block rounded" alt="Login Image"
+                  className="hidden md:block rounded"
+                  alt="Login Image"
                 />
                 <Formik
                   initialValues={initialValues}

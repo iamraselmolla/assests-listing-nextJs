@@ -14,6 +14,9 @@ import { toast } from "react-toastify";
 import { assets } from "../assets";
 import Image from "next/image";
 import { ChecklistRtl, Newspaper, Photo } from "@mui/icons-material";
+import { getAllProperty } from "../services/userServices";
+import { userDataActions } from "../store/user-data-slice";
+import { useDispatch } from "react-redux";
 
 export const adminMenu = [
   {
@@ -52,6 +55,7 @@ const Dashboard = ({ children }) => {
   const route = useRouter();
   const [highlightIndex, setHighlightIndex] = useState(-1);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!authCtx.isLoggedIn) {
@@ -67,6 +71,15 @@ const Dashboard = ({ children }) => {
     return () => {
       clearTimeout(timer);
     };
+  }, []);
+  useEffect(() => {
+    const getAllPropertyByAdmin = async () => {
+      const response = await getAllProperty();
+      if (authCtx.role === "admin") {
+        dispatch(userDataActions.setALlProperties(response?.data));
+      }
+    };
+    getAllPropertyByAdmin();
   }, []);
 
   const PAGES = [];
@@ -87,11 +100,12 @@ const Dashboard = ({ children }) => {
                       <Image
                         src={assets.director}
                         className="w-[100%] h-[100%] "
+                        alt="Director"
                       />
                     </div>
                     <h1 className="font-bold  mt-4 text-black">Harish Sikka</h1>
                     <h1 className="bg-sec text-white p-1 rounded-sm bg-primary">
-                      Admin
+                      {authCtx.role}
                     </h1>
                   </div>
 

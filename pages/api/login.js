@@ -15,24 +15,24 @@ export default async function handler(req, res) {
         let { email, password } = req.body;
         await dbConnect();
         email = email.toLowerCase();
-        const user = await User.findOne({ email });
-        if (!user) return res.status(404).json({ message: "User not found" });
+        const userExist = await User.findOne({ email });
+        if (!userExist)
+          return res.status(404).json({ message: "User not found" });
         const checkandComparePass = await compareHashPass(
           password,
-          user?.password
+          userExist?.password
         );
 
         if (checkandComparePass) {
           const jwtData = {
-            email,
-            role: user?.role,
-            id: user?._id,
-            role: user?.role,
+            role: userExist?.role,
+            id: userExist?._id,
           };
           const token = jwt.sign(jwtData, secretKey);
           return res.status(200).json({
             message: "Logged in Successfully",
-            user: { token, id: user._id, role: user?.role },
+            user: { token, id: userExist._id, role: userExist?.role },
+            userInfo: userExist,
           });
         }
 

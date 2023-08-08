@@ -7,8 +7,8 @@ const BASE_URL = {
 };
 
 // Handle Login
-export function handleLogin (values){
-  return http.post(BASE_URL.login, values)
+export function handleLogin(values) {
+  return http.post(BASE_URL.login, values);
 }
 
 export function handleSignUp(values) {

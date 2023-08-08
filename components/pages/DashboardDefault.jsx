@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Dashboard from "./Dashboard";
 import { useEffect } from "react";
 import { Link, ListItemText, Switch } from "@mui/material";
@@ -7,6 +7,9 @@ import Spinner from "../UI/Spinner";
 import { toast } from "react-toastify";
 import cities_arr, { state_arr } from "../utils/CityDropdown";
 import { getAllProperty } from "../services/userServices";
+import AuthContext from "../store/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
+import { userDataActions } from "../store/user-data-slice";
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
 const DashboardDefault = () => {
@@ -16,14 +19,16 @@ const DashboardDefault = () => {
   const [dataLoading, setDataLoading] = useState(true);
   const [changed, setChanged] = useState(true);
 
+  const { allProperties } = useSelector((state) => state.userData);
+
   useEffect(() => {
-    const getWareHouses = async () => {
-      const response = await getAllProperty();
-      if (response.status === 200) {
-        setWarehouses([...response?.data]);
-        setSearchWarehouses([...response?.data]);
-        setDataLoading(false);
-      }
+    const getWareHouses = () => {
+      const findAllAcceptedProperty = allProperties?.filter(
+        (property) => property.activity.accepted
+      );
+      setWarehouses([...findAllAcceptedProperty]);
+      setSearchWarehouses([...findAllAcceptedProperty]);
+      setDataLoading(false);
     };
     getWareHouses();
   }, [changed]);
@@ -52,7 +57,6 @@ const DashboardDefault = () => {
       const response = await axios.put(`/api/enableWarehouse?id=${id}`, {
         enabled,
       });
-      console.log(response.data);
       toast.success(response.data.message);
       setDisabling(false);
       setChanged(!changed);
@@ -151,10 +155,12 @@ const DashboardDefault = () => {
       )}
       {!dataLoading && warehouses.length === 0 && (
         <div className="text-center h-[40vh] flex flex-col justify-end items-center overflow-hidden gap-4">
-          <h3 className="text-lg font-bold">No Warehouses found</h3>
-          <Link href="/dashboard/addwarehouse">
+          <h3 className="text-lg text-black font-extrabold">
+            No Warehouses found
+          </h3>
+          <Link href="/dashboard/addproperty">
             <button className=" bg-primary text-white p-2 hover:bg-secondary w-64">
-              ADD WAREHOUSE
+              ADD Property
             </button>
           </Link>
         </div>
@@ -162,7 +168,7 @@ const DashboardDefault = () => {
 
       {search && searchWarehouses.length === 0 && (
         <div className="text-center h-[30vh] flex flex-col justify-end items-center overflow-hidden gap-4">
-          <h3 className="text-lg font-bold">No Property found</h3>
+          <h3 className="text-lg font-bold">No Property Found</h3>
         </div>
       )}
     </Dashboard>
