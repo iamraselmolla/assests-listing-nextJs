@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ResponsiveDrawer from "../UI/ResponsiveDrawer";
 import TopCard from "../UI/TopCard";
 import Footer from "../UI/Footer";
@@ -9,9 +9,17 @@ import * as Yup from "yup";
 import InputField from "../UI/InputField";
 import Image from "next/image";
 import { assets } from "../assets";
+import { handleLogin } from "../services/userServices";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import AuthContext from "../store/AuthContext";
+import Spinner from "../UI/Spinner";
 
 const Login = () => {
   const [loading, setLoading] = useState(true);
+  const router = useRouter()
+  const [buttonLoading, setButtonLoading] = useState(false);
+  const { login } = useContext(AuthContext)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -31,10 +39,27 @@ const Login = () => {
     password: Yup.string(),
   });
 
-  const onSubmitHandler = ({ values }) => {
-    console.log(values);
-    //------------ Route to submit the form -------------------
-    //---------------------------------------------------------
+  const onSubmitHandler = async (values) => {
+    setButtonLoading(true)
+
+    try {
+      const result = await handleLogin(values)
+      if (result.status === 200) {
+        toast.success("Login successfully")
+        router.push("/dashboard/addproperty");
+        setButtonLoading(false)
+        const { token, id, role } = result?.data?.user
+        login(id, token, role);
+
+      } else {
+        toast.warning(result?.data.message);
+        setButtonLoading(false)
+      }
+    }
+    catch (err) {
+      console.log(err);
+      setButtonLoading(false)
+    }
   };
 
   return (
@@ -44,13 +69,13 @@ const Login = () => {
       ) : (
         <>
           <ResponsiveDrawer />
-          <TopCard title="About" />
+          <TopCard title="Login" />
           <div className="py-20 bg-white text-black">
             <Container>
               <div className="p-3 my-5 shadow-lg rounded grid md:grid-cols-2 gap-4">
                 <Image
                   src={assets.contact}
-                  className="hidden md:block rounded"
+                  className="hidden md:block rounded" alt="Login Image"
                 />
                 <Formik
                   initialValues={initialValues}
@@ -78,7 +103,7 @@ const Login = () => {
                           type={"password"}
                         />
 
-                        {!loading ? (
+                        {!buttonLoading ? (
                           <button
                             type="submit"
                             className="self-center border border-primary hover:bg-primary rounded-sm text-primary font-bold hover:text-white w-full h-10 flex justify-center items-center gap-3"
@@ -86,7 +111,9 @@ const Login = () => {
                             Login
                           </button>
                         ) : (
-                          <Spinner size={40} />
+                          <div className="flex justify-center items-center">
+                            <Spinner size={40} />
+                          </div>
                         )}
                       </Form>
                     );

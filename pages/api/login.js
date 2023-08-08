@@ -12,21 +12,23 @@ export default async function handler(req, res) {
   switch (req.method) {
     case "POST": {
       try {
-        let { username, password } = req.body;
+        let { email, password } = req.body;
         await dbConnect();
-        username = username.toLowerCase();
-        const user = await User.findOne({ username });
+        email = email.toLowerCase();
+        const user = await User.findOne({ email });
         if (!user) return res.status(404).json({ message: "User not found" });
         const checkandComparePass = await compareHashPass(
           password,
           user?.password
         );
+       
 
-        if (password === user?.password) {
-          const token = jwt.sign({ username }, secretKey);
+        if (checkandComparePass) {
+          const jwtData = {email, role: user?.role, id: user?._id, role: user?.role}
+          const token = jwt.sign(jwtData, secretKey);
           return res.status(200).json({
             message: "Logged in Successfully",
-            user: { username, token, _id: user._id },
+            user: {token, id: user._id, role: user?.role },
           });
         }
 

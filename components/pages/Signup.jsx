@@ -33,6 +33,7 @@ const Signup = () => {
     lastName: "",
     email: "",
     password: "",
+    role: ''
   };
   const validationSchema = Yup.object({
     firstName: Yup.string(),
@@ -68,7 +69,7 @@ const Signup = () => {
       ) : (
         <>
           <ResponsiveDrawer />
-          <TopCard title="About" />
+          <TopCard title="Sign up" />
           <div className="py-20 bg-white text-black">
             <Container>
               <div className="p-3 my-5 shadow-lg rounded grid md:grid-cols-2 gap-4">
@@ -120,7 +121,9 @@ const Signup = () => {
                             Signup
                           </button>
                         ) : (
-                          <Spinner size={40} />
+                          <div className="flex justify-center items-center">
+                            <Spinner size={40} />
+                          </div>
                         )}
                       </Form>
                     );

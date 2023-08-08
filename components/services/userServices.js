@@ -6,6 +6,11 @@ const BASE_URL = {
   allProperty: "/api/allProperty",
 };
 
+// Handle Login
+export function handleLogin (values){
+  return http.post(BASE_URL.login, values)
+}
+
 export function handleSignUp(values) {
   return http.post(BASE_URL.signUp, values);
 }
