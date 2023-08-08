@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Dashboard from "./Dashboard";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
@@ -14,8 +14,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { addProperty } from "../services/userServices";
+import AuthContext from "../store/AuthContext";
 // import cloudinary from '../utils/cloudinary'
 const RentProperty = () => {
+  const { localid } = useContext(AuthContext);
   const router = useRouter();
   const { id } = router.query;
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -36,6 +38,8 @@ const RentProperty = () => {
       mobile2: "",
     },
     img: "",
+
+    user: "",
     // address: "",
     // description: "",
     // size: "",
@@ -141,12 +145,13 @@ const RentProperty = () => {
           imageUrl = response.data.secure_url;
           values.motive = "rent";
           values.img = imageUrl;
+          values.user = localid;
           const result = await addProperty(values);
           if (result.status === 200) {
             toast.success("Property added");
             resetForm({ values: "" });
             setButtonLoading(false);
-            setImage(null);
+            // setImage(null);
           }
         }
       } catch (err) {
@@ -224,8 +229,8 @@ const RentProperty = () => {
     // }
   };
   useEffect(() => {
-    if (image.length === 0) return;
-    const objectUrl = URL.createObjectURL(image[image.length - 1]);
+    if (image?.length === 0) return;
+    const objectUrl = URL.createObjectURL(image[image?.length - 1]);
     setPreview([...preview, objectUrl]);
   }, [image]);
 

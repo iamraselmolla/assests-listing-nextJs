@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const propertySchema = mongoose.Schema(
   {
@@ -45,6 +45,22 @@ const propertySchema = mongoose.Schema(
     img: {
       type: String,
       required: true,
+    },
+    activity: {
+      active: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
+      accepted: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
   },
   {

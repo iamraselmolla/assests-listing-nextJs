@@ -21,14 +21,18 @@ export default async function handler(req, res) {
           password,
           user?.password
         );
-       
 
         if (checkandComparePass) {
-          const jwtData = {email, role: user?.role, id: user?._id, role: user?.role}
+          const jwtData = {
+            email,
+            role: user?.role,
+            id: user?._id,
+            role: user?.role,
+          };
           const token = jwt.sign(jwtData, secretKey);
           return res.status(200).json({
             message: "Logged in Successfully",
-            user: {token, id: user._id, role: user?.role },
+            user: { token, id: user._id, role: user?.role },
           });
         }
 

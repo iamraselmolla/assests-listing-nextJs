@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Dashboard from "./Dashboard";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
@@ -14,8 +14,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { addProperty } from "../services/userServices";
+import AuthContext from "../store/AuthContext";
 // import cloudinary from '../utils/cloudinary'
 const SaleProperty = () => {
+  const { localid } = useContext(AuthContext);
   const router = useRouter();
   const { id } = router.query;
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -77,6 +79,8 @@ const SaleProperty = () => {
           mobile2: "",
         },
         img: "",
+
+        user: "",
         // address: "",
         // description: "",
         // size: "",
@@ -135,10 +139,13 @@ const SaleProperty = () => {
           imageUrl = response.data.secure_url;
           values.motive = "sale";
           values.img = imageUrl;
+          values.user = localid;
           const result = await addProperty(values);
           if (result.status === 200) {
             toast.success("Property added");
             resetForm({ values: "" });
+            // setImage([]);
+            setPreview([]);
             setButtonLoading(false);
           }
         }
@@ -151,56 +158,56 @@ const SaleProperty = () => {
     }
 
     // let res;
-    try {
-      // if (id) {
-      //   res = await axios.put(`/api/warehouse?id=${id}`, {
-      //     address: values.address,
-      //     type: values.type,
-      //     format: values.format,
-      //     city: values.city,
-      //     state: values.state,
-      //     imageUrl: image.length > 0 ? imageUrl : preview[0],
-      //     size: values.size,
-      //     zone: values.zone,
-      //     category: values.category,
-      //     owner: values.owner,
-      //     addedBy: "owner",
-      //     partlyAvailable: values.partlyAvailable,
-      //     price: values.price,
-      //   });
-      //   toast.success("Updated Successfully");
-      // } else {
-      //   res = await axios.post("/api/warehouse", {
-      //     address: values.address,
-      //     type: values.type,
-      //     format: values.format,
-      //     city: values.city,
-      //     state: values.state,
-      //     imageUrl: imageUrl,
-      //     size: values.size,
-      //     zone: values.zone,
-      //     category: values.category,
-      //     owner: values.owner,
-      //     addedBy: "owner",
-      //     partlyAvailable: values.partlyAvailable,
-      //     price: values.price,
-      //   });
-      // }
-      if (res.status === 201) {
-        resetForm({ values: "" });
-        setImage([]);
-        setPreview([]);
-        toast.success("Added Successfully");
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setButtonLoading(false);
-    }
+    // try {
+    //   if (id) {
+    //     res = await axios.put(`/api/warehouse?id=${id}`, {
+    //       address: values.address,
+    //       type: values.type,
+    //       format: values.format,
+    //       city: values.city,
+    //       state: values.state,
+    //       imageUrl: image.length > 0 ? imageUrl : preview[0],
+    //       size: values.size,
+    //       zone: values.zone,
+    //       category: values.category,
+    //       owner: values.owner,
+    //       addedBy: "owner",
+    //       partlyAvailable: values.partlyAvailable,
+    //       price: values.price,
+    //     });
+    //     toast.success("Updated Successfully");
+    //   } else {
+    //     res = await axios.post("/api/warehouse", {
+    //       address: values.address,
+    //       type: values.type,
+    //       format: values.format,
+    //       city: values.city,
+    //       state: values.state,
+    //       imageUrl: imageUrl,
+    //       size: values.size,
+    //       zone: values.zone,
+    //       category: values.category,
+    //       owner: values.owner,
+    //       addedBy: "owner",
+    //       partlyAvailable: values.partlyAvailable,
+    //       price: values.price,
+    //     });
+    //   }
+    //   if (res.status === 201) {
+    //     resetForm({ values: "" });
+    //     setImage([]);
+    //     setPreview([]);
+    //     toast.success("Added Successfully");
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    // } finally {
+    //   setButtonLoading(false);
+    // }
   };
   useEffect(() => {
-    if (image.length === 0) return;
-    const objectUrl = URL.createObjectURL(image[image.length - 1]);
+    if (image?.length === 0) return;
+    const objectUrl = URL.createObjectURL(image[image?.length - 1]);
     setPreview([...preview, objectUrl]);
   }, [image]);
 
