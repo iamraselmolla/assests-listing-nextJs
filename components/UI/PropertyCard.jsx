@@ -1,4 +1,6 @@
 import React from "react";
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 import {
   BathtubOutlined,
   BookmarkBorder,
@@ -36,9 +38,13 @@ const PropertyCard = ({ img, activity, property, motive }) => {
           </div>
         </div>
         <div className="absolute gap-1 pr-3 justify-end w-full bottom-2 flex">
-          <div className="bg-black p-1 text-sm rounded bg-opacity-40 cursor-pointer text-white">
-            <OpenInFull></OpenInFull>
-          </div>
+          <PhotoProvider>
+            <PhotoView src={img}>
+              <div className="bg-black p-1 text-sm rounded bg-opacity-40 cursor-pointer text-white">
+                <OpenInFull></OpenInFull>
+              </div>
+            </PhotoView>
+          </PhotoProvider>
           <div className="bg-black p-1 text-sm rounded bg-opacity-40 cursor-pointer text-white">
             <FavoriteBorder></FavoriteBorder>
           </div>
