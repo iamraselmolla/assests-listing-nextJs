@@ -58,6 +58,25 @@ export default async function propertyHandling(req, res) {
         });
       }
       break;
+    case "DELETE":
+      try {
+        await dbConnect();
+        isAdmin(req, res, async (req, res, next, decoded) => {
+          const { id } = req.query;
+          if (id) {
+            const result = await Property.findByIdAndDelete(id);
+            if (result) {
+              return res.status(200).json({ message: "Deleted Successfully" });
+            }
+          }
+        });
+      } catch (err) {
+        return res.status(500).json({
+          message: "Something went wrong",
+          error: err.message,
+        });
+      }
+      break;
     default:
       return res.status(405).json({ message: "Method not allowed" });
   }

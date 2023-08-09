@@ -13,7 +13,6 @@ import {
 import Image from "next/image";
 
 const PropertyCard = ({ img, activity, property, motive }) => {
-  console.log(img, activity, property);
   return (
     <div className="flex flex-col gap-2 bg-quat shadow-md rounded overflow-hidden justify-between h-fit">
       <div className="relative">

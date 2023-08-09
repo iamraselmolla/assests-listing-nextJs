@@ -6,11 +6,16 @@ const BASE_URL = {
   allProperty: "/api/allProperty",
   findPropertyForFrontEnd: "/api/findPropertyForDisplay",
   featuredOrActive: "/api/property",
+  deleteProperty: "/api/property",
 };
 
 // Handle Login
 export function handleLogin(values) {
   return http.post(BASE_URL.login, values);
+}
+// Delete Property
+export function handleDeletingProperty(id) {
+  return http.delete(BASE_URL.deleteProperty + `?id=${id}`);
 }
 export function getAllAcceptedAndActiveProperty() {
   return http.get(BASE_URL.findPropertyForFrontEnd);

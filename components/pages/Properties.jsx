@@ -17,8 +17,10 @@ import { getAllAcceptedAndActiveProperty } from "../services/userServices";
 
 const Properties = () => {
   const [loading, setLoading] = useState(true);
-  const [propertyFor, setPropertyFor] = useState("For Rent");
+  const [propertyFor, setPropertyFor] = useState("All");
   const [allProperty, setAllProperty] = useState([]);
+  const [allPropertyAfterFilter, setAllPropertyAfterFilter] =
+    useState(allProperty);
 
   useEffect(() => {
     const url = new URLSearchParams(window.location.search);
@@ -39,6 +41,27 @@ const Properties = () => {
     };
     fetchProperty();
   }, []);
+  useEffect(() => {
+    if (propertyFor === "For Rent") {
+      const allRents = allProperty?.filter(
+        (property) => property?.motive === "rent"
+      );
+      setAllPropertyAfterFilter(allRents);
+      console.log(allProperty, "rent");
+      return;
+    }
+    if (propertyFor === "For Sale") {
+      const allRents = allProperty?.filter(
+        (property) => property?.motive === "sale"
+      );
+      setAllPropertyAfterFilter(allRents, "sale");
+      console.log(allProperty);
+      return;
+    }
+    setAllPropertyAfterFilter(allProperty);
+    console.log(allProperty, "all");
+  }, [propertyFor]);
+
   const initialValues = {
     type: "",
     title: "",
@@ -119,7 +142,15 @@ const Properties = () => {
             <Container>
               <div className="grid grid-cols-3 my-10 gap-3">
                 <div className="flex flex-col gap-4 p-3 shadow-inner">
-                  <div className="bg-secondary grid grid-cols-2 justify-between overflow-hidden rounded-sm">
+                  <div className="bg-secondary grid grid-cols-3 justify-between overflow-hidden rounded-sm">
+                    <button
+                      className={`p-2 text-white ${
+                        propertyFor === "All" && "bg-primary"
+                      }`}
+                      onClick={() => setPropertyFor("All")}
+                    >
+                      All
+                    </button>
                     <button
                       className={`p-2 text-white ${
                         propertyFor === "For Rent" && "bg-primary"
@@ -257,7 +288,7 @@ const Properties = () => {
                 </div>
                 <div className="shadow-lg col-span-2 bg-quat p-3 grid grid-cols-1 md:grid-cols-2 gap-3">
                   {allProperty?.length > 0 &&
-                    allProperty?.map((item) => (
+                    allPropertyAfterFilter?.map((item) => (
                       <PropertyCard
                         property={item.property}
                         img={item.img}

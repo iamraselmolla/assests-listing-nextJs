@@ -9,6 +9,7 @@ import cities_arr, { state_arr } from "../utils/CityDropdown";
 import {
   getAllProperty,
   handleActiveOrFeatured,
+  handleDeletingProperty,
 } from "../services/userServices";
 import AuthContext from "../store/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
@@ -75,20 +76,25 @@ const DashboardDefault = () => {
       if (response?.status === 200) {
         toast.success(response?.data?.message);
 
-        // setChanged(!changed);
-        // setDataLoading(false);
+        setChanged(!changed);
+        setDataLoading(false);
         dispatch(userDataActions.refreshItem());
       } else {
-        // setChanged(!changed);
-        // setDataLoading(false);
+        setChanged(!changed);
+        setDataLoading(false);
         toast.error(response?.data?.message);
       }
     };
-    const warehouseDeleteHandler = async (id) => {
+    const propertyDeleteHandler = async (id) => {
       try {
-        const response = await axios.delete(`/api/warehouse?id=${id}`);
-        toast.success(response.data.message);
-        setChanged(!changed);
+        if (window.confirm("You you want to delete this?")) {
+          const response = await handleDeletingProperty(id);
+          if (response.status === 200) {
+            toast.success(response.data.message);
+            setChanged(!changed);
+            dispatch(userDataActions?.refreshItem());
+          }
+        }
       } catch (err) {
         console.log(err);
         toast.error(err.message);
@@ -134,7 +140,7 @@ const DashboardDefault = () => {
         </td>
         <td className="w-32 p-2 ">
           <button
-            onClick={() => warehouseDeleteHandler(item._id)}
+            onClick={() => propertyDeleteHandler(item._id)}
             className={`w-[100%] ${"bg-red-400"} hover:bg-red-300 text-white p-1 rounded-sm`}
           >
             Delete
