@@ -4,6 +4,7 @@ const initialState = {
   refresh: 0,
   userInfo: {},
   allProperties: [],
+  userProperty : []
 };
 
 const userDataSlice = createSlice({
@@ -19,6 +20,9 @@ const userDataSlice = createSlice({
     setALlProperties: (state, action) => {
       state.allProperties = action.payload;
     },
+    setUserProperty: (state, action) => {
+      state.userProperty = action.payload
+    }
   },
 });
 

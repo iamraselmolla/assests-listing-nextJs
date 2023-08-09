@@ -16,7 +16,7 @@ import Image from "next/image";
 import { ChecklistRtl, Newspaper, Photo } from "@mui/icons-material";
 import { getAllProperty } from "../services/userServices";
 import { userDataActions } from "../store/user-data-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const adminMenu = [
   {
@@ -56,6 +56,8 @@ const Dashboard = ({ children }) => {
   const [highlightIndex, setHighlightIndex] = useState(-1);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const allData = useSelector(state => state.userData);
+ 
 
   useEffect(() => {
     if (!authCtx.isLoggedIn) {
@@ -75,12 +77,20 @@ const Dashboard = ({ children }) => {
   useEffect(() => {
     const getAllPropertyByAdmin = async () => {
       const response = await getAllProperty();
+      
       if (authCtx.role === "admin") {
         dispatch(userDataActions.setALlProperties(response?.data));
+        
+      }
+      else {
+        
+        dispatch(userDataActions.setUserProperty(response?.data));
+      
+
       }
     };
     getAllPropertyByAdmin();
-  }, []);
+  }, [authCtx.role]);
 
   const PAGES = [];
 

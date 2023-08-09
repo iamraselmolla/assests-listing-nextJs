@@ -18,20 +18,29 @@ const DashboardDefault = () => {
   const [searchWarehouses, setSearchWarehouses] = useState([]);
   const [dataLoading, setDataLoading] = useState(true);
   const [changed, setChanged] = useState(true);
+  const [findAllProperty, setFindAllProperty] = useState([]);
+  const {role} = useContext(AuthContext)
 
-  const { allProperties } = useSelector((state) => state.userData);
+  const { allProperties, userProperty } = useSelector((state) => state.userData);
 
   useEffect(() => {
     const getWareHouses = () => {
-      const findAllAcceptedProperty = allProperties?.filter(
-        (property) => property.activity.accepted
-      );
-      setWarehouses([...findAllAcceptedProperty]);
-      setSearchWarehouses([...findAllAcceptedProperty]);
+      if(role === 'admin'){
+        const findAwaited = allProperties?.filter(
+          (property) => property.activity.accepted
+        );
+        setFindAllProperty(findAwaited)
+      }
+      if(role === 'user'){
+        setFindAllProperty(userProperty)
+      }
+      console.log(findAllProperty, userProperty)
+      setWarehouses(findAllProperty);
+      setSearchWarehouses(findAllProperty);
       setDataLoading(false);
     };
     getWareHouses();
-  }, [changed]);
+  }, [changed,role,allProperties, userProperty]);
 
   useEffect(() => {
     const searchResults = warehouses.filter((item) => {

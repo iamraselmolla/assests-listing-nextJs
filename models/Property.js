@@ -57,6 +57,12 @@ const propertySchema = mongoose.Schema(
         required: true,
         default: false,
       },
+      featured: {
+        type: Boolean,
+        required: true,
+        default: false,
+      }
+
     },
     user: {
       type: Schema.Types.ObjectId,
