@@ -9,21 +9,16 @@ import { Form, Formik } from "formik";
 import FormWrapper from "../UI/FormWrapper";
 import InputField from "../UI/InputField";
 import cities_arr, { state_arr } from "../utils/CityDropdown";
-import {
-  BathtubOutlined,
-  BookmarkBorder,
-  LocationOn,
-  Map,
-  Person,
-  Search,
-  SingleBedOutlined,
-} from "@mui/icons-material";
-import Image from "next/image";
+import { Search } from "@mui/icons-material";
+
 import { assets } from "../assets";
+import PropertyCard from "../UI/PropertyCard";
+import { getAllAcceptedAndActiveProperty } from "../services/userServices";
 
 const Properties = () => {
   const [loading, setLoading] = useState(true);
   const [propertyFor, setPropertyFor] = useState("For Rent");
+  const [allProperty, setAllProperty] = useState([]);
 
   useEffect(() => {
     const url = new URLSearchParams(window.location.search);
@@ -35,7 +30,15 @@ const Properties = () => {
       clearTimeout(timer);
     };
   }, []);
-
+  useEffect(() => {
+    const fetchProperty = async () => {
+      const allProperties = await getAllAcceptedAndActiveProperty();
+      if (allProperties.status === 200) {
+        setAllProperty(allProperties?.data);
+      }
+    };
+    fetchProperty();
+  }, []);
   const initialValues = {
     type: "",
     title: "",
@@ -61,102 +64,48 @@ const Properties = () => {
     console.log(values);
   };
 
-  const [propertyList, setPropertyList] = useState([
-    {
-      image: assets.storageFacilities,
-      title: "Los Angeles Long Plot",
-      price: 10000,
-      period: "Month",
-      location: "Saudi Arab Lane 01",
-      type: "House",
-      owner: "John Dow",
-      area: "150 sq. ft",
-    },
-    {
-      image: assets.storageFacilities,
-      title: "Los Angeles Long Plot",
-      price: 10000,
-      period: "Month",
-      location: "Saudi Arab Lane 01",
-      type: "House",
-      owner: "John Dow",
-      area: "150 sq. ft",
-    },
-    {
-      image: assets.storageFacilities,
-      title: "Los Angeles Long Plot",
-      price: 10000,
-      period: "Month",
-      location: "Saudi Arab Lane 01",
-      type: "House",
-      owner: "John Dow",
-      area: "150 sq. ft",
-    },
-    {
-      image: assets.storageFacilities,
-      title: "Los Angeles Long Plot",
-      price: 10000,
-      period: "Month",
-      location: "Saudi Arab Lane 01",
-      type: "House",
-      owner: "John Dow",
-      area: "150 sq. ft",
-    },
-  ]);
-  const PropertyCard = ({
-    image,
-    title,
-    price,
-    period,
-    location,
-    type,
-    owner,
-    area,
-    bedroom,
-    bathroom,
-  }) => {
-    return (
-      <div className="flex flex-col gap-2 bg-quat shadow-md rounded overflow-hidden justify-between h-fit">
-        <Image src={image} alt={"Not Found"} className="h-52" />
-        <div className="p-3 flex flex-col gap-2">
-          <p className="w-20 bg-primary shadow-sm text-sm p-1 rounded-full text-center text-white font-bold">
-            For Sale
-          </p>
-          <h2 className="text-xl font-bold">{title}</h2>
-          <p>
-            Rs {price.toLocaleString("en-US")}
-            <b className="text-primary"> / {period ? period : "-"}</b>
-          </p>
-          <div className="flex gap-2">
-            <LocationOn sx={{ color: "orange" }} />
-            <p>{location}</p>
-          </div>
-          <div className="flex gap-2">
-            <BookmarkBorder sx={{ color: "orange" }} />
-            <p>{type}</p>
-          </div>
-          <div className="flex gap-2">
-            <Person sx={{ color: "orange" }} />
-            <p>{owner}</p>
-          </div>
-        </div>
-        <div className="bg-primary px-3 p-1 text-white flex justify-between text-sm shadow-inner">
-          <div className="flex gap-1 items-center">
-            <Map />
-            <p>{area}</p>
-          </div>
-          <div className="flex gap-1 items-center">
-            <SingleBedOutlined />
-            <p>{bedroom}</p>
-          </div>
-          <div className="flex gap-1 items-center">
-            <BathtubOutlined />
-            <p>{bathroom}</p>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  // const [propertyList, setPropertyList] = useState([
+  //   {
+  //     image: assets.storageFacilities,
+  //     title: "Los Angeles Long Plot",
+  //     price: 10000,
+  //     period: "Month",
+  //     location: "Saudi Arab Lane 01",
+  //     type: "House",
+  //     owner: "John Dow",
+  //     area: "150 sq. ft",
+  //   },
+  //   {
+  //     image: assets.storageFacilities,
+  //     title: "Los Angeles Long Plot",
+  //     price: 10000,
+  //     period: "Month",
+  //     location: "Saudi Arab Lane 01",
+  //     type: "House",
+  //     owner: "John Dow",
+  //     area: "150 sq. ft",
+  //   },
+  //   {
+  //     image: assets.storageFacilities,
+  //     title: "Los Angeles Long Plot",
+  //     price: 10000,
+  //     period: "Month",
+  //     location: "Saudi Arab Lane 01",
+  //     type: "House",
+  //     owner: "John Dow",
+  //     area: "150 sq. ft",
+  //   },
+  //   {
+  //     image: assets.storageFacilities,
+  //     title: "Los Angeles Long Plot",
+  //     price: 10000,
+  //     period: "Month",
+  //     location: "Saudi Arab Lane 01",
+  //     type: "House",
+  //     owner: "John Dow",
+  //     area: "150 sq. ft",
+  //   },
+  // ]);
 
   return (
     <div className="relative">
@@ -170,9 +119,9 @@ const Properties = () => {
             <Container>
               <div className="grid grid-cols-3 my-10 gap-3">
                 <div className="flex flex-col gap-4 p-3 shadow-inner">
-                  <div className="bg-secondary flex rounded-sm overflow-hidden">
+                  <div className="bg-secondary grid grid-cols-2 justify-between overflow-hidden rounded-sm">
                     <button
-                      className={`p-2 w-32 text-white ${
+                      className={`p-2 text-white ${
                         propertyFor === "For Rent" && "bg-primary"
                       }`}
                       onClick={() => setPropertyFor("For Rent")}
@@ -180,7 +129,7 @@ const Properties = () => {
                       For Rent
                     </button>
                     <button
-                      className={`p-2 w-32 text-white ${
+                      className={`p-2 text-white ${
                         propertyFor === "For Sale" && "bg-primary"
                       }`}
                       onClick={() => setPropertyFor("For Sale")}
@@ -277,9 +226,15 @@ const Properties = () => {
                             inputClass={"bg-quat rounded-sm"}
                           >
                             <>
-                              <option value="BTS (Build To Suite)">BTS (Build To Suite)</option>
-                              <option value="Under Construction">Under Construction</option>
-                              <option value="Ready To Move">Ready To Move</option>
+                              <option value="BTS (Build To Suite)">
+                                BTS (Build To Suite)
+                              </option>
+                              <option value="Under Construction">
+                                Under Construction
+                              </option>
+                              <option value="Ready To Move">
+                                Ready To Move
+                              </option>
                             </>
                           </InputField>
                           <div className="flex justify-end">
@@ -301,8 +256,15 @@ const Properties = () => {
                   </Formik>
                 </div>
                 <div className="shadow-lg col-span-2 bg-quat p-3 grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {propertyList &&
-                    propertyList.map((item) => <PropertyCard {...item} />)}
+                  {allProperty?.length > 0 &&
+                    allProperty?.map((item) => (
+                      <PropertyCard
+                        property={item.property}
+                        img={item.img}
+                        activity={item.activity}
+                        motive={item?.motive}
+                      />
+                    ))}
                 </div>
               </div>
             </Container>

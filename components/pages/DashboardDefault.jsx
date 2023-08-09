@@ -6,10 +6,14 @@ import axios from "axios";
 import Spinner from "../UI/Spinner";
 import { toast } from "react-toastify";
 import cities_arr, { state_arr } from "../utils/CityDropdown";
-import { getAllProperty } from "../services/userServices";
+import {
+  getAllProperty,
+  handleActiveOrFeatured,
+} from "../services/userServices";
 import AuthContext from "../store/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { userDataActions } from "../store/user-data-slice";
+
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
 const DashboardDefault = () => {
@@ -19,28 +23,32 @@ const DashboardDefault = () => {
   const [dataLoading, setDataLoading] = useState(true);
   const [changed, setChanged] = useState(true);
   const [findAllProperty, setFindAllProperty] = useState([]);
-  const {role} = useContext(AuthContext)
+  const { role } = useContext(AuthContext);
+  const dispatch = useDispatch();
 
-  const { allProperties, userProperty } = useSelector((state) => state.userData);
+  const { allProperties, userProperty, refresh } = useSelector(
+    (state) => state.userData
+  );
 
   useEffect(() => {
     const getWareHouses = () => {
-      if(role === 'admin'){
+      if (role === "admin") {
         const findAwaited = allProperties?.filter(
           (property) => property.activity.accepted
         );
-        setFindAllProperty(findAwaited)
+        setFindAllProperty(findAwaited);
       }
-      if(role === 'user'){
-        setFindAllProperty(userProperty)
+      if (role === "user") {
+        setFindAllProperty(userProperty);
       }
-      console.log(findAllProperty, userProperty)
+
       setWarehouses(findAllProperty);
       setSearchWarehouses(findAllProperty);
       setDataLoading(false);
     };
+    console.log(refresh);
     getWareHouses();
-  }, [changed,role,allProperties, userProperty]);
+  }, [changed, role, allProperties, userProperty, refresh]);
 
   useEffect(() => {
     const searchResults = warehouses.filter((item) => {
@@ -58,18 +66,23 @@ const DashboardDefault = () => {
   }, [search]);
 
   const Content = ({ item }) => {
-    const [disabling, setDisabling] = useState(false);
+    const [activeStatus, setActiveStatus] = useState(item?.activity?.active);
+    const [featuredStatus, setfeaturedStatus] = useState(
+      item?.activity?.featured
+    );
+    const handleDisableOrEnable = async (id, action) => {
+      const response = await handleActiveOrFeatured(id, action);
+      if (response?.status === 200) {
+        toast.success(response?.data?.message);
 
-    const handleDisableOrEnable = async (id, enabled) => {
-      setDisabling(true);
-      console.log(enabled);
-      const response = await axios.put(`/api/enableWarehouse?id=${id}`, {
-        enabled,
-      });
-      toast.success(response.data.message);
-      setDisabling(false);
-      setChanged(!changed);
-      setDataLoading(true);
+        // setChanged(!changed);
+        // setDataLoading(false);
+        dispatch(userDataActions.refreshItem());
+      } else {
+        // setChanged(!changed);
+        // setDataLoading(false);
+        toast.error(response?.data?.message);
+      }
     };
     const warehouseDeleteHandler = async (id) => {
       try {
@@ -89,14 +102,25 @@ const DashboardDefault = () => {
         <td className="p-2">{item?.property.type}</td>
         <td className="p-2">{item?.property.city}</td>
         <td className="p-2">{state_arr[item?.property.state]}</td>
-        <td className="p-2">
-          <Switch
-            {...label}
-            disabled={disabling}
-            defaultChecked={item.enabled}
-            onChange={() => handleDisableOrEnable(item?._id, item.enabled)}
-          />
-        </td>
+        {role === "admin" && (
+          <>
+            <td className="p-2">
+              <Switch
+                // disabled={disabling}
+                checked={activeStatus}
+                onChange={() => handleDisableOrEnable(item?._id, "active")}
+              />
+            </td>
+
+            <td className="p-2">
+              <Switch
+                // disabled={disabling}
+                checked={featuredStatus}
+                onChange={() => handleDisableOrEnable(item?._id, "featured")}
+              />
+            </td>
+          </>
+        )}
 
         <td className="p-2">{item?.motive}</td>
         <td className="w-32 p-2 ">
@@ -150,7 +174,12 @@ const DashboardDefault = () => {
                 <th className="p-2">Type</th>
                 <th className="p-2">City</th>
                 <th className="p-2">State</th>
-                <th className="p-2">Enabled</th>
+                {role === "admin" && (
+                  <>
+                    <th className="p-2">Enabled</th>
+                    <th className="p-2">Featured</th>
+                  </>
+                )}
                 <th className="p-2">Motive</th>
                 <th className="p-2">View</th>
                 <th className="p-2">Delete</th>

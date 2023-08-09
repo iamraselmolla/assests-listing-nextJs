@@ -56,8 +56,7 @@ const Dashboard = ({ children }) => {
   const [highlightIndex, setHighlightIndex] = useState(-1);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
-  const allData = useSelector(state => state.userData);
- 
+  const { refresh } = useSelector((state) => state.userData);
 
   useEffect(() => {
     if (!authCtx.isLoggedIn) {
@@ -77,20 +76,16 @@ const Dashboard = ({ children }) => {
   useEffect(() => {
     const getAllPropertyByAdmin = async () => {
       const response = await getAllProperty();
-      
+      console.log("refetched");
+
       if (authCtx.role === "admin") {
         dispatch(userDataActions.setALlProperties(response?.data));
-        
-      }
-      else {
-        
+      } else {
         dispatch(userDataActions.setUserProperty(response?.data));
-      
-
       }
     };
     getAllPropertyByAdmin();
-  }, [authCtx.role]);
+  }, [authCtx.role, refresh]);
 
   const PAGES = [];
 

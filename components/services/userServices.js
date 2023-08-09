@@ -4,13 +4,17 @@ const BASE_URL = {
   login: "/api/login",
   addProperty: "/api/property",
   allProperty: "/api/allProperty",
+  findPropertyForFrontEnd: "/api/findPropertyForDisplay",
+  featuredOrActive: "/api/property",
 };
 
 // Handle Login
 export function handleLogin(values) {
   return http.post(BASE_URL.login, values);
 }
-
+export function getAllAcceptedAndActiveProperty() {
+  return http.get(BASE_URL.findPropertyForFrontEnd);
+}
 export function handleSignUp(values) {
   return http.post(BASE_URL.signUp, values);
 }
@@ -19,6 +23,9 @@ export function adminLoginHandler(values) {
 }
 export function addProperty(values) {
   return http.post(BASE_URL.addProperty, { values });
+}
+export function handleActiveOrFeatured(values, action) {
+  return http.put(BASE_URL.featuredOrActive, { values, action });
 }
 
 export function getAllProperty() {
