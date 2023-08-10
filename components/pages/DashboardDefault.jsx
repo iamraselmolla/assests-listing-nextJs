@@ -21,10 +21,11 @@ const DashboardDefault = () => {
   const [search, setSearch] = useState("");
   const [warehouses, setWarehouses] = useState([]);
   const [searchWarehouses, setSearchWarehouses] = useState([]);
-  const [findAllProperty, setFindAllProperty] = useState([]);
+  const [setFindAllProperty] = useState([]);
   const { role } = useContext(AuthContext);
+  const [refetch, setRefetch] = useState(false);
 
-  const [dataLoading, setDataLoading] = useState(false)
+  const [dataLoading, setDataLoading] = useState(false);
 
   // const { allProperties, userProperty, refresh } = useSelector(
   //   (state) => state.userData
@@ -33,19 +34,26 @@ const DashboardDefault = () => {
   useEffect(() => {
     const getWareHouses = async () => {
       try {
-        const findAwaited = await getAllProperty(true);
+        setDataLoading(true);
+        const findAwaited = await getAllProperty();
         if (findAwaited?.status === 200) {
           setFindAllProperty(findAwaited?.data);
-          setWarehouses(findAllProperty);
-          setSearchWarehouses(findAllProperty);
+          setWarehouses(findAwaited?.data);
+          setSearchWarehouses(findAwaited?.data);
+          setDataLoading(false);
+
+          // console.log(findAwaited?.data);
+          // console.log(findAllProperty);
+          // console.log(warehouses);
+          // console.log(searchWarehouses);
         }
       } catch (err) {
-        console.log(err)
+        console.log(err);
+        setDataLoading(false);
       }
-     
     };
     getWareHouses();
-  }, [ role]);
+  }, [role, refetch]);
 
   useEffect(() => {
     const searchResults = warehouses.filter((item) => {
@@ -71,10 +79,8 @@ const DashboardDefault = () => {
       const response = await handleActiveOrFeatured(id, action);
       if (response?.status === 200) {
         toast.success(response?.data?.message);
-
-       
+        setRefetch(!refetch);
       } else {
-      
         toast.error(response?.data?.message);
       }
     };
@@ -84,7 +90,7 @@ const DashboardDefault = () => {
           const response = await handleDeletingProperty(id);
           if (response.status === 200) {
             toast.success(response.data.message);
-            
+            setRefetch(!refetch);
           }
         }
       } catch (err) {
@@ -144,13 +150,14 @@ const DashboardDefault = () => {
 
   return (
     <Dashboard>
-      {dataLoading  && (
+      {dataLoading && (
         <div className="flex justify-center h-[40vh] items-end overflow-hidden">
           <Spinner size={80} />
         </div>
       )}
       {warehouses?.length > 0 && (
         <>
+          {console.log(warehouses, "000")}
           <div className="flex gap-4">
             <input
               placeholder="Search"
@@ -189,7 +196,7 @@ const DashboardDefault = () => {
           </div>
         </>
       )}
-      { warehouses?.length === 0 && (
+      {warehouses?.length === 0 && (
         <div className="text-center h-[40vh] flex flex-col justify-end items-center overflow-hidden gap-4">
           <h3 className="text-lg text-black font-extrabold">
             No Warehouses found

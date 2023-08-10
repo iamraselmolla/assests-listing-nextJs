@@ -55,8 +55,8 @@ const Dashboard = ({ children }) => {
   const route = useRouter();
   const [highlightIndex, setHighlightIndex] = useState(-1);
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
-  const { refresh } = useSelector((state) => state.userData);
+  // const dispatch = useDispatch();
+  // const { refresh } = useSelector((state) => state.userData);
 
   useEffect(() => {
     if (!authCtx.isLoggedIn) {

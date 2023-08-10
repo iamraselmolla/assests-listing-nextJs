@@ -21,21 +21,19 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { userDataActions } from "../store/user-data-slice";
 
-const PropertyCard = ({ img, activity, property, motive,acceptCard,id }) => {
-  const dispatch = useDispatch()
-  const HanldleAccepted =  async (id) =>{
-    if(window.confirm("Do You want to accept this property?")){
-      const result =  await handleApprovePropertyByAdmin(id);
-      if(result.status === 200){
-        toast.success(result?.data?.message)
-        dispatch(userDataActions?.refreshItem())
-
-      }else{
-        toast.success("Something Wrong")
+const PropertyCard = ({ img, activity, property, motive, acceptCard, id }) => {
+  const dispatch = useDispatch();
+  const HanldleAccepted = async (id) => {
+    if (window.confirm("Do You want to accept this property?")) {
+      const result = await handleApprovePropertyByAdmin(id);
+      if (result.status === 200) {
+        toast.success(result?.data?.message);
+        dispatch(userDataActions?.refreshItem());
+      } else {
+        toast.success("Something Wrong");
       }
     }
-
-  }
+  };
   return (
     <div className="flex flex-col gap-2 text-black bg-quat shadow-md rounded overflow-hidden justify-between h-fit">
       <div className="relative">
@@ -99,16 +97,21 @@ const PropertyCard = ({ img, activity, property, motive,acceptCard,id }) => {
           <p>{`l;dshfks;dfhkj`}</p>
         </div>
       </div> */}
-      {acceptCard && <>
-        <div className="flex w-full">
-          <button onClick={() => HanldleAccepted(id)} className="bg-green-400 flex justify-center items-center w-full py-2 px-4 text-white font-bold">
-            Accept <Check />
-          </button>
-          <button className="bg-red-400 w-full justify-center items-center py-2 px-4 text-white font-bold">
-            Reject <Block/>
-          </button>
-        </div>
-      </>}
+      {acceptCard && (
+        <>
+          <div className="flex w-full">
+            <button
+              onClick={() => HanldleAccepted(id)}
+              className="bg-green-400 flex justify-center items-center w-full py-2 px-4 text-white font-bold"
+            >
+              Accept <Check />
+            </button>
+            <button className="bg-red-400 w-full justify-center items-center py-2 px-4 text-white font-bold">
+              Reject <Block />
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
