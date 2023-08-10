@@ -7,7 +7,12 @@ const BASE_URL = {
   findPropertyForFrontEnd: "/api/findPropertyForDisplay",
   featuredOrActive: "/api/property",
   deleteProperty: "/api/property",
+  acceptProperty: "/api/acceptProperty",
 };
+// Acceprt Property
+export function handleApprovePropertyByAdmin(id){
+  return http.put(BASE_URL.acceptProperty, {id})
+}
 
 // Handle Login
 export function handleLogin(values) {

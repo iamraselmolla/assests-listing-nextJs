@@ -21,13 +21,12 @@ const DashboardDefault = () => {
   const [search, setSearch] = useState("");
   const [warehouses, setWarehouses] = useState([]);
   const [searchWarehouses, setSearchWarehouses] = useState([]);
-  const [dataLoading, setDataLoading] = useState(true);
   const [changed, setChanged] = useState(true);
   const [findAllProperty, setFindAllProperty] = useState([]);
   const { role } = useContext(AuthContext);
   const dispatch = useDispatch();
 
-  const { allProperties, userProperty, refresh } = useSelector(
+  const { allProperties, userProperty, refresh,propertyFetching } = useSelector(
     (state) => state.userData
   );
 
@@ -38,16 +37,16 @@ const DashboardDefault = () => {
           (property) => property.activity.accepted
         );
         setFindAllProperty(findAwaited);
+        
       }
       if (role === "user") {
         setFindAllProperty(userProperty);
+
       }
 
       setWarehouses(findAllProperty);
       setSearchWarehouses(findAllProperty);
-      setDataLoading(false);
     };
-    console.log(refresh);
     getWareHouses();
   }, [changed, role, allProperties, userProperty, refresh]);
 
@@ -77,11 +76,9 @@ const DashboardDefault = () => {
         toast.success(response?.data?.message);
 
         setChanged(!changed);
-        setDataLoading(false);
         dispatch(userDataActions.refreshItem());
       } else {
         setChanged(!changed);
-        setDataLoading(false);
         toast.error(response?.data?.message);
       }
     };
@@ -152,12 +149,12 @@ const DashboardDefault = () => {
 
   return (
     <Dashboard>
-      {dataLoading && (
+      {propertyFetching && (
         <div className="flex justify-center h-[40vh] items-end overflow-hidden">
           <Spinner size={80} />
         </div>
       )}
-      {!dataLoading && warehouses.length > 0 && (
+      {!propertyFetching && warehouses.length > 0 && (
         <>
           <div className="flex gap-4">
             <input
@@ -197,7 +194,7 @@ const DashboardDefault = () => {
           </div>
         </>
       )}
-      {!dataLoading && warehouses.length === 0 && (
+      {!propertyFetching && warehouses?.length === 0 && (
         <div className="text-center h-[40vh] flex flex-col justify-end items-center overflow-hidden gap-4">
           <h3 className="text-lg text-black font-extrabold">
             No Warehouses found

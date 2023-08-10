@@ -3,7 +3,9 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import {
   BathtubOutlined,
+  Block,
   BookmarkBorder,
+  Check,
   FavoriteBorder,
   LocationOn,
   Map,
@@ -13,10 +15,29 @@ import {
   SingleBedOutlined,
 } from "@mui/icons-material";
 import Image from "next/image";
+import { identifierToKeywordKind } from "typescript";
+import { handleApprovePropertyByAdmin } from "../services/userServices";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { userDataActions } from "../store/user-data-slice";
 
-const PropertyCard = ({ img, activity, property, motive }) => {
+const PropertyCard = ({ img, activity, property, motive,acceptCard,id }) => {
+  const dispatch = useDispatch()
+  const HanldleAccepted =  async (id) =>{
+    if(window.confirm("Do You want to accept this property?")){
+      const result =  await handleApprovePropertyByAdmin(id);
+      if(result.status === 200){
+        toast.success(result?.data?.message)
+        dispatch(userDataActions?.refreshItem())
+
+      }else{
+        toast.success("Something Wrong")
+      }
+    }
+
+  }
   return (
-    <div className="flex flex-col gap-2 bg-quat shadow-md rounded overflow-hidden justify-between h-fit">
+    <div className="flex flex-col gap-2 text-black bg-quat shadow-md rounded overflow-hidden justify-between h-fit">
       <div className="relative">
         <img src={img} alt="Property Image" className="h-52" />
         <div className="absolute top-3 w-full uppercase">
@@ -64,7 +85,7 @@ const PropertyCard = ({ img, activity, property, motive }) => {
           <p>{property?.city}</p>
         </div>
       </div>
-      <div className="bg-primary px-3 p-1 text-white flex justify-between text-sm shadow-inner">
+      {/* <div className="bg-primary px-3 p-1 text-white flex justify-between text-sm shadow-inner">
         <div className="flex gap-1 items-center">
           <Map />
           <p>{property?.city}</p>
@@ -77,7 +98,17 @@ const PropertyCard = ({ img, activity, property, motive }) => {
           <BathtubOutlined />
           <p>{`l;dshfks;dfhkj`}</p>
         </div>
-      </div>
+      </div> */}
+      {acceptCard && <>
+        <div className="flex w-full">
+          <button onClick={() => HanldleAccepted(id)} className="bg-green-400 flex justify-center items-center w-full py-2 px-4 text-white font-bold">
+            Accept <Check />
+          </button>
+          <button className="bg-red-400 w-full justify-center items-center py-2 px-4 text-white font-bold">
+            Reject <Block/>
+          </button>
+        </div>
+      </>}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Dashboard from "./Dashboard";
 import { useSelector } from "react-redux";
 import Image from "next/image";
+import PropertyCard from "../UI/PropertyCard";
 
 const RequestListing = () => {
   const { allProperties } = useSelector((state) => state.userData);
@@ -21,22 +22,24 @@ const RequestListing = () => {
   return (
     <Dashboard>
       <div className="pt-7">
-        <h2 className="font-bold text-3xl text-center text-black">
+        <h2 className="font-bold text-3xl mb-5  text-center text-black">
           You have {findAllAwaitedItem?.length} properties in pending request to
           be listed
         </h2>
-        {findAllAwaitedItem?.map((singleItem) => (
-          <>
-            <div className="grid border px-6 py-3 border-blue-500   my-4">
-              <Image
-                width={300}
-                height={300}
-                src={singleItem?.img}
-                alt="Property Image"
-              />
-            </div>
-          </>
-        ))}
+        <div className="shadow-lg col-span-2 bg-quat p-3 grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {findAllAwaitedItem?.length > 0 &&
+                    findAllAwaitedItem?.map((item) => (
+                      <PropertyCard
+                        property={item.property}
+                        img={item.img}
+                        activity={item.activity}
+                        motive={item?.motive}
+                        acceptCard={true}
+                        id={item?._id}
+                      />
+                    ))}
+                </div>
+       
       </div>
     </Dashboard>
   );

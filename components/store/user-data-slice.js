@@ -5,6 +5,7 @@ const initialState = {
   userInfo: {},
   allProperties: [],
   userProperty: [],
+  propertyFetching: false
 };
 
 const userDataSlice = createSlice({
@@ -23,6 +24,9 @@ const userDataSlice = createSlice({
     setUserProperty: (state, action) => {
       state.userProperty = action.payload;
     },
+    setPropertyFetching: (state, action) => {
+      state.propertyFetching = action.payload
+    }
   },
 });
 
