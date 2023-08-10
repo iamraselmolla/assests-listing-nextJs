@@ -21,34 +21,31 @@ const DashboardDefault = () => {
   const [search, setSearch] = useState("");
   const [warehouses, setWarehouses] = useState([]);
   const [searchWarehouses, setSearchWarehouses] = useState([]);
-  const [changed, setChanged] = useState(true);
   const [findAllProperty, setFindAllProperty] = useState([]);
   const { role } = useContext(AuthContext);
-  const dispatch = useDispatch();
 
-  const { allProperties, userProperty, refresh,propertyFetching } = useSelector(
-    (state) => state.userData
-  );
+  const [dataLoading, setDataLoading] = useState(false)
+
+  // const { allProperties, userProperty, refresh } = useSelector(
+  //   (state) => state.userData
+  // );
 
   useEffect(() => {
-    const getWareHouses = () => {
-      if (role === "admin") {
-        const findAwaited = allProperties?.filter(
-          (property) => property.activity.accepted
-        );
-        setFindAllProperty(findAwaited);
-        
+    const getWareHouses = async () => {
+      try {
+        const findAwaited = await getAllProperty(true);
+        if (findAwaited?.status === 200) {
+          setFindAllProperty(findAwaited?.data);
+          setWarehouses(findAllProperty);
+          setSearchWarehouses(findAllProperty);
+        }
+      } catch (err) {
+        console.log(err)
       }
-      if (role === "user") {
-        setFindAllProperty(userProperty);
-
-      }
-
-      setWarehouses(findAllProperty);
-      setSearchWarehouses(findAllProperty);
+     
     };
     getWareHouses();
-  }, [changed, role, allProperties, userProperty, refresh]);
+  }, [ role]);
 
   useEffect(() => {
     const searchResults = warehouses.filter((item) => {
@@ -75,10 +72,9 @@ const DashboardDefault = () => {
       if (response?.status === 200) {
         toast.success(response?.data?.message);
 
-        setChanged(!changed);
-        dispatch(userDataActions.refreshItem());
+       
       } else {
-        setChanged(!changed);
+      
         toast.error(response?.data?.message);
       }
     };
@@ -88,8 +84,7 @@ const DashboardDefault = () => {
           const response = await handleDeletingProperty(id);
           if (response.status === 200) {
             toast.success(response.data.message);
-            setChanged(!changed);
-            dispatch(userDataActions?.refreshItem());
+            
           }
         }
       } catch (err) {
@@ -149,12 +144,12 @@ const DashboardDefault = () => {
 
   return (
     <Dashboard>
-      {propertyFetching && (
+      {dataLoading  && (
         <div className="flex justify-center h-[40vh] items-end overflow-hidden">
           <Spinner size={80} />
         </div>
       )}
-      {!propertyFetching && warehouses.length > 0 && (
+      {warehouses?.length > 0 && (
         <>
           <div className="flex gap-4">
             <input
@@ -194,7 +189,7 @@ const DashboardDefault = () => {
           </div>
         </>
       )}
-      {!propertyFetching && warehouses?.length === 0 && (
+      { warehouses?.length === 0 && (
         <div className="text-center h-[40vh] flex flex-col justify-end items-center overflow-hidden gap-4">
           <h3 className="text-lg text-black font-extrabold">
             No Warehouses found

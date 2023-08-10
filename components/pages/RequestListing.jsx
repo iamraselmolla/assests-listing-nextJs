@@ -3,21 +3,23 @@ import Dashboard from "./Dashboard";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import PropertyCard from "../UI/PropertyCard";
+import { getAllProperty, getAwaitedItem } from "../services/userServices";
 
 const RequestListing = () => {
-  const { allProperties } = useSelector((state) => state.userData);
   const [findAllAwaitedItem, setFindAllAwaitedItem] = useState([]);
 
   useEffect(() => {
-    if (allProperties?.length > 0) {
-      const awaitedItems = allProperties.filter(
-        (property) => property.activity.accepted === false
-      );
-      setFindAllAwaitedItem(awaitedItems);
+    const fetchAllProperty = async () => {
+      const findAwaited = await getAwaitedItem();
+      setFindAllAwaitedItem(findAwaited?.data)
+      
+     
+      console.log(findAwaited)
     }
-  }, [allProperties]);
+    fetchAllProperty()
+    
+  }, []);
 
-  console.log(allProperties, findAllAwaitedItem);
 
   return (
     <Dashboard>

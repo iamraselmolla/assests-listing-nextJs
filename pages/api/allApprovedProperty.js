@@ -2,16 +2,14 @@ import { isUser } from "../../components/middleware/user";
 import Property from "../../models/Property";
 import dbConnect from "../../utils/dbConnect";
 
-export default async function getAllProperty(req, res) {
+export default async function getAllApprovedProperty(req, res) {
   switch (req.method) {
     case "GET": {
       try {
         isUser(req, res, async (req, res, next, decoded) => {
           await dbConnect();
+          console.log(req.body)
           const { role, id } = decoded;
-          const {approved} = req.query
-          const typeOfArrpoved = Boolean(approved)
-          console.log(typeof typeOfArrpoved)
           if (decoded.role === "admin") {
             const getAllProperty = await Property.find({'activity.accepted' : true});
             res.status(200).json(getAllProperty);

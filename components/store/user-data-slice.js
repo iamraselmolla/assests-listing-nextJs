@@ -3,9 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   refresh: 0,
   userInfo: {},
-  allProperties: [],
-  userProperty: [],
-  propertyFetching: false
 };
 
 const userDataSlice = createSlice({
@@ -18,15 +15,6 @@ const userDataSlice = createSlice({
     setUserInfo: (state, action) => {
       state.userInfo = action.payload;
     },
-    setALlProperties: (state, action) => {
-      state.allProperties = action.payload;
-    },
-    setUserProperty: (state, action) => {
-      state.userProperty = action.payload;
-    },
-    setPropertyFetching: (state, action) => {
-      state.propertyFetching = action.payload
-    }
   },
 });
 

@@ -8,10 +8,21 @@ const BASE_URL = {
   featuredOrActive: "/api/property",
   deleteProperty: "/api/property",
   acceptProperty: "/api/acceptProperty",
+  getAllAcceptedProperty: '/api/allApprovedProperty'
 };
-// Acceprt Property
+
+
+export function getAwaitedItem(id){
+  return http.get(BASE_URL.acceptProperty, {id})
+}
+// Accert Property
 export function handleApprovePropertyByAdmin(id){
   return http.put(BASE_URL.acceptProperty, {id})
+}
+
+// FindAll Approved Property
+export function findAllProperyForAdmin (){
+  return http.get(BASE_URL.getAllAcceptedProperty)
 }
 
 // Handle Login
@@ -38,6 +49,6 @@ export function handleActiveOrFeatured(values, action) {
   return http.put(BASE_URL.featuredOrActive, { values, action });
 }
 
-export function getAllProperty() {
-  return http.get(BASE_URL.allProperty);
+export function getAllProperty(type) {
+  return http.get(BASE_URL.allProperty+ `?approved=${type}`);
 }

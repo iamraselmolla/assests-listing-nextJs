@@ -73,28 +73,28 @@ const Dashboard = ({ children }) => {
       clearTimeout(timer);
     };
   }, []);
-  useEffect(() => {
-    const getAllPropertyByAdmin = async () => {
-      dispatch(userDataActions.setPropertyFetching(true))
-     try{
-      const response = await getAllProperty();
-      console.log("refetched");
+  // useEffect(() => {
+  //   const getAllPropertyByAdmin = async () => {
+  //     dispatch(userDataActions.setPropertyFetching(true))
+  //    try{
+  //     const response = await getAllProperty();
+  //     console.log("refetched");
 
-      if (authCtx.role === "admin") {
-        dispatch(userDataActions.setALlProperties(response?.data));
-        dispatch(userDataActions.setPropertyFetching(false))
-      } else {
-        dispatch(userDataActions.setUserProperty(response?.data));
-        dispatch(userDataActions.setPropertyFetching(false))
+  //     if (authCtx.role === "admin") {
+  //       dispatch(userDataActions.setALlProperties(response?.data));
+  //       dispatch(userDataActions.setPropertyFetching(false))
+  //     } else {
+  //       dispatch(userDataActions.setUserProperty(response?.data));
+  //       dispatch(userDataActions.setPropertyFetching(false))
 
-      }
-     }catch(err){
-      dispatch(userDataActions.setPropertyFetching(false))
-     }
+  //     }
+  //    }catch(err){
+  //     dispatch(userDataActions.setPropertyFetching(false))
+  //    }
 
-    };
-    getAllPropertyByAdmin();
-  }, [authCtx.role, refresh]);
+  //   };
+  //   getAllPropertyByAdmin();
+  // }, [authCtx.role, refresh]);
 
   const PAGES = [];
 
