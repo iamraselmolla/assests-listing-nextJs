@@ -9,11 +9,10 @@ export default async function getAllProperty(req, res) {
         isUser(req, res, async (req, res, next, decoded) => {
           await dbConnect();
           const { role, id } = decoded;
-          const {approved} = req.query
-          const typeOfArrpoved = Boolean(approved)
-          console.log(typeof typeOfArrpoved)
           if (decoded.role === "admin") {
-            const getAllProperty = await Property.find({'activity.accepted' : true});
+            const getAllProperty = await Property.find({
+              "activity.accepted": true,
+            });
             res.status(200).json(getAllProperty);
           } else {
             const getAllProperty = await Property.find({ user: id });

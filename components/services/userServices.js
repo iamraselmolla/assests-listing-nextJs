@@ -54,6 +54,6 @@ export function handleActiveOrFeatured(values, action) {
   return http.put(BASE_URL.featuredOrActive, { values, action });
 }
 
-export function getAllProperty(type) {
-  return http.get(BASE_URL.allProperty + `?approved=${type}`);
+export function getAllProperty() {
+  return http.get(BASE_URL.allProperty);
 }

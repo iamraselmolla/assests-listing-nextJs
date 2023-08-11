@@ -21,20 +21,17 @@ const DashboardDefault = () => {
   const [search, setSearch] = useState("");
   const [warehouses, setWarehouses] = useState([]);
   const [searchWarehouses, setSearchWarehouses] = useState([]);
-  const [setFindAllProperty] = useState([]);
+  const [findAllProperty, setFindAllProperty] = useState([]);
   const { role } = useContext(AuthContext);
-  const [refetch, setRefetch] = useState(false);
+  const { refresh } = useSelector((state) => state.userData);
 
-  const [dataLoading, setDataLoading] = useState(false);
-
-  // const { allProperties, userProperty, refresh } = useSelector(
-  //   (state) => state.userData
-  // );
+  const [dataLoading, setDataLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getWareHouses = async () => {
       try {
-        setDataLoading(true);
+        // setDataLoading(true);
         const findAwaited = await getAllProperty();
         if (findAwaited?.status === 200) {
           setFindAllProperty(findAwaited?.data);
@@ -42,10 +39,10 @@ const DashboardDefault = () => {
           setSearchWarehouses(findAwaited?.data);
           setDataLoading(false);
 
-          // console.log(findAwaited?.data);
-          // console.log(findAllProperty);
-          // console.log(warehouses);
-          // console.log(searchWarehouses);
+          console.log(findAwaited?.data);
+          console.log(findAllProperty);
+          console.log(warehouses);
+          console.log(searchWarehouses);
         }
       } catch (err) {
         console.log(err);
@@ -53,7 +50,7 @@ const DashboardDefault = () => {
       }
     };
     getWareHouses();
-  }, [role, refetch]);
+  }, [refresh]);
 
   useEffect(() => {
     const searchResults = warehouses.filter((item) => {
@@ -79,7 +76,7 @@ const DashboardDefault = () => {
       const response = await handleActiveOrFeatured(id, action);
       if (response?.status === 200) {
         toast.success(response?.data?.message);
-        setRefetch(!refetch);
+        dispatch(userDataActions.refreshItem());
       } else {
         toast.error(response?.data?.message);
       }
@@ -90,7 +87,7 @@ const DashboardDefault = () => {
           const response = await handleDeletingProperty(id);
           if (response.status === 200) {
             toast.success(response.data.message);
-            setRefetch(!refetch);
+            dispatch(userDataActions.refreshItem());
           }
         }
       } catch (err) {
