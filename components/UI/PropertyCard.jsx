@@ -102,11 +102,11 @@ const PropertyCard = ({ img, activity, property, motive, acceptCard, id }) => {
           <div className="flex w-full">
             <button
               onClick={() => HanldleAccepted(id)}
-              className="bg-green-400 flex justify-center items-center w-full py-2 px-4 text-white font-bold"
+              className="bg-green-400 flex justify-center items-center w-full py-1 px-4 text-white font-bold"
             >
               Accept <Check />
             </button>
-            <button className="bg-red-400 w-full justify-center items-center py-2 px-4 text-white font-bold">
+            <button className="bg-red-400 w-full justify-center items-center py-1 px-4 text-white font-bold">
               Reject <Block />
             </button>
           </div>

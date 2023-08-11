@@ -14,6 +14,7 @@ import {
 import AuthContext from "../store/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { userDataActions } from "../store/user-data-slice";
+import { OpenInNew } from "@mui/icons-material";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -103,6 +104,11 @@ const DashboardDefault = () => {
         <td className="p-2">{item?.property.type}</td>
         <td className="p-2">{item?.property.city}</td>
         <td className="p-2">{state_arr[item?.property.state]}</td>
+        <td className="p-2">
+          <a target="_blank" href={item?.img}>
+            <OpenInNew />
+          </a>
+        </td>
         {role === "admin" && (
           <>
             <td className="p-2">
@@ -125,7 +131,7 @@ const DashboardDefault = () => {
 
         <td className="p-2">{item?.motive}</td>
         <td className="w-32 p-2 ">
-          <a href={`/dashboard/addwarehouse?id=${item?._id}`}>
+          <a href={`/dashboard/addproperty/${item?.motive}?id=${item?._id}`}>
             <button
               className={`w-[100%] ${"bg-primary"} text-white p-1 rounded-sm`}
             >
@@ -176,6 +182,7 @@ const DashboardDefault = () => {
                 <th className="p-2">Type</th>
                 <th className="p-2">City</th>
                 <th className="p-2">State</th>
+                <th className="p-2">Image</th>
                 {role === "admin" && (
                   <>
                     <th className="p-2">Enabled</th>
@@ -193,7 +200,7 @@ const DashboardDefault = () => {
           </div>
         </>
       )}
-      {warehouses?.length === 0 && (
+      {!dataLoading && warehouses?.length === 0 && (
         <div className="text-center h-[40vh] flex flex-col justify-end items-center overflow-hidden gap-4">
           <h3 className="text-lg text-black font-extrabold">
             No Warehouses found

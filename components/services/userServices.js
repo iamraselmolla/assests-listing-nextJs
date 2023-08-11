@@ -10,6 +10,7 @@ const BASE_URL = {
   acceptProperty: "/api/acceptProperty",
   getAllAcceptedProperty: "/api/allApprovedProperty",
   getAwaitedProperties: "/api/allAwaitedProperty",
+  getSingleProperty: "/api/getSigleProperty",
 };
 
 //
@@ -56,4 +57,8 @@ export function handleActiveOrFeatured(values, action) {
 
 export function getAllProperty() {
   return http.get(BASE_URL.allProperty);
+}
+
+export function getProperyById(id) {
+  return http.get(BASE_URL.getSingleProperty + `?id=${id}`);
 }

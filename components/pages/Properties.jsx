@@ -47,7 +47,6 @@ const Properties = () => {
         (property) => property?.motive === "rent"
       );
       setAllPropertyAfterFilter(allRents);
-      console.log(allProperty, "rent");
       return;
     }
     if (propertyFor === "For Sale") {
@@ -55,11 +54,9 @@ const Properties = () => {
         (property) => property?.motive === "sale"
       );
       setAllPropertyAfterFilter(allRents, "sale");
-      console.log(allProperty);
       return;
     }
     setAllPropertyAfterFilter(allProperty);
-    console.log(allProperty, "all");
   }, [propertyFor]);
 
   const initialValues = {
@@ -141,7 +138,7 @@ const Properties = () => {
           <div className="py-20 bg-white text-black ">
             <Container>
               <div className="grid grid-cols-3 my-10 gap-3">
-                <div className="flex flex-col gap-4 p-3 shadow-inner">
+                <div className="flex sticky top-0 flex-col gap-4 p-3 shadow-inner">
                   <div className="bg-secondary grid grid-cols-3 justify-between overflow-hidden rounded-sm">
                     <button
                       className={`p-2 text-white ${
