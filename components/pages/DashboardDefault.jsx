@@ -39,11 +39,6 @@ const DashboardDefault = () => {
           setWarehouses(findAwaited?.data);
           setSearchWarehouses(findAwaited?.data);
           setDataLoading(false);
-
-          console.log(findAwaited?.data);
-          console.log(findAllProperty);
-          console.log(warehouses);
-          console.log(searchWarehouses);
         }
       } catch (err) {
         console.log(err);
@@ -160,7 +155,6 @@ const DashboardDefault = () => {
       )}
       {warehouses?.length > 0 && (
         <>
-          {console.log(warehouses, "000")}
           <div className="flex gap-4">
             <input
               placeholder="Search"

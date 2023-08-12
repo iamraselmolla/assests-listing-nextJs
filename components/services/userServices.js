@@ -59,6 +59,6 @@ export function getAllProperty() {
   return http.get(BASE_URL.allProperty);
 }
 
-export function getProperyById(id) {
+export function getPropertyById(id) {
   return http.get(BASE_URL.getSingleProperty + `?id=${id}`);
 }

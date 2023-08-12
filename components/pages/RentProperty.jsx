@@ -13,7 +13,7 @@ import { IconButton } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { addProperty, getProperyById } from "../services/userServices";
+import { addProperty, getPropertyById } from "../services/userServices";
 import AuthContext from "../store/AuthContext";
 // import cloudinary from '../utils/cloudinary'
 const RentProperty = () => {
@@ -58,9 +58,10 @@ const RentProperty = () => {
     const fetchProperty = async () => {
       if (id) {
         try {
-          const response = await getProperyById(id);
-          const item = response.data.warehouse;
-          setPreview([item.imageUrl]);
+          const response = await getPropertyById(id);
+          const item = response?.data;
+
+          setPreview([item.img]);
           setFetchedValues(item);
         } catch (err) {
           toast.error(err);
@@ -69,38 +70,37 @@ const RentProperty = () => {
     };
     fetchProperty();
 
-    return () => {
-      setFetchedValues({
-        motive: "",
-        property: {
-          type: "",
-          state: "",
-          city: "",
-          format: "",
-        },
-        owner: {
-          name: "",
-          email: "",
-          mobile1: "",
-          mobile2: "",
-        },
-        img: "",
-        activity: {
-          active: false,
-          accepted: false,
-          featured: false,
-        },
-        user: "",
-        // address: "",
-        // description: "",
-        // size: "",
-        // zone: "",
-        // category: "",
-
-        // partlyAvailable: "",
-        // price: "",
-      });
-    };
+    // return () => {
+    //   setFetchedValues({
+    // motive: "",
+    // property: {
+    //   type: "",
+    //   state: "",
+    //   city: "",
+    //   format: "",
+    // },
+    // owner: {
+    //   name: "",
+    //   email: "",
+    //   mobile1: "",
+    //   mobile2: "",
+    // },
+    // img: "",
+    // activity: {
+    //   active: false,
+    //   accepted: false,
+    //   featured: false,
+    // },
+    // user: "",
+    // address: "",
+    // description: "",
+    // size: "",
+    // zone: "",
+    // category: "",
+    // partlyAvailable: "",
+    // price: "",
+    //   });
+    // };
   }, [id]);
 
   const validationSchema = Yup.object({
