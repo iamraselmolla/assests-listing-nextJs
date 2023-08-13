@@ -14,7 +14,7 @@ import {
 import AuthContext from "../store/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { userDataActions } from "../store/user-data-slice";
-import { OpenInNew } from "@mui/icons-material";
+import { Delete, OpenInNew, Visibility } from "@mui/icons-material";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -94,19 +94,24 @@ const DashboardDefault = () => {
 
     const [hidden, setHidden] = useState(true);
     return (
-      <tr className="py-1">
-        <td className="p-2">{item?.property.format}</td>
-        <td className="p-2">{item?.property.type}</td>
-        <td className="p-2">{item?.property.city}</td>
-        <td className="p-2">{state_arr[item?.property.state]}</td>
-        <td className="p-2">
+      <tr className="py-1 text-center">
+        <td className="p-2 border border-black">{item?.property.format}</td>
+        <td className="p-2 border border-black">{item?.property.type}</td>
+        <td className="p-2 border border-black">{item?.property.city}</td>
+        <td className="p-2 border border-black">{state_arr[item?.property.state]}</td>
+        <td className="p-2 border border-black">
           <a target="_blank" href={item?.img}>
             <OpenInNew />
           </a>
         </td>
         {role === "admin" && (
           <>
-            <td className="p-2">
+             <td className="p-2 border border-black"><>
+              {item?.owner.name} <br/>
+              {item?.owner.mobile1}<br/>
+              {item?.owner.mobile2}
+             </></td>
+            <td className="p-2 border border-black">
               <Switch
                 // disabled={disabling}
                 checked={activeStatus}
@@ -114,7 +119,7 @@ const DashboardDefault = () => {
               />
             </td>
 
-            <td className="p-2">
+            <td className="p-2 border border-black">
               <Switch
                 // disabled={disabling}
                 checked={featuredStatus}
@@ -124,24 +129,25 @@ const DashboardDefault = () => {
           </>
         )}
 
-        <td className="p-2">{item?.motive}</td>
-        <td className="w-32 p-2 ">
+        <td className="p-2 border border-black">{item?.motive}</td>
+        <td className="p-2 border border-black ">
           <a href={`/dashboard/addproperty/${item?.motive}?id=${item?._id}`}>
-            <button
-              className={`w-[100%] ${"bg-primary"} text-white p-1 rounded-sm`}
-            >
-              View
-            </button>
+          <div className="border cursor-pointer mx-auto border-green-500 flex h-8 items-center justify-center rounded-full w-8">
+            <Visibility className=" text-green-600" />
+            </div>
           </a>
         </td>
-        <td className="w-32 p-2 ">
-          <button
-            onClick={() => propertyDeleteHandler(item._id)}
-            className={`w-[100%] ${"bg-red-400"} hover:bg-red-300 text-white p-1 rounded-sm`}
-          >
-            Delete
-          </button>
-        </td>
+       {role === 'admin' && <>
+       
+       <td className=" border border-black">
+          
+         
+          <div className="border cursor-pointer mx-auto border-red-500 flex h-8 items-center justify-center rounded-full w-8">
+          <Delete className=" text-red-600"  onClick={() => propertyDeleteHandler(item._id)} />
+          </div>
+       
+      </td>
+       </>}
       </tr>
     );
   };
@@ -170,22 +176,27 @@ const DashboardDefault = () => {
             </button>
           </div>
           <div className="p-4 overflow-x-auto min-w-[100%] max-w-[300px]">
-            <table className="text-black w-[100%]">
-              <tr className="text-left">
-                <th className="p-2">Format</th>
-                <th className="p-2">Type</th>
-                <th className="p-2">City</th>
-                <th className="p-2">State</th>
-                <th className="p-2">Image</th>
+            <table className="text-black table border border-black w-[100%]">
+              <tr className="text-center">
+                <th className="p-2 border border-black">Format</th>
+                <th className="p-2 border border-black">Type</th>
+                <th className="p-2 border border-black">City</th>
+                <th className="p-2 border border-black">State</th>
+               
+
+                <th className="p-2 border border-black">Image</th>
                 {role === "admin" && (
                   <>
-                    <th className="p-2">Enabled</th>
-                    <th className="p-2">Featured</th>
+                   <th className="p-2 border border-black">Owner</th>
+                    <th className="p-2 border border-black">Enabled</th>
+                    <th className="p-2 border border-black">Featured</th>
                   </>
                 )}
-                <th className="p-2">Motive</th>
-                <th className="p-2">View</th>
-                <th className="p-2">Delete</th>
+                <th className="p-2 border border-black">Motive</th>
+                <th className="p-2 border border-black">View</th>
+                {role === 'admin' && <>
+                <th className="p-2 border border-black">Delete</th>
+                </>}
               </tr>
               {searchWarehouses.map((item, i) => (
                 <Content key={i} item={item} />
@@ -200,7 +211,7 @@ const DashboardDefault = () => {
             No Warehouses found
           </h3>
           <Link href="/dashboard/addproperty">
-            <button className=" bg-primary text-white p-2 hover:bg-secondary w-64">
+            <button className=" bg-primary text-white p-2 border hover:bg-secondary w-64">
               ADD Property
             </button>
           </Link>
