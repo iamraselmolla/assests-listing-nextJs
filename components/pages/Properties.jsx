@@ -6,12 +6,9 @@ import ResponsiveDrawer from "../UI/ResponsiveDrawer";
 import { Container } from "@mui/system";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
-import FormWrapper from "../UI/FormWrapper";
 import InputField from "../UI/InputField";
 import cities_arr, { state_arr } from "../utils/CityDropdown";
 import { Search } from "@mui/icons-material";
-
-import { assets } from "../assets";
 import PropertyCard from "../UI/PropertyCard";
 import { getAllAcceptedAndActiveProperty } from "../services/userServices";
 
@@ -58,7 +55,6 @@ const Properties = () => {
     }
     setAllPropertyAfterFilter(allProperty);
   }, [propertyFor]);
-
   const initialValues = {
     type: "",
     title: "",

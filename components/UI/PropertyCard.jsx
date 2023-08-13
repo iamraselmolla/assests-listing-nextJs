@@ -20,6 +20,7 @@ import { handleApprovePropertyByAdmin } from "../services/userServices";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { userDataActions } from "../store/user-data-slice";
+import cities_arr, { state_arr } from "../utils/CityDropdown";
 
 const PropertyCard = ({ img, activity, property, motive, acceptCard, id }) => {
   const dispatch = useDispatch();
@@ -76,11 +77,14 @@ const PropertyCard = ({ img, activity, property, motive, acceptCard, id }) => {
         </p>
         <div className="flex gap-2">
           <LocationOn sx={{ color: "orange" }} />
-          <p>{property?.state}</p>
+          <p>{state_arr[property?.state]}</p>
+        
+          
         </div>
         <div className="flex gap-2">
           <LocationOn sx={{ color: "orange" }} />
           <p>{property?.city}</p>
+         
         </div>
       </div>
       {/* <div className="bg-primary px-3 p-1 text-white flex justify-between text-sm shadow-inner">
