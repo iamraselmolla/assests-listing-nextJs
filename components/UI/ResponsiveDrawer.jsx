@@ -162,6 +162,11 @@ const ResponsiveDrawer = () => {
               ABOUT US
             </button>
           </Link>
+          <Link href="/gallery">
+            <button className=" hover:underline  text-black p-2 ">
+              GALLERY
+            </button>
+          </Link>
           <Link href="/blog">
             <button className=" hover:underline  text-black p-2 ">
                 BLOG

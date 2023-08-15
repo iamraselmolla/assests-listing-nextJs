@@ -11,8 +11,12 @@ const BASE_URL = {
   getAllAcceptedProperty: "/api/allApprovedProperty",
   getAwaitedProperties: "/api/allAwaitedProperty",
   getSingleProperty: "/api/getSigleProperty",
+  galleryImage: '/api/gallery',
 };
-
+// Find All Gallery Images
+export function getAllGalleryImages (){
+  return http.get(BASE_URL.galleryImage);
+}
 //
 export function findAllAwaitedProperties() {
   return http.get(BASE_URL.getAwaitedProperties);
@@ -45,9 +49,7 @@ export function getAllAcceptedAndActiveProperty() {
 export function handleSignUp(values) {
   return http.post(BASE_URL.signUp, values);
 }
-export function adminLoginHandler(values) {
-  return http.post(BASE_URL.login, values);
-}
+
 export function addProperty(values) {
   return http.post(BASE_URL.addProperty, { values });
 }

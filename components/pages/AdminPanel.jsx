@@ -10,7 +10,7 @@ import AuthContext from "../store/AuthContext";
 import SplashScreen from "../SplashScreen";
 import ResponsiveDrawer from "../UI/ResponsiveDrawer";
 import Footer from "../UI/Footer";
-import { adminLoginHandler } from "../services/userServices";
+import { handleLogin } from "../services/userServices";
 
 const AdminPanel = () => {
   const [loading, setLoading] = useState(true);
@@ -34,13 +34,13 @@ const AdminPanel = () => {
   }, []);
 
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const formHandler = async (e) => {
     e.preventDefault();
 
-    if (!formData.username || !formData.password) {
+    if (!formData.email || !formData.password) {
       toast.warn("All fields are required");
       return;
     }
@@ -48,11 +48,11 @@ const AdminPanel = () => {
     try {
       console.log(formData);
       setButtonLoading(true);
-      const response = await adminLoginHandler(formData);
+      const response = await handleLogin(formData);
       if (response.status === 200) {
         toast.success("Signed in Successfully");
         setFormData({
-          username: "",
+          email: "",
           password: "",
         });
         console.log(response.data);
@@ -88,15 +88,15 @@ const AdminPanel = () => {
                     className="w-full flex flex-col  space-y-4"
                   >
                     <div className="flex flex-col items-center space-y-2 text-md">
-                      <label htmlFor="email">User Name or Email</label>
+                      <label htmlFor="email">Email</label>
                       <input
                         className="bg-white rounded-sm w-full h-10 text-black p-4"
                         type="text"
                         id="email"
-                        value={formData.username}
+                        value={formData.email}
                         required
                         onChange={(e) =>
-                          setFormData({ ...formData, username: e.target.value })
+                          setFormData({ ...formData, email: e.target.value })
                         }
                       />
                     </div>
