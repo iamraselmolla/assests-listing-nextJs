@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   refresh: 0,
   userInfo: {},
+  blogs: []
 };
 
 const userDataSlice = createSlice({
@@ -15,6 +16,9 @@ const userDataSlice = createSlice({
     setUserInfo: (state, action) => {
       state.userInfo = action.payload;
     },
+    setAllBlogs : (state, action) => {
+      state.blogs = action.payload
+    }
   },
 });
 
