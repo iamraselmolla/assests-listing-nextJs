@@ -46,7 +46,6 @@ const Signup = () => {
     setButtonLoading(true);
     try {
       const response = await handleSignUp(values);
-      console.log(response);
       if (response.status !== 200) {
         setButtonLoading(false);
         toast.error(response.data.message);

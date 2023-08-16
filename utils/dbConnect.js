@@ -7,7 +7,7 @@ const dbConnect = async () => {
 
   return mongoose.connect(
     // "mongodb+srv://sikka-warehouse:dvh7hsQP5bEb8dCI@cluster0.pmxzwjj.mongodb.net/sikka-warehouse?retryWrites=true&w=majority",
-    // "mongodb+srv://sikkaandassociates:BRbCcHBTfNcpIyvn@cluster0.pmxzwjj.mongodb.net/sikka-warehouse?retryWrites=true&w=majority",
+    // "mongodb+srv://sikkaandassociates:BRbCcHBTfNcpIyvn@cluster0.pmxzwjj.mongodb.net/sikka",
     "mongodb+srv://rasel:rasel@cluster0.q37bxqk.mongodb.net/sikka",
     {
       useNewUrlParser: true,

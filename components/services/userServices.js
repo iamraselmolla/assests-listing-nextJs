@@ -12,7 +12,14 @@ const BASE_URL = {
   getAwaitedProperties: "/api/allAwaitedProperty",
   getSingleProperty: "/api/getSigleProperty",
   galleryImage: '/api/gallery',
+  addBlog: '/api/addBlog'
 };
+
+// Add Blog
+export function addBlogbyAdmin(values){
+  return http.post(BASE_URL.addBlog, values)
+}
+
 // Find All Gallery Images
 export function getAllGalleryImages (){
   return http.get(BASE_URL.galleryImage);

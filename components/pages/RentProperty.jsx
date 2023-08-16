@@ -130,7 +130,7 @@ const RentProperty = () => {
   });
 
   const onSubmitHandler = async (values, { resetForm }) => {
-    console.log("Hi");
+  
     setButtonLoading(true);
     let imageUrl = "";
     if (image?.length > 0) {
@@ -150,7 +150,6 @@ const RentProperty = () => {
           "https://api.cloudinary.com/v1_1/da75fckow/image/upload",
           formData
         );
-        console.log(response);
 
         if (response.status === 200) {
           imageUrl = response.data.secure_url;
