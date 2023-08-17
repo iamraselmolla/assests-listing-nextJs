@@ -9,6 +9,7 @@ import { getASingleBlogPost, getAllBlogs } from "../../components/services/userS
 import { toast } from "react-toastify";
 import Spinner from "../../components/UI/Spinner";
 import Link from "next/link";
+import { ImageNotSupported } from "@mui/icons-material";
 
 const PostDetails = () => {
     const router = useRouter();
@@ -96,7 +97,7 @@ const PostDetails = () => {
                                                         <Link href={`/blog/${blog?._id}`}>
 
                                                             <div className="flex gap-3 mb-4 items-center">
-                                                                <div>{blog?.img ? <img className="w-20" src={`${blog?.img}`} /> : <div className="bg-green-300 text-white w-20 h-20 flex justify-center items-center rounded-full">No Image</div>}</div>
+                                                                <div>{blog?.img ? <img className="w-12" src={`${blog?.img}`} /> : <div className="bg-green-300 text-white w-12 h-12 flex justify-center items-center rounded-full"><ImageNotSupported/> </div>}</div>
                                                                 <div>
 
                                                                     <h3 className="font-bold">
