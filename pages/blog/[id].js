@@ -1,59 +1,29 @@
-import { useRouter } from "next/router";
-import SplashScreen from "../../components/SplashScreen";
-import ResponsiveDrawer from "../../components/UI/ResponsiveDrawer";
-import { Container } from '@mui/system';
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import TopCard from "../../components/UI/TopCard";
-import Footer from "../../components/UI/Footer";
+import Head from "next/head";
+import BlogForUser from "../../components/pages/BlogForUser";
+import PostDetails from "../../components/pages/PostDetails";
 
-
-const Page = () => {
-
-    const router = useRouter();
-    const { id } = router.query;
-    const  {blogs}  = useSelector(state => state.userData);
-   
-    const [singleBlog, setSingleBlog] = useState(null)
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 100);
-        return () => {
-            clearTimeout(timer);
-        }
-    }, []);
-    useEffect(() => {
-        if (id) {
-            const findPost = blogs?.filter(blog => blog._id === id);
-            
-            setSingleBlog(findPost)
-        }
-    }, [id]);
-    console.log(singleBlog)
-
-    return (
-
-        <div className='relative'>
-            {loading ? <SplashScreen /> :
-                <>
-                    <ResponsiveDrawer />
-                    <TopCard title='All Blogs' />
-                    <div className='py-20 bg-white text-black '>
-                        <Container>
-
-
-                        </Container>
-
-                    </div>
-
-                    <Footer />
-                </>
-            }
-        </div>
-    )
-
+export default function index() {
+  return (
+    <>
+    <Head>
+    <title>Sikka & Associates - Blog Details</title>
+    <meta charSet="utf-8" />
+    <link rel="icon" href='https://res.cloudinary.com/da75fckow/image/upload/v1683447238/sikka-warehouse/logo_ul5ndq.png' />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content= "sikka_and_associates_desc" />
+    <meta property="og:title" content="Sikka & Associates - Contact" />
+    <meta name="keywords" content="sikka_and_associates_keywords" />
+    <meta property="og:url" content="https://warehouseservicez.com/" />
+    {/* <meta name="author" content="Your name here" /> */}
+    <meta property="og:image" itemProp='https://res.cloudinary.com/da75fckow/image/upload/v1683447238/sikka-warehouse/logo_ul5ndq.png'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta httpEquiv="Content-Type" content="text/html; charSet=utf-8" />
+    <link rel="canonical" href="https://sikkaandassociates.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content= "sikka_and_associates_desc" />
+    <meta property="og:site_name" content="Sikka & Associates" />
+    </Head>
+    <PostDetails/>
+    </>
+  )
 }
-export default Page;

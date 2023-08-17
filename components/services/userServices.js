@@ -14,7 +14,12 @@ const BASE_URL = {
   galleryImage: '/api/gallery',
   addBlog: '/api/blog',
   getBlog: '/api/blog',
+  getOneBlog: '/api/findSingleBlog'
 };
+// Find Single Blog
+export function getASingleBlogPost(id){
+  return http.get(BASE_URL.getOneBlog + `?id=${id}`)
+}
 
 // Find all Blogs
 export function getAllBlogs (){

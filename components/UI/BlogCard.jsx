@@ -3,7 +3,6 @@ import Link from "next/link";
 
 
 const BlogCard = ({img, title,id, description, category, createdAt}) => {
-console.log(img)
 
 
     return (

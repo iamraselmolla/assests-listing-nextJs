@@ -14,7 +14,6 @@ const BlogForUser = () => {
     const [loading, setLoading] = useState(true);
     const [dataLoading, setDataLoading] = useState(true);
     const [allBlogs, setAllBlogs] = useState([]);
-    const dispatch = useDispatch()
 
     useEffect(() => {
         const fetchBlogs = async () => {
@@ -22,7 +21,6 @@ const BlogForUser = () => {
             try {
                 const response = await getAllBlogs()
                 setAllBlogs(response?.data)
-                dispatch(userDataActions.setAllBlogs(response?.data));
                 setDataLoading(false)
 
             }
