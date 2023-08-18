@@ -14,8 +14,15 @@ const BASE_URL = {
   galleryImage: '/api/gallery',
   addBlog: '/api/blog',
   getBlog: '/api/blog',
-  getOneBlog: '/api/findSingleBlog'
+  getOneBlog: '/api/findSingleBlog',
+  updateProperty: '/api/updateProperty',
 };
+
+// Update property by Admin 
+export function updateAProperty(values){
+  return http.put(BASE_URL.updateProperty, values)
+}
+
 // Find Single Blog
 export function getASingleBlogPost(id){
   return http.get(BASE_URL.getOneBlog + `?id=${id}`)

@@ -13,9 +13,8 @@ import { IconButton } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { addProperty, getPropertyById } from "../services/userServices";
+import { addProperty, getPropertyById, updateAProperty } from "../services/userServices";
 import AuthContext from "../store/AuthContext";
-// import cloudinary from '../utils/cloudinary'
 const RentProperty = () => {
   const { localid } = useContext(AuthContext);
   const router = useRouter();
@@ -130,64 +129,54 @@ const RentProperty = () => {
   });
 
   const onSubmitHandler = async (values, { resetForm }) => {
-  
+
     setButtonLoading(true);
-    let imageUrl = "";
-    if (image?.length > 0) {
-      const formData = new FormData();
-      formData.append("file", image[0]);
-      formData.append("upload_preset", "client-uploads");
-      try {
-        // const res = await fetch(
-        //   `https://api.cloudinary.com/v1_1/da75fckow/image/upload`,
-        //   {
-        //     method: "POST",
-        //     body: formData,
-        //   }
-        // );
-        // const data = await res.json();
-        const response = await axios.post(
-          "https://api.cloudinary.com/v1_1/da75fckow/image/upload",
-          formData
-        );
+    let imageUrl;
+    if (!id) {
+      if (image?.length > 0) {
+        const formData = new FormData();
+        formData.append("file", image[0]);
+        formData.append("upload_preset", "client-uploads");
+        try {
+          const response = await axios.post(
+            "https://api.cloudinary.com/v1_1/da75fckow/image/upload",
+            formData
+          );
 
-        if (response.status === 200) {
-          imageUrl = response.data.secure_url;
-          values.motive = "rent";
-          values.img = imageUrl;
-          values.user = localid;
-          const result = await addProperty(values);
-          if (result.status === 200) {
-            toast.success("Property added");
-            resetForm({ values: "" });
-            setButtonLoading(false);
-            // setImage(null);
+          if (response.status === 200) {
+            imageUrl = response.data.secure_url;
+            values.motive = "rent";
+            values.img = imageUrl;
+            values.user = localid;
+            const result = await addProperty(values);
+            if (result.status === 200) {
+              toast.success("Property added");
+              resetForm({ values: "" });
+              setButtonLoading(false);
+              // setImage(null);
+            }
           }
+        } catch (err) {
+          console.error(err);
+          setButtonLoading(false);
         }
-      } catch (err) {
-        console.error(err);
-        setButtonLoading(false);
-      }
 
-      // const formData = new FormData();
-      // formData.append("file", image[0]);
-      // formData.append("upload_preset", "client-uploads");
-      // try {
-      //   const res = await fetch(
-      //     `https://api.cloudinary.com/v1_1/da75fckow/image/upload`,
-      //     {
-      //       method: "POST",
-      //       body: formData,
-      //     }
-      //   );
-      //   const data = await res.json();
-      //   imageUrl = data.secure_url;
-      // } catch (err) {
-      //   console.error(err);
-      // }
+      } else {
+        setButtonLoading(false);
+        return toast.error("Please add a property image");
+      }
     } else {
-      setButtonLoading(false);
-      return toast.error("Please add a property image");
+      const { owner, property } = values
+      
+      const result = await updateAProperty({owner, property, id });
+      if(result.status === 201){
+        toast.success("Property Updated")
+        toast.success(result.data.messgae)
+        setButtonLoading(false)
+      }else{
+        console.log(result)
+      }
+     
     }
 
     // let res;

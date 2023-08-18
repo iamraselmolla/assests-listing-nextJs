@@ -40,7 +40,6 @@ export default async function propertyHandling(req, res) {
       try {
         await dbConnect();
         isAdmin(req, res, async (req, res, next, decoded) => {
-          console.log(req.body);
 
           const { values, action } = req.body;
           const getProperty = await Property.findById(values);
