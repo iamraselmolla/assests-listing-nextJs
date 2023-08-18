@@ -7,13 +7,14 @@ export default async function propertyHandling(req, res) {
         case "PUT":
             try {
                 await dbConnect();
-                const { owner, property, id } = req.body;
+                const { owner, property, id, img } = req.body;
                 isAdmin(req, res, async (req, res, next, decoded) => {
 
 
                     const doUpdate = await Property.findByIdAndUpdate(id, {
                         owner: owner,
-                        property: property
+                        property: property,
+                        img: img
                     }, {
                         new: true,
                     });

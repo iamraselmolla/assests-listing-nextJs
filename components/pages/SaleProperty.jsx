@@ -152,17 +152,38 @@ const SaleProperty = () => {
         return toast.error("Please add a property image");
       }
     } else {
-      const { owner, property } = values
-      
-      const result = await updateAProperty({owner, property, id });
-      if(result.status === 201){
-        toast.success("Property Updated")
-        toast.success(result.data.messgae)
-        setButtonLoading(false)
-      }else{
-        console.log(result)
+      if (image?.length > 0) {
+        let response;
+        const formData = new FormData();
+        formData.append("file", image[0]);
+        formData.append("upload_preset", "client-uploads");
+        try {
+          response = await axios.post(
+            "https://api.cloudinary.com/v1_1/da75fckow/image/upload",
+            formData
+          );
+          if(response.status === 200){
+            imageUrl = response.data.secure_url;
+            values.img = imageUrl;
+            const { owner, property,img } = values
+
+            const result = await updateAProperty({ img,owner, property, id });
+            if (result.status === 201) {
+              toast.success("Property Updated")
+              toast.success(result.data.messgae)
+              setButtonLoading(false)
+            } else {
+              console.log(result)
+            }
+          }
+        } catch (err) {
+          console.error(err);
+          setButtonLoading(false);
+        }
       }
+
      
+
     }
 
     // let res;
