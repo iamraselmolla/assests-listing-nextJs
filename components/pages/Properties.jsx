@@ -34,6 +34,7 @@ const Properties = () => {
       const allProperties = await getAllAcceptedAndActiveProperty();
       if (allProperties.status === 200) {
         setAllProperty(allProperties?.data);
+        setAllPropertyAfterFilter(allProperties?.data)
       }
     };
     fetchProperty();
@@ -50,11 +51,11 @@ const Properties = () => {
       const allRents = allProperty?.filter(
         (property) => property?.motive === "sale"
       );
-      setAllPropertyAfterFilter(allRents, "sale");
-      return;
+      setAllPropertyAfterFilter(allRents);
+     
     }
     setAllPropertyAfterFilter(allProperty);
-  }, [propertyFor]);
+  }, [propertyFor, allProperty]);
   const initialValues = {
     type: "",
     title: "",

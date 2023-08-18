@@ -33,7 +33,7 @@ import {
 } from "@mui/icons-material";
 import SplashScreen from "../SplashScreen";
 import Link from "next/link";
-import { Container, IconButton } from "@mui/material";
+import { Container, IconButton, Skeleton } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import "../../node_modules/swiper/modules/pagination.css";
@@ -46,9 +46,14 @@ import FormWrapper from "../UI/FormWrapper";
 import InputField from "../UI/InputField";
 import * as Yup from "yup";
 import cities_arr, { state_arr } from "../utils/CityDropdown";
+import { getAllFeaturedItemsforHomePage } from "../services/userServices";
+import PropertyCard from "../UI/PropertyCard";
 
 const HomePage = () => {
+
   const [loading, setLoading] = useState(true);
+  const [fetchingProperties, setFetchingProperties] = useState(true)
+  const [allFeaturedProperties, setAllFeaturedProperties] = useState(null)
   const [search, setSearch] = useState({
     city: "",
     state: "",
@@ -67,6 +72,18 @@ const HomePage = () => {
       clearTimeout(timer);
     };
   }, []);
+  useEffect(() => {
+    const getFeatueedItems = async () => {
+      const response = await getAllFeaturedItemsforHomePage();
+      if (response.status === 200) {
+        setAllFeaturedProperties(response?.data);
+        setFetchingProperties(false)
+      } else {
+        setFetchingProperties(false)
+      }
+    }
+    getFeatueedItems()
+  }, [])
 
   const warehouses = [
     {
@@ -224,9 +241,9 @@ const HomePage = () => {
   };
 
   const taskList = [
-    { title: "Warehouse", image: assets.dealsIn.warehouse},
+    { title: "Warehouse", image: assets.dealsIn.warehouse },
     { title: "Industrial Shed", image: assets.dealsIn.industrialShed },
-    { title: "Hotel", image: assets.dealsIn.hotel},
+    { title: "Hotel", image: assets.dealsIn.hotel },
     { title: "Call Center", image: assets.dealsIn.callCenter },
     { title: "Restaurant", image: assets.dealsIn.restaurant },
     { title: "Factory", image: assets.dealsIn.factory },
@@ -465,17 +482,15 @@ const HomePage = () => {
             <div className="p-5 w-full">
               <div className="p-2 flex gap-3">
                 <button
-                  className={`w-20 p-2 rounded ${
-                    propertyFor === "For Sale" && "bg-quat"
-                  }`}
+                  className={`w-20 p-2 rounded ${propertyFor === "For Sale" && "bg-quat"
+                    }`}
                   onClick={() => setPropertyFor("For Sale")}
                 >
                   For Sale
                 </button>
                 <button
-                  className={`w-20 p-2 rounded ${
-                    propertyFor === "For Rent" && "bg-quat"
-                  }`}
+                  className={`w-20 p-2 rounded ${propertyFor === "For Rent" && "bg-quat"
+                    }`}
                   onClick={() => setPropertyFor("For Rent")}
                 >
                   For Rent
@@ -655,12 +670,34 @@ const HomePage = () => {
               <h1 className="text-3xl my-3">Find A Property</h1>
               <hr className="my-3" />
               <div className="grid grid-cols-1 md:grid-cols-3 my-3 gap-4">
-                {featuredList.map((property) => (
-                  <FeaturedProperty key={property.title} {...property} />
-                ))}
-                <button className="col-span-full w-40 p-2 rounded-sm hover:bg-primary hover:text-white font-bold text-primary border border-primary justify-self-center">
-                  Show More
-                </button>
+                {!fetchingProperties ? (allFeaturedProperties && allFeaturedProperties?.length > 0 && allFeaturedProperties.map((item) => (
+                  // <FeaturedProperty key={property.title} {...property} />
+                  <PropertyCard
+                    property={item.property}
+                    img={item.img}
+                    activity={item.activity}
+                    motive={item?.motive}
+                  />
+                ))) : 
+                <>
+                    <Skeleton height={350} />
+                    <Skeleton height={350} />
+                    <Skeleton height={350} />
+                    <Skeleton height={350} />
+                    <Skeleton height={350} />
+                    <Skeleton height={350} />
+                    
+                  
+                </> 
+                }
+              </div>
+              <div className="flex justify-center">
+                <Link href={'/properties'}>
+                  <button className="col-span-full w-40 p-2 rounded-sm hover:bg-primary hover:text-white font-bold text-primary border border-primary justify-self-center">
+                    Show More
+                  </button>
+                </Link>
+
               </div>
               {/*<Swiper
                 spaceBetween={20}

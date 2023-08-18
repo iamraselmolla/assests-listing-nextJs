@@ -16,7 +16,14 @@ const BASE_URL = {
   getBlog: '/api/blog',
   getOneBlog: '/api/findSingleBlog',
   updateProperty: '/api/updateProperty',
+  featurdProperty: '/api/getFeaturedProperty',
 };
+
+// get Featurd Property for Homepage
+export function getAllFeaturedItemsforHomePage(){
+  return http.get(BASE_URL.featurdProperty);
+}
+
 
 // Update property by Admin 
 export function updateAProperty(values){
