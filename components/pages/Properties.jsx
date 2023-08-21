@@ -38,7 +38,7 @@ const Properties = () => {
       }
     };
     fetchProperty();
-  }, [propertyFor]);
+  }, []);
   useEffect(() => {
     if (propertyFor === "For Rent") {
       const allRents = allProperty?.filter(
