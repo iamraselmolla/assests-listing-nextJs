@@ -46,15 +46,18 @@ const Properties = () => {
       );
       setAllPropertyAfterFilter(allRents);
       return;
-    }
-    if (propertyFor === "For Sale") {
+    }else  if (propertyFor === "For Sale") {
       const allRents = allProperty?.filter(
         (property) => property?.motive === "sale"
       );
       setAllPropertyAfterFilter(allRents);
-     
     }
-    setAllPropertyAfterFilter(allProperty);
+      else{
+
+        setAllPropertyAfterFilter(allProperty);
+      }
+     
+    
   }, [propertyFor, allProperty]);
   const initialValues = {
     type: "",
