@@ -55,9 +55,8 @@ const AdminPanel = () => {
           email: "",
           password: "",
         });
-        console.log(response.data);
         authCtx.login(
-          response.data.user._id,
+          response.data.user.id,
           response.data.user?.token,
           "admin"
         );

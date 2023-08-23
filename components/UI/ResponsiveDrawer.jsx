@@ -178,7 +178,7 @@ const ResponsiveDrawer = () => {
           <div className="group/parent relative group-hover/parent:bg-red-400  text-center h-[100%] flex flex-col items-center justify-center">
             <button className="text-black p-2 ">
               <Link
-                href={`${authCtx.isLoggedIn ? "/addproperty" : "/login"}`}
+                href={`${authCtx.isLoggedIn ? "/dashboard/addproperty" : "/login"}`}
                 className="group/item border-b-2 border-transparent hover:border-black duration-500 h-10"
               >
                 ACCOUNT

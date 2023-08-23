@@ -5,7 +5,7 @@ export default function index() {
   return (
     <>
     <Head>
-    <title>Sikka & Associates - Dashboard</title>
+    <title>Sikka & Associates - HomePage</title>
     <meta charSet="utf-8" />
     <link rel="icon" href='https://res.cloudinary.com/da75fckow/image/upload/v1683447238/sikka-warehouse/logo_ul5ndq.png' />
     <meta property="og:locale" content="en_US" />
