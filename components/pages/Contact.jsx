@@ -11,8 +11,10 @@ import Image from 'next/image';
 import * as Yup from 'yup'
 import { Form, Formik } from 'formik';
 import InputField from '../UI/InputField';
+import { useRouter } from 'next/router';
 const Contact = () => {
     const [loading, setLoading] = useState(true);
+    const router = useRouter()
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -40,7 +42,7 @@ const Contact = () => {
     const onSubmitHandler = (values, { resetForm }) => {
         let body = `Name=${values.name}%0D%0A Contact no=${values.mobileNo}%0D%0A Message=${values.message}`
         router.push(`mailto:warehouseservicez@gmail.com?subject=Contact&body=${body}`)
-        resetForm();
+        resetForm({ values: "" });
     }
 
 

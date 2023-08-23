@@ -664,7 +664,6 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-
           <div className="bg-white py-10">
             <div className="w-[80%] m-auto">
               <h1 className="text-3xl my-3">Find A Property</h1>
