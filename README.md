@@ -10,3 +10,6 @@ user and admin
 * Admin can review any added property item from dashboard option named request listings from user and can approve or reject that. after approving, it will be shown in the properties page in the menu.
 * Admin also can add any item for rent or sale as like user
 * Admin can add gallery images from own dashboard menu
+* Admin can also show/hide any approved item from dashboard
+* Any accepted property item can be select as featured item
+* After selecting enabled property, it will be displayed in the front end menu named Properties
